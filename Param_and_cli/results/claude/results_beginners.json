@@ -1,0 +1,438 @@
+[
+  {
+    "model": "claude-sonnet-4.6",
+    "total_tests": 46,
+    "tool_selection_correct": 46,
+    "tool_selection_total": 46,
+    "parameter_extraction_perfect": 24,
+    "parameter_extraction_total": 46,
+    "combined_perfect": 24,
+    "latencies": [],
+    "test_details": [
+      {
+        "index": 1,
+        "query": "Can you find the dots on the bone scans in /data/scans? Use the models in /model",
+        "expected_tool": "ali_cbct",
+        "selected_tool": "ali_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.8333333333333334,
+        "is_perfect": false
+      },
+      {
+        "index": 2,
+        "query": "I need to mark teeth 8 and 9 on the picture at /data/tooth.stl. Use the /models/",
+        "expected_tool": "ali_ios",
+        "selected_tool": "ali_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.6666666666666666,
+        "is_perfect": false
+      },
+      {
+        "index": 3,
+        "query": "Please color in the top and bottom jaw from the scans in /data/cbct. Use the AI ",
+        "expected_tool": "amasss_cli",
+        "selected_tool": "amasss_cli",
+        "tool_correct": true,
+        "param_accuracy": 0.8,
+        "is_perfect": false
+      },
+      {
+        "index": 4,
+        "query": "Can you line up the old scans in /data/T1 with the new ones in /data/T2 for the ",
+        "expected_tool": "areg_cbct",
+        "selected_tool": "areg_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 5,
+        "query": "Match the first mouth scan in /data/pre with the second one in /data/post. Use t",
+        "expected_tool": "areg_ios",
+        "selected_tool": "areg_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.8333333333333334,
+        "is_perfect": false
+      },
+      {
+        "index": 6,
+        "query": "Cut out the small boxes from the big scans in /data/scans using the marker file ",
+        "expected_tool": "autocrop3d",
+        "selected_tool": "autocrop3d",
+        "tool_correct": true,
+        "param_accuracy": 0.8,
+        "is_perfect": false
+      },
+      {
+        "index": 7,
+        "query": "Move the scan /data/patient.nii using the directions in /data/tfm. Use /data/ref",
+        "expected_tool": "automatrix",
+        "selected_tool": "automatrix",
+        "tool_correct": true,
+        "param_accuracy": 0.7142857142857143,
+        "is_perfect": false
+      },
+      {
+        "index": 8,
+        "query": "Find the teeth in all the files in /data/scans at once. Use the models in /model",
+        "expected_tool": "batchdentalseg",
+        "selected_tool": "batchdentalseg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 9,
+        "query": "Use the CLIC tool to find teeth in the scans at /data/patients. Use the model fo",
+        "expected_tool": "clic",
+        "selected_tool": "clic",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 10,
+        "query": "Check the tooth shapes in /data/meshes. Use the classification mode with 3 group",
+        "expected_tool": "docshapeaxi",
+        "selected_tool": "docshapeaxi",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 11,
+        "query": "Warp the tooth shape at /data/tooth.stl. Use the butterfly way and save the new ",
+        "expected_tool": "flexreg",
+        "selected_tool": "flexreg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 12,
+        "query": "Make a simple webpage to look at the results in /data/summaries. Save the files ",
+        "expected_tool": "medx_dashboard",
+        "selected_tool": "medx_dashboard",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 13,
+        "query": "Read the patient notes in /data/notes and give me a short summary. Use the t5-ba",
+        "expected_tool": "medx_summarize",
+        "selected_tool": "medx_summarize",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 14,
+        "query": "Make the MRI scans in /data/mri look like the CBCT scans in /data/cbct. Save the",
+        "expected_tool": "mri2cbct_approx",
+        "selected_tool": "mri2cbct_approx",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 15,
+        "query": "Line up the MRI folder /data/mri with the CBCT folder /data/cbct. Use the masks ",
+        "expected_tool": "mri2cbct_reg",
+        "selected_tool": "mri2cbct_reg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 16,
+        "query": "Cut the scans into left and right sides. Use CBCT /data/cbct, MRI /data/mri, and",
+        "expected_tool": "mri2cbct_lr_crop",
+        "selected_tool": "mri2cbct_lr_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 17,
+        "query": "Straighten the MRI scans in /data/mri_raw. Use direction -1,0,0,0,-1,0,0,0,1 and",
+        "expected_tool": "mri2cbct_orient_center",
+        "selected_tool": "mri2cbct_orient_center",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 18,
+        "query": "Change the resolution of all my scans in /data/raw to size [256, 256, 128]. Save",
+        "expected_tool": "mri2cbct_resample",
+        "selected_tool": "mri2cbct_resample",
+        "tool_correct": true,
+        "param_accuracy": 0.2,
+        "is_perfect": false
+      },
+      {
+        "index": 19,
+        "query": "Cut out the jaw joints from the scans in /data/cbct and /data/mri. Use /data/seg",
+        "expected_tool": "mri2cbct_tmj_crop",
+        "selected_tool": "mri2cbct_tmj_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 20,
+        "query": "Clean up the scans in /data/raw for ASO. Use the model in /models/aso, save to /",
+        "expected_tool": "pre_aso_cbct",
+        "selected_tool": "pre_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 21,
+        "query": "Turn the mouth scans in /data/ios the right way using /data/gold. Do teeth 8 and",
+        "expected_tool": "pre_aso_ios",
+        "selected_tool": "pre_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.7142857142857143,
+        "is_perfect": false
+      },
+      {
+        "index": 22,
+        "query": "Fix the angle of the scans in /data/scans using the landmarks Sella and Nasion. ",
+        "expected_tool": "semi_aso_cbct",
+        "selected_tool": "semi_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 23,
+        "query": "Turn the mouth shapes in /data/ios using landmarks Cusp and Fossa. Use the top j",
+        "expected_tool": "semi_aso_ios",
+        "selected_tool": "semi_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.7142857142857143,
+        "is_perfect": false
+      },
+      {
+        "index": 24,
+        "query": "Can you find the landmark points on the patient scans in /data/scans? Use the mo",
+        "expected_tool": "ali_cbct",
+        "selected_tool": "ali_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.8333333333333334,
+        "is_perfect": false
+      },
+      {
+        "index": 25,
+        "query": "I need to find landmarks for teeth 8 and 9 on the scan file /data/teeth.stl. Use",
+        "expected_tool": "ali_ios",
+        "selected_tool": "ali_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.6666666666666666,
+        "is_perfect": false
+      },
+      {
+        "index": 26,
+        "query": "Please segment the Mandible and Maxilla from the scans in /data/cbct_scans. Use ",
+        "expected_tool": "amasss_cli",
+        "selected_tool": "amasss_cli",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 27,
+        "query": "Help me align my first scans in /data/T1 with the second scans in /data/T2 using",
+        "expected_tool": "areg_cbct",
+        "selected_tool": "areg_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 28,
+        "query": "Can you register the dental scans in /data/pre to the ones in /data/post? Use th",
+        "expected_tool": "areg_ios",
+        "selected_tool": "areg_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.8333333333333334,
+        "is_perfect": false
+      },
+      {
+        "index": 29,
+        "query": "I want to crop my scans in /data/volumes using the marker file /data/markers.jso",
+        "expected_tool": "autocrop3d",
+        "selected_tool": "autocrop3d",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 30,
+        "query": "Apply the movement matrices in /data/tfm to the scan /data/patient.nii. Use /dat",
+        "expected_tool": "automatrix",
+        "selected_tool": "automatrix",
+        "tool_correct": true,
+        "param_accuracy": 0.7142857142857143,
+        "is_perfect": false
+      },
+      {
+        "index": 31,
+        "query": "Please run a batch tooth segmentation on the folder /data/scans. Use the models ",
+        "expected_tool": "batchdentalseg",
+        "selected_tool": "batchdentalseg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 32,
+        "query": "Run the CLIC segmentation on the scans in /data/patients. Use the Mask-RCNN mode",
+        "expected_tool": "clic",
+        "selected_tool": "clic",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 33,
+        "query": "Analyze the tooth shapes of the meshes in /data/stls using the classification ta",
+        "expected_tool": "docshapeaxi",
+        "selected_tool": "docshapeaxi",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 34,
+        "query": "Do a flexible registration for the tooth mesh at /data/tooth.vtk. Use the butter",
+        "expected_tool": "flexreg",
+        "selected_tool": "flexreg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 35,
+        "query": "Make a web dashboard to show the results in /data/results. Save the HTML dashboa",
+        "expected_tool": "medx_dashboard",
+        "selected_tool": "medx_dashboard",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 36,
+        "query": "Summarize the patient notes in /data/notes using the t5-base model. Put the summ",
+        "expected_tool": "medx_summarize",
+        "selected_tool": "medx_summarize",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 37,
+        "query": "Approximate the MRI scans in /data/mri using the CBCT scans in /data/cbct. Put t",
+        "expected_tool": "mri2cbct_approx",
+        "selected_tool": "mri2cbct_approx",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 38,
+        "query": "Register my MRI folder /data/mri to the CBCT folder /data/cbct. Use the masks in",
+        "expected_tool": "mri2cbct_reg",
+        "selected_tool": "mri2cbct_reg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 39,
+        "query": "Crop the left and right sides of the scans. CBCT: /data/cbct, MRI: /data/mri, Se",
+        "expected_tool": "mri2cbct_lr_crop",
+        "selected_tool": "mri2cbct_lr_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 40,
+        "query": "Standardize the MRI scans in /data/mri_raw. Set the direction to -1,0,0,0,-1,0,0",
+        "expected_tool": "mri2cbct_orient_center",
+        "selected_tool": "mri2cbct_orient_center",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 41,
+        "query": "Resample all my images in /data/raw to size [256, 256, 128]. Use /data/resampled",
+        "expected_tool": "mri2cbct_resample",
+        "selected_tool": "mri2cbct_resample",
+        "tool_correct": true,
+        "param_accuracy": 0.2,
+        "is_perfect": false
+      },
+      {
+        "index": 42,
+        "query": "Find and crop the TMJ regions from the scans in /data/cbct and /data/mri. Use th",
+        "expected_tool": "mri2cbct_tmj_crop",
+        "selected_tool": "mri2cbct_tmj_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 43,
+        "query": "Prepare the CBCT scans in /data/raw for ASO. Use the model in /models/aso, save ",
+        "expected_tool": "pre_aso_cbct",
+        "selected_tool": "pre_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 44,
+        "query": "Orient my dental scans in /data/ios for ASO using the gold standard in /data/gol",
+        "expected_tool": "pre_aso_ios",
+        "selected_tool": "pre_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.8571428571428571,
+        "is_perfect": false
+      },
+      {
+        "index": 45,
+        "query": "Fix the orientation of my CBCT scans in /data/scans using the gold standard in /",
+        "expected_tool": "semi_aso_cbct",
+        "selected_tool": "semi_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 46,
+        "query": "Orient my dental meshes in /data/ios using the gold folder /data/gold. Use landm",
+        "expected_tool": "semi_aso_ios",
+        "selected_tool": "semi_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.8571428571428571,
+        "is_perfect": false
+      }
+    ],
+    "errors": [],
+    "avg_tool_selection_accuracy": 1.0,
+    "avg_parameter_accuracy": 0.8638716356107661,
+    "avg_combined_accuracy": 0.8638716356107661,
+    "latency_stats": {
+      "mean_s": 0.0,
+      "median_s": 0.0,
+      "min_s": 0.0,
+      "max_s": 0.0
+    }
+  }
+]

@@ -1,0 +1,438 @@
+[
+  {
+    "model": "claude-opus-4.8",
+    "total_tests": 46,
+    "tool_selection_correct": 46,
+    "tool_selection_total": 46,
+    "parameter_extraction_perfect": 41,
+    "parameter_extraction_total": 46,
+    "combined_perfect": 41,
+    "latencies": [],
+    "test_details": [
+      {
+        "index": 1,
+        "query": "Segment the mandible and maxilla from CBCT scans in /patients/study_a using nnUN",
+        "expected_tool": "amasss_cli",
+        "selected_tool": "amasss_cli",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 2,
+        "query": "Identify landmarks on DICOM CBCT scans in /data/dicom_folder. Use model folder /",
+        "expected_tool": "ali_cbct",
+        "selected_tool": "ali_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 3,
+        "query": "Run ALI IOS on mesh /meshes/scan01.stl. Models: /models/ios_v2. Detect landmarks",
+        "expected_tool": "ali_ios",
+        "selected_tool": "ali_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 4,
+        "query": "Perform maxilla registration (MAX) between T1 /data/T1 and T2 /data/T2. Results ",
+        "expected_tool": "areg_cbct",
+        "selected_tool": "areg_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.8571428571428571,
+        "is_perfect": false
+      },
+      {
+        "index": 5,
+        "query": "Register IOS surfaces from /ios/baseline to /ios/followup. Use model /models/ref",
+        "expected_tool": "areg_ios",
+        "selected_tool": "areg_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 6,
+        "query": "Crop 3D volumes in /scans using markers from /markers/points.mrk.json. Output to",
+        "expected_tool": "autocrop3d",
+        "selected_tool": "autocrop3d",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 7,
+        "query": "Apply transformation matrix from /matrices to patient scan /data/patient.nii.gz.",
+        "expected_tool": "automatrix",
+        "selected_tool": "automatrix",
+        "tool_correct": true,
+        "param_accuracy": 0.8571428571428571,
+        "is_perfect": false
+      },
+      {
+        "index": 8,
+        "query": "Perform Mask-RCNN segmentation on CBCTs in /in_scans with model /models/clic. Ou",
+        "expected_tool": "clic",
+        "selected_tool": "clic",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 9,
+        "query": "Shape analysis on VTK meshes in /meshes. Output: /analysis. Data type: surface, ",
+        "expected_tool": "docshapeaxi",
+        "selected_tool": "docshapeaxi",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 10,
+        "query": "Generate MedX Dashboard from summaries in /summaries/output. Save HTML to /dashb",
+        "expected_tool": "medx_dashboard",
+        "selected_tool": "medx_dashboard",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 11,
+        "query": "Summarize medical notes in /notes using t5-base model. Output to /notes/summarie",
+        "expected_tool": "medx_summarize",
+        "selected_tool": "medx_summarize",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 12,
+        "query": "Approximate MRI from /mri_data to CBCT in /cbct_data. Save results to /mri2cbct/",
+        "expected_tool": "mri2cbct_approx",
+        "selected_tool": "mri2cbct_approx",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 13,
+        "query": "Register MRI /mri_vol to CBCT /cbct_vol with mask /masks/cbct_mask.nii.gz. Outpu",
+        "expected_tool": "mri2cbct_reg",
+        "selected_tool": "mri2cbct_reg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 14,
+        "query": "Crop left-right regions for MRI /mri and CBCT /cbct using segmentation /seg. Sav",
+        "expected_tool": "mri2cbct_lr_crop",
+        "selected_tool": "mri2cbct_lr_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 15,
+        "query": "Orient and center MRI scans in /raw_mri. Output to /centered_mri. Spacing: 1.5. ",
+        "expected_tool": "mri2cbct_orient_center",
+        "selected_tool": "mri2cbct_orient_center",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 16,
+        "query": "Resample CBCT /cbct_in and MRI /mri_in (including T2 and segments) to size [256,",
+        "expected_tool": "mri2cbct_resample",
+        "selected_tool": "mri2cbct_resample",
+        "tool_correct": true,
+        "param_accuracy": 0.5,
+        "is_perfect": false
+      },
+      {
+        "index": 17,
+        "query": "Crop TMJ region using nnUNet model /models/tmj from CBCT /data/cbct and MRI /dat",
+        "expected_tool": "mri2cbct_tmj_crop",
+        "selected_tool": "mri2cbct_tmj_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 18,
+        "query": "Preprocess CBCT scans in /raw for ASO. Use model /models/aso_pre. Output to /pre",
+        "expected_tool": "pre_aso_cbct",
+        "selected_tool": "pre_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 19,
+        "query": "Orient IOS scans in /ios_raw for tooth 14,15,16. Gold standard: /gold/ios. Outpu",
+        "expected_tool": "pre_aso_ios",
+        "selected_tool": "pre_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 20,
+        "query": "Semi-auto orientation of CBCT /scans using gold /gold_std. Landmarks: Nasion,Sel",
+        "expected_tool": "semi_aso_cbct",
+        "selected_tool": "semi_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 21,
+        "query": "Semi-auto orient IOS in /data/ios using landmarks L1,L2,L3. Reference: /data/ref",
+        "expected_tool": "semi_aso_ios",
+        "selected_tool": "semi_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 22,
+        "query": "Detect landmarks 21,22,23 on CBCT /patient/vol.nrrd. Models in /models/ali. Save",
+        "expected_tool": "ali_cbct",
+        "selected_tool": "ali_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 23,
+        "query": "ALI IOS on mesh /mesh/input.vtk with models /models/ios. Landmarks: 1 2. Teeth: ",
+        "expected_tool": "ali_ios",
+        "selected_tool": "ali_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 24,
+        "query": "Segment skull structures Maxilla and Mandible from /in/cbct using /models/amasss",
+        "expected_tool": "amasss_cli",
+        "selected_tool": "amasss_cli",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 25,
+        "query": "Register CBCT T1 /t1 to T2 /t2. Reg type: CB. Output: /reg_output. Temp: /reg_tm",
+        "expected_tool": "areg_cbct",
+        "selected_tool": "areg_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.8571428571428571,
+        "is_perfect": false
+      },
+      {
+        "index": 26,
+        "query": "IOS Registration T1: /s1, T2: /s2. Model: /mod/reg. Output: /aligned. Log: /alig",
+        "expected_tool": "areg_ios",
+        "selected_tool": "areg_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 27,
+        "query": "AutoCrop3D: Scans at /vol, Markers at /vol/m.json. Output: /vol/crop. Box size: ",
+        "expected_tool": "autocrop3d",
+        "selected_tool": "autocrop3d",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 28,
+        "query": "Apply matrix to /pat/scan.nii.gz from /pat/mat. Reference: /pat/ref.nii.gz. Outp",
+        "expected_tool": "automatrix",
+        "selected_tool": "automatrix",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 29,
+        "query": "CLIC segmentation for /scans/dicom. Models: /clic_v1. Output: /segs.",
+        "expected_tool": "clic",
+        "selected_tool": "clic",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 30,
+        "query": "ShapeAXI analysis on /data/meshes. Out: /data/results. Type: mesh, Task: regress",
+        "expected_tool": "docshapeaxi",
+        "selected_tool": "docshapeaxi",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 31,
+        "query": "Create MedX Dashboard from /results/summaries. Save to /results/dashboard.",
+        "expected_tool": "medx_dashboard",
+        "selected_tool": "medx_dashboard",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 32,
+        "query": "Summarize notes at /in/notes. Model: t5-large. Output: /out/notes. Log: /out/not",
+        "expected_tool": "medx_summarize",
+        "selected_tool": "medx_summarize",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 33,
+        "query": "MRI approximation /mri to CBCT /cbct. Output: /mri_approx.",
+        "expected_tool": "mri2cbct_approx",
+        "selected_tool": "mri2cbct_approx",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 34,
+        "query": "Register MRI /mri_folder to CBCT /cbct_folder with mask /masks/m.nii.gz. Output:",
+        "expected_tool": "mri2cbct_reg",
+        "selected_tool": "mri2cbct_reg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 35,
+        "query": "Left-Right asymmetry crop for CBCT /c, MRI /m, Seg /s. Output: /lrcrop.",
+        "expected_tool": "mri2cbct_lr_crop",
+        "selected_tool": "mri2cbct_lr_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 36,
+        "query": "Standardize MRI /raw_mri to /standard_mri. Z-spacing: 2.0. Direction: '1.0, 0.0,",
+        "expected_tool": "mri2cbct_orient_center",
+        "selected_tool": "mri2cbct_orient_center",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 37,
+        "query": "Resample datasets in /raw to size [128, 128, 64] and spacing [1.0, 1.0, 2.0]. Ou",
+        "expected_tool": "mri2cbct_resample",
+        "selected_tool": "mri2cbct_resample",
+        "tool_correct": true,
+        "param_accuracy": 0.3,
+        "is_perfect": false
+      },
+      {
+        "index": 38,
+        "query": "TMJ Cropping from CBCT /cbct_path and MRI /mri_path. Segs: /seg_path. Model: /tm",
+        "expected_tool": "mri2cbct_tmj_crop",
+        "selected_tool": "mri2cbct_tmj_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 39,
+        "query": "Pre-ASO CBCT preprocessing on /input_scans. Model: /aso_model. Out: /output_scan",
+        "expected_tool": "pre_aso_cbct",
+        "selected_tool": "pre_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 40,
+        "query": "Pre-ASO IOS for teeth 2,3,4. Input: /ios_in, Gold: /ios_gold, Out: /ios_out. Jaw",
+        "expected_tool": "pre_aso_ios",
+        "selected_tool": "pre_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 41,
+        "query": "Semi-ASO CBCT alignment. Input: /in, Reference: /ref, Out: /out. Landmarks: A,B,",
+        "expected_tool": "semi_aso_cbct",
+        "selected_tool": "semi_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 42,
+        "query": "Semi-ASO IOS alignment. Input: /in, Gold: /gold, Out: /out. Landmarks: L1,L2. Ja",
+        "expected_tool": "semi_aso_ios",
+        "selected_tool": "semi_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 43,
+        "query": "Run flexible registration on surface /meshes/upper_jaw.vtk with curve patches. O",
+        "expected_tool": "flexreg",
+        "selected_tool": "flexreg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 44,
+        "query": "Can you do patch-based deformable registration on /scans/dental_surface.stl? Use",
+        "expected_tool": "flexreg",
+        "selected_tool": "flexreg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 45,
+        "query": "Segment dental structures from CBCT folder /data/study_cohort/ using models /opt",
+        "expected_tool": "batchdentalseg",
+        "selected_tool": "batchdentalseg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 46,
+        "query": "Can you process multiple CBCT scans for dental segmentation? Scans are in /hospi",
+        "expected_tool": "batchdentalseg",
+        "selected_tool": "batchdentalseg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      }
+    ],
+    "errors": [],
+    "avg_tool_selection_accuracy": 1.0,
+    "avg_parameter_accuracy": 0.9645962732919253,
+    "avg_combined_accuracy": 0.9645962732919253,
+    "latency_stats": {
+      "mean_s": 0.0,
+      "median_s": 0.0,
+      "min_s": 0.0,
+      "max_s": 0.0
+    }
+  }
+]

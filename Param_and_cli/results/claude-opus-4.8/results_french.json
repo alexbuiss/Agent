@@ -1,0 +1,231 @@
+[
+  {
+    "model": "claude-opus-4.8",
+    "total_tests": 23,
+    "tool_selection_correct": 23,
+    "tool_selection_total": 23,
+    "parameter_extraction_perfect": 12,
+    "parameter_extraction_total": 23,
+    "combined_perfect": 12,
+    "latencies": [],
+    "test_details": [
+      {
+        "index": 1,
+        "query": "Peux-tu identifier les points de repère anatomiques sur les volumes CBCT dans /d",
+        "expected_tool": "ali_cbct",
+        "selected_tool": "ali_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.8333333333333334,
+        "is_perfect": false
+      },
+      {
+        "index": 2,
+        "query": "J'ai besoin d'extraire les landmarks dentaires pour les dents 8 et 9 sur le scan",
+        "expected_tool": "ali_ios",
+        "selected_tool": "ali_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.6666666666666666,
+        "is_perfect": false
+      },
+      {
+        "index": 3,
+        "query": "Effectue une segmentation automatique de la mandibule et du maxillaire sur les s",
+        "expected_tool": "amasss_cli",
+        "selected_tool": "amasss_cli",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 4,
+        "query": "Ajuste les scans initiaux (T1) de /data/T1 avec les scans de suivi (T2) dans /da",
+        "expected_tool": "areg_cbct",
+        "selected_tool": "areg_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 5,
+        "query": "Réalise le recalage des surfaces dentaires entre /scans/T1 et /scans/T2. Utilise",
+        "expected_tool": "areg_ios",
+        "selected_tool": "areg_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.8333333333333334,
+        "is_perfect": false
+      },
+      {
+        "index": 6,
+        "query": "Découpe les zones d'intérêt des volumes dans /data/raw en utilisant le fichier d",
+        "expected_tool": "autocrop3d",
+        "selected_tool": "autocrop3d",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 7,
+        "query": "Applique les matrices de transformation de /data/matrices au scan /data/patient.",
+        "expected_tool": "automatrix",
+        "selected_tool": "automatrix",
+        "tool_correct": true,
+        "param_accuracy": 0.7142857142857143,
+        "is_perfect": false
+      },
+      {
+        "index": 8,
+        "query": "Lance une segmentation dentaire par lot sur le dossier /data/cbct_scans. Utilise",
+        "expected_tool": "batchdentalseg",
+        "selected_tool": "batchdentalseg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 9,
+        "query": "Utilise l'outil CLIC pour segmenter les structures dentaires dans /data/patients",
+        "expected_tool": "clic",
+        "selected_tool": "clic",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 10,
+        "query": "Analyse la morphologie des maillages dans /data/meshes. Effectue une classificat",
+        "expected_tool": "docshapeaxi",
+        "selected_tool": "docshapeaxi",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 11,
+        "query": "Effectue un recalage flexible (deformable) sur la surface /data/tooth.vtk. Utili",
+        "expected_tool": "flexreg",
+        "selected_tool": "flexreg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 12,
+        "query": "Génère un tableau de bord interactif à partir des résumés cliniques dans /data/r",
+        "expected_tool": "medx_dashboard",
+        "selected_tool": "medx_dashboard",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 13,
+        "query": "Produis une synthèse des notes médicales situées dans /data/notes avec le modèle",
+        "expected_tool": "medx_summarize",
+        "selected_tool": "medx_summarize",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 14,
+        "query": "Réalise une approximation d'image IRM vers CBCT pour les fichiers dans /data/mri",
+        "expected_tool": "mri2cbct_approx",
+        "selected_tool": "mri2cbct_approx",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 15,
+        "query": "Aligne les séquences IRM de /data/mri sur les volumes CBCT de /data/cbct. Utilis",
+        "expected_tool": "mri2cbct_reg",
+        "selected_tool": "mri2cbct_reg",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 16,
+        "query": "Sépare les côtés gauche et droit des scans pour une analyse d'asymétrie. CBCT : ",
+        "expected_tool": "mri2cbct_lr_crop",
+        "selected_tool": "mri2cbct_lr_crop",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 17,
+        "query": "Réoriente et centre les IRM brutes dans /data/mri_raw. Utilise la direction stan",
+        "expected_tool": "mri2cbct_orient_center",
+        "selected_tool": "mri2cbct_orient_center",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 18,
+        "query": "Rééchantillonne tous les volumes du dossier /data/raw vers une taille de [256, 2",
+        "expected_tool": "mri2cbct_resample",
+        "selected_tool": "mri2cbct_resample",
+        "tool_correct": true,
+        "param_accuracy": 0.2,
+        "is_perfect": false
+      },
+      {
+        "index": 19,
+        "query": "Extrais les régions de l'articulation temporo-mandibulaire (ATM) des scans CBCT ",
+        "expected_tool": "mri2cbct_tmj_crop",
+        "selected_tool": "mri2cbct_tmj_crop",
+        "tool_correct": true,
+        "param_accuracy": 0.6666666666666666,
+        "is_perfect": false
+      },
+      {
+        "index": 20,
+        "query": "Prépare les scans CBCT dans /data/raw pour l'orientation ASO. Utilise le modèle ",
+        "expected_tool": "pre_aso_cbct",
+        "selected_tool": "pre_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 1.0,
+        "is_perfect": true
+      },
+      {
+        "index": 21,
+        "query": "Standardise l'orientation des scans intraoraux de /data/ios par rapport à la réf",
+        "expected_tool": "pre_aso_ios",
+        "selected_tool": "pre_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.8571428571428571,
+        "is_perfect": false
+      },
+      {
+        "index": 22,
+        "query": "Réoriente les scans CBCT dans /data/scans en utilisant les points Sella et Nasio",
+        "expected_tool": "semi_aso_cbct",
+        "selected_tool": "semi_aso_cbct",
+        "tool_correct": true,
+        "param_accuracy": 0.75,
+        "is_perfect": false
+      },
+      {
+        "index": 23,
+        "query": "Ajuste l'orientation des surfaces IOS dans /data/ios via les landmarks Cusp et F",
+        "expected_tool": "semi_aso_ios",
+        "selected_tool": "semi_aso_ios",
+        "tool_correct": true,
+        "param_accuracy": 0.7142857142857143,
+        "is_perfect": false
+      }
+    ],
+    "errors": [],
+    "avg_tool_selection_accuracy": 1.0,
+    "avg_parameter_accuracy": 0.8580745341614907,
+    "avg_combined_accuracy": 0.8580745341614907,
+    "latency_stats": {
+      "mean_s": 0.0,
+      "median_s": 0.0,
+      "min_s": 0.0,
+      "max_s": 0.0
+    }
+  }
+]

@@ -14,6 +14,10 @@ from slicer.parameterNodeWrapper import (
 
 from slicer import vtkMRMLScalarVolumeNode
 
+# Max number of automatic "fix the parameters from the error and retry"
+# attempts after a real tool execution fails (see Agent_UIWidget.runToolWithRepair).
+MAX_REPAIR_ATTEMPTS = 2
+
 class DropZone(qt.QFrame):
     """Zone drag&drop multi-fichiers/dossiers. Émet une liste de paths locaux."""
     dropped = qt.Signal(list)
@@ -33,15 +37,17 @@ class DropZone(qt.QFrame):
         lay.setContentsMargins(10, 10, 10, 10)
         lay.addWidget(self._label)
 
-        # style “drop zone”
+        # style "drop zone" - palette(...) functions resolve against the
+        # active Slicer theme (light or dark) at render time, so this never
+        # needs to special-case dark mode itself.
         self.setStyleSheet("""
             QFrame {
-                border: 2px dashed #b8c4d6;
+                border: 2px dashed palette(mid);
                 border-radius: 8px;
-                background: #ffffff;
+                background: palette(base);
             }
             QLabel {
-                color: #34495e;
+                color: palette(window-text);
                 font-weight: 800;
             }
         """)
@@ -221,7 +227,10 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self._parameterNode = None
         self._parameterNodeGuiTag = None
         self.CliStartTime=0
-        self._requiredWidgets = {}
+        # Earlier turns of this conversation, sent to Agent_CLI on every
+        # request so the model isn't limited to the latest message (e.g. a
+        # follow-up that only supplies a previously-missing parameter).
+        self.conversationHistory = []
 
     def setup(self) -> None:
         import qt
@@ -357,6 +366,11 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         # Make sure parameter node is initialized (needed for module reload)
         self.initializeParameterNode()
+
+        # Re-color the "LLM response will appear here..." placeholder once
+        # the widget has actually been painted (grab() right now, before the
+        # first paint event, can't sample real pixels yet).
+        qt.QTimer.singleShot(0, self._applyPlaceholderTheme)
 
     def onDroppedPaths(self, paths):
         norm = []
@@ -501,11 +515,53 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         text = text.replace("  ", "&nbsp;&nbsp;")
         return text
 
+    def _isDarkBackground(self, widget):
+        """
+        Sample the actual rendered pixels of `widget` to tell light from
+        dark theme. QPalette roles (even WindowText/Text) turned out to
+        keep returning the default *light*-theme values in Slicer's dark
+        style, so they can't be trusted here - grabbing the real on-screen
+        pixmap is the only thing that reflects what's actually painted,
+        regardless of how Slicer implements the theme under the hood.
+        """
+        try:
+            pixmap = widget.grab()
+            if pixmap.isNull() or pixmap.width() < 1 or pixmap.height() < 1:
+                return False
+            image = pixmap.toImage()
+            x = min(5, image.width() - 1)
+            y = min(5, image.height() - 1)
+            color = image.pixelColor(x, y)
+            luminance = 0.299 * color.red() + 0.587 * color.green() + 0.114 * color.blue()
+            return luminance < 128
+        except Exception:
+            return False
+
+    def _applyPlaceholderTheme(self):
+        """
+        Recolor the "LLM response will appear here..." placeholder text.
+        The static "color: palette(mid);" from the .ui ended up unreadable
+        in both themes (too light on light, invisible on dark) - same root
+        cause as the chat bubbles, so reuse the pixel-sampling detection
+        and bake in a literal color instead of trusting palette roles.
+        """
+        baseStyle = self.ui.textEdit.property("_baseStyleSheet")
+        if baseStyle is None:
+            baseStyle = self.ui.textEdit.styleSheet
+            self.ui.textEdit.setProperty("_baseStyleSheet", baseStyle)
+
+        isDark = self._isDarkBackground(self.ui.textEdit)
+        placeholderColor = "#cfd8dc" if isDark else "#5a6268"
+        self.ui.textEdit.setStyleSheet(
+            f"{baseStyle}\nQTextEdit {{ color: {placeholderColor}; }}"
+        )
+
     def add_user_message(self, msg):
         msg_escaped = self.to_html(msg)
+        accent = "#5dade2" if self._isDarkBackground(self.ui.textEdit) else "#3498db"
         self.ui.textEdit.insertHtml(
             f'<table width="100%"><tr><td width="20%"></td><td width="80%" align="right">'
-            f'<div style="color: #3498db; padding: 6px 15px; border-radius: 999px; margin: 5px 20px 5px 0; display: inline-block; white-space: pre-wrap; font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">'
+            f'<div style="color: {accent}; padding: 6px 15px; border-radius: 999px; margin: 5px 20px 5px 0; display: inline-block; white-space: pre-wrap; font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">'
             f'{msg_escaped}'
             f'</div>'
             f'</td></tr></table>'
@@ -515,11 +571,15 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.textEdit.setTextCursor(cursor)
         self.ui.textEdit.ensureCursorVisible()
 
+        content = msg[2:] if msg.startswith("👨:") else msg
+        self._appendHistory("user", content)
+
     def add_agent_message(self, msg):
         msg_escaped = self.to_html(msg)
+        textColor = "#ecf0f1" if self._isDarkBackground(self.ui.textEdit) else "#1c2833"
         self.ui.textEdit.insertHtml(
             f'<table width="100%"><tr><td width="80%" align="left">'
-            f'<div style="color: black; padding: 6px 15px; border-radius: 999px; margin: 5px 0 5px 20px; display: inline-block; white-space: pre-wrap; font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">'
+            f'<div style="color: {textColor}; padding: 6px 15px; border-radius: 999px; margin: 5px 0 5px 20px; display: inline-block; white-space: pre-wrap; font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">'
             f'<b>🤖:</b> {msg_escaped}'
             f'</div>'
             f'</td><td width="20%"></td></tr></table>'
@@ -529,6 +589,17 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         cursor.movePosition(qt.QTextCursor.End)
         self.ui.textEdit.setTextCursor(cursor)
         self.ui.textEdit.ensureCursorVisible()
+
+        self._appendHistory("assistant", msg)
+
+    def _appendHistory(self, role, content):
+        """Append a turn to the conversation history sent to Agent_CLI, capped
+        to the last MAX_HISTORY_ENTRIES so the prompt doesn't grow unbounded
+        over a long chat."""
+        MAX_HISTORY_ENTRIES = 40
+        self.conversationHistory.append({"role": role, "content": content})
+        if len(self.conversationHistory) > MAX_HISTORY_ENTRIES:
+            self.conversationHistory = self.conversationHistory[-MAX_HISTORY_ENTRIES:]
 
     def normalize_folders(self,folders):
         if folders is None:
@@ -543,9 +614,15 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     def onApplyButton(self) -> None:
         import time
+        import json
         self.CliStartTime = time.time()
         self.ui.label_4.setVisible(True)
         slicer.app.processEvents()
+
+        # Snapshot history BEFORE adding this turn's user message, since
+        # Agent_CLI.py appends the current prompt itself - including it here
+        # too would duplicate the last user turn.
+        historySnapshot = list(self.conversationHistory)
 
         message = "👨:" + self._parameterNode.prompt
         self.add_user_message(message)
@@ -559,7 +636,8 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             "folders": self.droppedInputPaths,
             "prompt": self._parameterNode.prompt,
             "modeagent": self._parameterNode.modeagent,
-            "temp_folder":slicer.util.tempDirectory()
+            "temp_folder":slicer.util.tempDirectory(),
+            "history": json.dumps(historySnapshot)
         }
         CLI = slicer.modules.agent_cli
             
@@ -572,110 +650,6 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         self.ui.applyButton.enabled = False
         self.ui.textEdit_2.clear()
-
-    def showRequiredParameters(self, required_parameters):
-        """
-        required_parameters: list[dict] (ce que ton CLI renvoie)
-        """
-        layout = self.paramsFormLayout
-
-        # Clear form
-        while layout.rowCount() > 0:
-            layout.removeRow(0)
-
-        self._requiredWidgets = {}
-
-        for p in required_parameters:
-            name = p["name"]
-            ptype = p.get("type", "str")
-            desc = p.get("description", "")
-            val  = p.get("value", None)
-            miss = bool(p.get("is_missing", False))
-
-            label = qt.QLabel(f"{name} *")
-            label.setToolTip(desc)
-
-            w = self._makeWidgetForRequired(ptype)
-            self._setWidgetValue(w, ptype, val)
-
-            if miss:
-                label.setStyleSheet("color: #b00020; font-weight: 600;")
-
-            layout.addRow(label, w)
-            self._requiredWidgets[name] = (p, w)
-
-    def _makeWidgetForRequired(self, ptype: str):
-        import ctk
-        if ptype == "path":
-            w = ctk.ctkPathLineEdit()
-            w.filters = ctk.ctkPathLineEdit.Files | ctk.ctkPathLineEdit.Dirs
-            return w
-
-        if ptype == "bool":
-            return qt.QCheckBox()
-
-        if ptype == "int":
-            sb = qt.QSpinBox()
-            sb.minimum = -10**9
-            sb.maximum =  10**9
-            return sb
-
-        if ptype == "float":
-            dsb = qt.QDoubleSpinBox()
-            dsb.minimum = -1e12
-            dsb.maximum =  1e12
-            dsb.decimals = 6
-            return dsb
-
-        # list / list[float] / list[int] / str
-        return qt.QLineEdit()
-    
-    def _setWidgetValue(self, w, ptype: str, val):
-        if val is None:
-            val = ""
-
-        if ptype == "path":
-            w.setCurrentPath(str(val) if val else "")
-            return
-
-        if ptype == "bool":
-            w.checked = bool(val)
-            return
-
-        if ptype == "int":
-            try: w.value = int(val)
-            except: w.value = 0
-            return
-
-        if ptype == "float":
-            try: w.value = float(val)
-            except: w.value = 0.0
-            return
-
-        # list/str → text
-        w.text = str(val)
-
-    def _getWidgetValue(self, w, ptype: str):
-        if ptype == "path":
-            return w.currentPath
-
-        if ptype == "bool":
-            return bool(w.checked)
-
-        if ptype == "int":
-            return int(w.value)
-
-        if ptype == "float":
-            return float(w.value)
-
-        return w.text
-    
-    def collectRequiredCorrections(self):
-        corrections = {}
-        for name, (pdef, w) in self._requiredWidgets.items():
-            ptype = pdef.get("type", "str")
-            corrections[name] = self._getWidgetValue(w, ptype)
-        return corrections
 
 
     def onCliUpdated(self, caller, event):
@@ -697,9 +671,32 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             print(output_text)
 
             if self._parameterNode.modeagent == "Agent (Automated)":
-                message = json.loads(output_text)
+                try:
+                    message = json.loads(output_text)
+                except (json.JSONDecodeError, TypeError):
+                    error_text = cliNode.GetErrorText() or "no output from Agent_CLI."
+                    self.add_agent_message(
+                        f"Agent_CLI failed to run.\n\n{error_text[-1000:]}\n\n"
+                        f"{self._suggestFixFor(error_text)}"
+                    )
+                    self.ui.label_4.setVisible(False)
+                    self._checkCanApply()
+                    return
+
+                if message.get("error"):
+                    traceback_text = cliNode.GetErrorText()
+                    details = f"\n\nFull traceback (see also the Slicer Python console):\n{traceback_text[-1500:]}" if traceback_text else ""
+                    self.add_agent_message(
+                        f"The agent hit an error and couldn't process your request:\n\n{message['error']}"
+                        f"{details}\n\n"
+                        f"{self._suggestFixFor(message['error'] + ' ' + (traceback_text or ''))}"
+                    )
+                    self.ui.label_4.setVisible(False)
+                    self._checkCanApply()
+                    return
+
                 selected_tool = message.get("tool",None)
-                missing_required = message.get("missing_required",[]) 
+                missing_required = message.get("missing_required",[])
                 params = message.get("parameters",{})
                 cli_args = message.get("command",[])
 
@@ -721,19 +718,18 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                             output_text=f"\nRunning:{selected_tool}\n"
                             self.add_agent_message(output_text)
 
-                            newText = f"LLM is running {selected_tool}"
-                            self.ui.label_4.setText(newText)
-
-                            result = subprocess.run(cli_args, capture_output=True, text=True)
-
-                            stdout = result.stdout.strip()
-                            stderr = result.stderr.strip()
-                            print(stdout)
-                            print(stderr)
+                            self.runToolWithRepair(selected_tool, params, cli_args)
 
                     else:
                         missing = "\n-".join(missing_required)
-                        output_text = f"""After reflexion I would like to run {selected_tool} but for this I need these parameters:\n\n-{missing}"""
+                        known_section = ""
+                        if params:
+                            known = "\n-".join(f"{key}={value}" for key, value in params.items())
+                            known_section = f"\n\nAlready known parameters:\n-{known}"
+                        output_text = (
+                            f"After reflexion I would like to run {selected_tool} but for this I need these parameters:\n\n-{missing}"
+                            f"{known_section}\n\nPlease give me the missing value(s) above."
+                        )
                         self.add_agent_message(output_text)
                         
                 else:
@@ -750,6 +746,169 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         newText = f"LLM is thinking ({total_time}s)"
         self.ui.label_4.setText(newText)
 
+    def _suggestFixFor(self, error_text):
+        """Best-effort, keyword-based remediation hint for an Agent_CLI failure."""
+        import re
+
+        text = (error_text or "")
+        lower = text.lower()
+
+        model_match = re.search(r"model ['\"]([^'\"]+)['\"] not found", lower)
+        if model_match:
+            model_name = model_match.group(1)
+            return (
+                f"The Ollama model '{model_name}' isn't pulled on this machine yet. Run this in a "
+                f"terminal: ollama pull {model_name.split(':')[0]}\nThen try again."
+            )
+        if "modulenotfounderror" in lower or "no module named" in lower:
+            return (
+                "A required Python package is missing in Slicer's environment. "
+                "Click the 'Check' button to (re)install the dependencies, then try again."
+            )
+        if "nameerror" in lower and "'nn'" in lower:
+            return (
+                "Known regression in transformers>=4.53.0 (a missing 'import torch.nn as nn' in "
+                "transformers/integrations/accelerate.py - see huggingface/transformers#43784), not "
+                "a bug in the agent. Click 'Check' to reinstall with the pinned, working version, "
+                "or run manually in Slicer's Python console: "
+                "slicer.util.pip_install('transformers<4.53.0')"
+            )
+        if "numpy is not available" in lower:
+            return (
+                "Likely a numpy 2.x / torch ABI mismatch (numpy>=2 breaks most pip-installed torch "
+                "wheels' .numpy() calls). Click 'Check' to reinstall with numpy pinned below 2, or "
+                "run manually in Slicer's Python console: slicer.util.pip_install('numpy<2')"
+            )
+        if "ollama" in lower or "connection" in lower:
+            return (
+                "This usually means Ollama isn't installed/running - install it from "
+                "https://ollama.com, make sure 'ollama serve' is running, then try again."
+            )
+        return "Click the 'Check' button to verify dependencies, then try again."
+
+    def runToolWithRepair(self, tool_name, params, cli_args):
+        """
+        Run cli_args (the real underlying CLI tool, e.g. ALI_CBCT.py). On
+        failure, ask the LLM to propose corrected parameters from the error
+        output and retry, bounded to MAX_REPAIR_ATTEMPTS. A Yes/No
+        confirmation is required before each retry since these are real,
+        potentially expensive medical-imaging jobs.
+        """
+        import subprocess
+
+        attempt = 0
+        current_params = dict(params or {})
+        current_cli_args = list(cli_args)
+
+        while True:
+            self.ui.label_4.setText(f"LLM is running {tool_name}")
+            slicer.app.processEvents()
+
+            result = subprocess.run(current_cli_args, capture_output=True, text=True)
+            stdout = result.stdout.strip()
+            stderr = result.stderr.strip()
+            print(stdout)
+            print(stderr)
+
+            if result.returncode == 0:
+                self.add_agent_message(f"{tool_name} completed successfully.")
+                return
+
+            if attempt >= MAX_REPAIR_ATTEMPTS:
+                self.add_agent_message(
+                    f"{tool_name} failed after {attempt} repair attempt(s) and I couldn't fix it automatically.\n\nLast error:\n{stderr[-1000:]}"
+                )
+                return
+
+            self.add_agent_message(
+                f"{tool_name} failed (exit code {result.returncode}). Trying to fix the parameters from the error..."
+            )
+
+            repaired = self._proposeRepair(tool_name, current_params, current_cli_args, stderr)
+            if repaired is None:
+                self.add_agent_message(f"I couldn't propose a fix for this error.\n\nLast error:\n{stderr[-1000:]}")
+                return
+
+            new_params, new_cli_args = repaired
+            diff_lines = "\n".join(
+                f"-{k}: {current_params.get(k)!r} -> {v!r}"
+                for k, v in new_params.items()
+                if current_params.get(k) != v
+            )
+            if not diff_lines:
+                self.add_agent_message(f"I couldn't find a different set of parameters to try.\n\nLast error:\n{stderr[-1000:]}")
+                return
+
+            reply = qt.QMessageBox.question(
+                None,
+                f"Retry {tool_name}?",
+                f"{tool_name} failed. Here is the fix I propose:\n\n{diff_lines}\n\nRetry with these corrected parameters?",
+                qt.QMessageBox.Yes | qt.QMessageBox.No
+            )
+            if reply != qt.QMessageBox.Yes:
+                self.add_agent_message("Okay, not retrying.")
+                return
+
+            current_params, current_cli_args = new_params, new_cli_args
+            attempt += 1
+
+    def _proposeRepair(self, tool_name, params, cli_args, stderr):
+        """
+        Ask the LLM to correct `params` given the failing `cli_args`/`stderr`.
+        Returns (new_params, new_cli_args), or None if no usable correction
+        could be produced. Reuses Agent_CLI_utils (no duplicated extraction
+        logic) by adding Agent_CLI's own directory to sys.path.
+        """
+        import sys
+        import json
+
+        agent_cli_dir = os.path.dirname(slicer.modules.agent_cli.path)
+        if agent_cli_dir not in sys.path:
+            sys.path.insert(0, agent_cli_dir)
+
+        from Agent_CLI_utils.utils import (
+            load_manifest, build_repair_prompt, build_cli_args, complete_with_defaults, get_tool_def, chat_with_auto_pull
+        )
+        from Agent_CLI_utils.parameter_validator import ParameterValidator
+
+        manifest_path = os.path.join(agent_cli_dir, "manifest.yaml")
+        if not os.path.isfile(manifest_path):
+            manifest_path = os.path.join(agent_cli_dir, "Resources", "manifest.yaml")
+
+        try:
+            manifest = load_manifest(manifest_path)
+            tool_spec = get_tool_def(manifest, tool_name)
+            if not tool_spec:
+                return None
+
+            prompt = build_repair_prompt(tool_name, tool_spec, params, cli_args, stderr)
+            model = os.environ.get("ROUTER_MODEL", "qwen3:8b")
+
+            response = chat_with_auto_pull(
+                model,
+                messages=[
+                    {"role": "system", "content": "You are a parameter-repair expert. Output ONLY valid JSON on one line."},
+                    {"role": "user", "content": prompt}
+                ],
+                format="json"
+            )
+            data = json.loads(response["message"]["content"])
+            corrections = data.get("extracted", {})
+            if not corrections:
+                return None
+
+            merged = dict(params)
+            merged.update(corrections)
+
+            validator = ParameterValidator(manifest_path)
+            validation_result = validator.validate(tool_name, merged)
+            new_params = complete_with_defaults(manifest, tool_name, validation_result["params"])
+            new_cli_args = build_cli_args(tool_name, new_params, manifest, agent_cli_dir)
+            return new_params, new_cli_args
+        except Exception as e:
+            print(f"Repair attempt failed: {e}")
+            return None
+
     def OnSaveButton(self):
         import time
         from pathlib import Path
@@ -765,6 +924,7 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     def OnClearButton(self):
         self.ui.textEdit.clear()
+        self.conversationHistory = []
         self._checkCanApply()
 
     def onReturnPressed(self):
@@ -801,28 +961,71 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     def CheckDependencies(self):
         import subprocess
+        import shutil
 
+        # Agent_CLI.py runs as a separate "python-real" CLI process, but it
+        # shares Slicer's site-packages, so pip-installing here is what makes
+        # these importable there too.
         slicer.util.pip_install("ollama")
-        list_model = ["gemma","gemma2"]
+        slicer.util.pip_install("pyyaml")
+        # sentence-transformers pulls in torch - this one's a heavier,
+        # slower install than the others, used for the cross-encoder tool
+        # retrieval (cross_encoder_retrieve_candidates in utils.py).
+        # transformers>=4.53.0 has a known regression that breaks this import
+        # with "NameError: name 'nn' is not defined"
+        # (huggingface/transformers#43784). Pin it first so the second
+        # install doesn't pull in the broken version as a dependency.
+        slicer.util.pip_install("transformers<4.53.0")
+        # numpy>=2 breaks the ABI most pip-installed torch wheels were built
+        # against, causing "RuntimeError: Numpy is not available" the first
+        # time a tensor is converted via .numpy(). Pin below 2 before torch
+        # gets pulled in as a sentence-transformers dependency.
+        slicer.util.pip_install("numpy<2")
+        slicer.util.pip_install("sentence-transformers")
+
+        # pip_install("ollama") only installs the Python client library - the
+        # actual Ollama application/server (the "ollama" binary used below)
+        # has to be installed separately and isn't something pip can provide.
+        if shutil.which("ollama") is None:
+            qt.QMessageBox.warning(
+                None,
+                "Ollama is not installed",
+                "The Ollama Python package was installed, but the Ollama application itself "
+                "(the 'ollama' command) was not found on this machine.\n\n"
+                "Install it from https://ollama.com, make sure it's running (it should start "
+                "automatically, or run 'ollama serve' in a terminal), then click Check again."
+            )
+            return
+
+        list_model = ["qwen3:8b"]
+        installed = True
 
         for model in list_model:
             try:
-                subprocess.run(
+                result = subprocess.run(
                     ['ollama', 'pull',model],
                     capture_output=True,
                     text=True
                 )
-                print(f"Model {model} has successfully been installed")
-                installed = True
+                if result.returncode == 0:
+                    print(f"Model {model} has successfully been installed")
+                else:
+                    print(f"Error pulling model {model}: {result.stderr.strip()}")
+                    installed = False
             except Exception as e:
                 print(f"Error getting models: {e}")
                 installed = False
-        
+
         if installed:
             qt.QMessageBox.information(None,"Dependencies checked and installed","All the dependencies have been checked and installed, now you can start to talk with your personal agent.")
 
         else:
-            qt.QMessageBox.warning(None,"Dependencies installation issues","There has been an issue during the installation of the models, try again.")
+            qt.QMessageBox.warning(
+                None,
+                "Dependencies installation issues",
+                "Ollama is installed but pulling the models failed. Make sure Ollama is running "
+                "('ollama serve') and that you have network access, then try again."
+            )
 
 
     def clearDropzone(self):

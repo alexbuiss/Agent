@@ -1,0 +1,11 @@
+category,total_tests,avg_tool_selection_accuracy,avg_parameter_accuracy,avg_combined_accuracy,combined_perfect,parameter_extraction_perfect
+short,23,1.0,0.937,0.937,18,18
+long,23,1.0,0.961,0.961,17,17
+normal vocab,46,1.0,0.965,0.965,41,41
+beginners,46,1.0,0.864,0.864,24,24
+expert vocab,23,1.0,0.889,0.889,13,13
+missingparam,23,1.0,0.612,0.612,0,0
+french,23,1.0,0.858,0.858,12,12
+spanish,23,1.0,0.858,0.858,12,12
+portuguese,23,1.0,0.858,0.858,12,12
+OVERALL,253,1.0,0.875,0.875,149,149

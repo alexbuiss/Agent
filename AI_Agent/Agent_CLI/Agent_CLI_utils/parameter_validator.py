@@ -132,8 +132,16 @@ class ParameterValidator:
             try:
                 # Tentative de conversion
                 if ptype == "bool":
-                    corrected[name] = self._convert_bool(value)
-                
+                    converted = self._convert_bool(value)
+                    encode = param.get("encode", "")
+                    if encode == "lower_str_bool":
+                        # Some CLI scripts compare the raw arg to "true"/"false"
+                        # case-sensitively (no .lower() on their side), so
+                        # Python's str(bool) ("True"/"False") would never match.
+                        corrected[name] = "true" if converted else "false"
+                    else:
+                        corrected[name] = converted
+
                 elif ptype == "int":
                     corrected[name] = self._convert_int(value)
                 

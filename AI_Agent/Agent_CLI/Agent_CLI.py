@@ -1,87 +1,18 @@
 #!/usr/bin/env python-real
 
 import re
-from difflib import SequenceMatcher
 import json
 import subprocess
 import os
 import argparse
 import logging
 import ollama
-from Agent_CLI_utils.utils import (load_manifest,build_tool_spec,extract_parameters,build_cli_args)
+from Agent_CLI_utils.utils import (load_manifest,build_tool_spec,extract_parameters,build_cli_args,get_tool_def,complete_with_defaults,chat_with_auto_pull,cross_encoder_retrieve_candidates)
 from Agent_CLI_utils.parameter_extraction_improved import ImprovedParameterExtractor
 from Agent_CLI_utils.parameter_validator import ParameterValidator,ValidationReport
 
 
 logger = logging.getLogger(__name__)
-
-def get_tool_def(manifest, tool_name: str):
-    for tool in manifest.get("scripts", []):
-        if tool.get("name") == tool_name:
-            return tool
-    return None
-
-def complete_with_defaults(manifest, tool_name: str,params:dict):
-    tool = get_tool_def(manifest, tool_name)
-    if not tool:
-        return []
-    defaults = {p.get("name",""):p.get("default","") for p in tool.get("parameters", []) if not p.get("required", False) and "default" in p}
-    for name,default in defaults.items():
-        if name not in params:
-            params[name]= default
-    
-    return params
-
-def _tokenize(text: str):
-    if not text:
-        return []
-    return re.findall(r"[a-z0-9_]+", text.lower())
-
-def _sim(a: str, b: str) -> float:
-    if not a or not b:
-        return 0.0
-    return SequenceMatcher(None, a.lower(), b.lower()).ratio()
-
-def retrieve_candidates(manifest: dict, user_text: str, k: int = 5):
-    """
-    Retourne top-k scripts candidats (dicts du manifest) via scoring local.
-    """
-    scripts = manifest.get("scripts", [])
-    t = user_text.lower()
-    toks = set(_tokenize(user_text))
-
-    scored = []
-    for s in scripts:
-        name = s.get("name", "")
-        desc = s.get("description", "")
-        tags = [str(x).lower() for x in (s.get("tags") or [])]
-
-        score = 0.0
-
-        # Match nom direct
-        if name and name.lower() in t:
-            score += 10.0
-
-        # Tags
-        for tag in tags:
-            if tag in toks:
-                score += 3.0
-            elif tag in t:  # match substring
-                score += 1.5
-
-        # Desc tokens (léger)
-        desc_toks = set(_tokenize(desc))
-        score += 0.25 * len(desc_toks.intersection(toks))
-
-        # Similarité “fuzzy” entre requête et nom/desc (petit bonus)
-        score += 2.0 * _sim(user_text, name)
-        score += 1.0 * _sim(user_text, desc[:120])
-
-        scored.append((score, s))
-
-    scored.sort(key=lambda x: x[0], reverse=True)
-    top = [s for _, s in scored[:k]]
-    return top
 
 def build_candidates_block(candidates):
     """
@@ -120,11 +51,48 @@ def build_candidates_block_ask(candidates):
 def main(input):
     module_dir = os.path.dirname(__file__)
 
-    manifest_path = os.path.join(module_dir,"manifest.yaml")
+    try:
+        _run(input, module_dir)
+    except Exception as e:
+        # Print the full traceback to stderr (visible in Slicer's CLI module
+        # log / Python console) so the actual failure point is debuggable,
+        # while stdout always stays valid, parseable JSON - Agent_UI.py
+        # relies on json.loads(output) and would otherwise crash on an
+        # empty/non-JSON stdout.
+        import traceback
+        traceback.print_exc()
+        output = {
+            "tool": None,
+            "tool_confidence": None,
+            "parameters_confidence": None,
+            "parameters": None,
+            "missing_required": None,
+            "command": None,
+            "error": f"{type(e).__name__}: {e}",
+        }
+        print(json.dumps(output))
+
+
+def _run(input, module_dir):
+    # Packaged Slicer installs may stage RESOURCES under a Resources/
+    # subfolder instead of next to the script, so check both.
+    manifest_path = os.path.join(module_dir, "manifest.yaml")
+    if not os.path.isfile(manifest_path):
+        manifest_path = os.path.join(module_dir, "Resources", "manifest.yaml")
     manifest = load_manifest(manifest_path)
     tools = build_tool_spec(manifest)
     improved_extractor = ImprovedParameterExtractor(manifest_path)
     parameter_validator = ParameterValidator(manifest_path)
+
+    # Earlier turns of this conversation (list of {"role","content"}), so the
+    # model isn't limited to the latest message - lets e.g. a follow-up that
+    # only supplies a previously-missing parameter still make sense.
+    try:
+        history = json.loads(getattr(input, "history", "") or "[]")
+        if not isinstance(history, list):
+            history = []
+    except (json.JSONDecodeError, TypeError):
+        history = []
 
     if input.modeagent == "Agent (Automated)":
 
@@ -140,9 +108,9 @@ def main(input):
         - If multiple candidates exist, pick the most specific match and explain briefly in 'reason'.
         """.strip()
 
-        modele = os.environ.get("ROUTER_MODEL", "gemma2:latest")
+        modele = os.environ.get("ROUTER_MODEL", "qwen3:8b")
 
-        candidates = retrieve_candidates(manifest, input.prompt, k=3)
+        candidates = cross_encoder_retrieve_candidates(manifest, input.prompt, k=3)
         candidates_block = build_candidates_block(candidates)
 
         router_system = """
@@ -166,10 +134,11 @@ CANDIDATES (choose exactly one name from this list):
 """.strip()
 
         try:
-            response = ollama.chat(
-                model=modele,
+            response = chat_with_auto_pull(
+                modele,
                 messages=[
                     {"role": "system", "content": router_system},
+                    *history,
                     {"role": "user", "content": router_user}
                 ],
                 format="json"
@@ -184,15 +153,16 @@ CANDIDATES (choose exactly one name from this list):
         if selected_tool and selected_tool!="null" and selected_tool!="None":
             new_prompt = f"""{input.prompt}\n\n{folders_context}"""
 
-            params, param_conf, missing_required,removed = extract_parameters(manifest, selected_tool, new_prompt,improved_extractor,parameter_validator,modele)
+            params, param_conf, missing_required,removed = extract_parameters(manifest, selected_tool, new_prompt,improved_extractor,parameter_validator,modele,history)
 
             params = complete_with_defaults(manifest,selected_tool,params)
 
-            if removed:
-                params[removed[0]] = input.temp_folder
-                missing_required.remove(removed[0])
+            for removed_name in removed:
+                params[removed_name] = input.temp_folder
+                if removed_name in missing_required:
+                    missing_required.remove(removed_name)
 
-            cli_args = build_cli_args(selected_tool, params, manifest)
+            cli_args = build_cli_args(selected_tool, params, manifest, module_dir)
             
             output = {
                 "tool": selected_tool,
@@ -217,9 +187,9 @@ CANDIDATES (choose exactly one name from this list):
             print(json.dumps(output))
 
     else:
-        candidates = retrieve_candidates(manifest, input.prompt, k=3)
+        candidates = cross_encoder_retrieve_candidates(manifest, input.prompt, k=3)
         candidates_block = build_candidates_block_ask(candidates)
-        modele = os.environ.get("ROUTER_MODEL", "gemma:latest")
+        modele = os.environ.get("ROUTER_MODEL", "qwen3:8b")
 
         system_prompt = f"""You are an expert medical image analysis consultant specializing in dental and orthodontic imaging.
 
@@ -238,10 +208,11 @@ When answering questions:
 Keep your response focused and practical."""
         
         try:
-            response = ollama.chat(
-                model=modele,
+            response = chat_with_auto_pull(
+                modele,
                 messages=[
                     {"role": "system", "content": system_prompt},
+                    *history,
                     {"role": "user", "content": input.prompt}
                 ]
             )
@@ -261,6 +232,7 @@ if __name__ == "__main__":
     parser.add_argument('folders',type=str)
     parser.add_argument('modeagent',type=str)
     parser.add_argument('temp_folder',type=str)
+    parser.add_argument('history',type=str, nargs='?', default='[]')
 
     try:
         args = parser.parse_args()

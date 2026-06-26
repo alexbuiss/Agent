@@ -39,5 +39,13 @@
       <description><![CDATA[Agent (Automated) or Consultant]]></description>
     </string>
 
+    <string>
+      <name>history</name>
+      <label>History</label>
+      <index>4</index>
+      <description><![CDATA[JSON-encoded list of {"role","content"} messages from earlier turns in this conversation, so the model isn't limited to the latest message.]]></description>
+      <default>[]</default>
+    </string>
+
   </parameters>
 </executable>
