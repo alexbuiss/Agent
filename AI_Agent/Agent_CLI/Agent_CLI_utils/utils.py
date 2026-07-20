@@ -1,20 +1,40 @@
+from __future__ import annotations
+
 import json
-import subprocess
 import os
-import time
 import sys
-from datetime import datetime
-from pathlib import Path
-from typing import Dict, Any, Tuple, List, Optional
-from Agent_CLI_utils.parameter_extraction_improved import ImprovedParameterExtractor
-from Agent_CLI_utils.parameter_validator import ParameterValidator,ValidationReport
+from typing import Dict, Any, Tuple, List, Optional, TYPE_CHECKING
 import yaml
+
+# These imports are only needed for type hints. Importing them at runtime would
+# create a circular import (parameter_extraction_improved / parameter_validator
+# both import load_manifest from this module), so we guard them behind
+# TYPE_CHECKING and rely on "from __future__ import annotations" to keep the
+# annotations as plain strings at runtime.
+if TYPE_CHECKING:
+    from Agent_CLI_utils.parameter_extraction_improved import ImprovedParameterExtractor
+    from Agent_CLI_utils.parameter_validator import ParameterValidator
+
+# Single source of truth for the Ollama model used by the agent. Can be
+# overridden with the ROUTER_MODEL environment variable, otherwise every call
+# site (router, parameter extraction, repair loop) uses qwen3:8b.
+DEFAULT_MODEL = "qwen3:8b"
+
+
+def get_router_model() -> str:
+    """Return the Ollama model name, honouring the ROUTER_MODEL override."""
+    return os.environ.get("ROUTER_MODEL", DEFAULT_MODEL)
 
 
 def load_manifest(manifest_path):
-    """Load the manifest with all tool descriptions."""
-    with open(manifest_path, "r", encoding="utf-8") as f:
+    """Load the manifest (YAML) holding all the tool descriptions."""
+    try:
+        with open(manifest_path, "r", encoding="utf-8") as f:
             return yaml.safe_load(f)
+    except Exception as e:
+        # Re-raise with a clearer, path-aware message so a missing or malformed
+        # manifest is easy to diagnose from the CLI log.
+        raise RuntimeError(f"Failed to load manifest '{manifest_path}': {e}")
 
 _cross_encoder_model = None
 
@@ -28,8 +48,18 @@ def _get_cross_encoder():
     """
     global _cross_encoder_model
     if _cross_encoder_model is None:
-        from sentence_transformers import CrossEncoder
-        _cross_encoder_model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+        try:
+            from sentence_transformers import CrossEncoder
+            _cross_encoder_model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+        except Exception as e:
+            # sentence-transformers (and its torch/transformers deps) may be
+            # missing or broken; surface a clear, actionable error instead of a
+            # raw ImportError deep in the retrieval path.
+            raise RuntimeError(
+                f"Could not load the cross-encoder model: {e}. "
+                "Click the 'Check' button in the Agent_UI module to (re)install "
+                "the dependencies."
+            )
     return _cross_encoder_model
 
 def cross_encoder_retrieve_candidates(manifest: Dict, user_text: str, k: int = 3) -> List[Dict]:
@@ -46,16 +76,22 @@ def cross_encoder_retrieve_candidates(manifest: Dict, user_text: str, k: int = 3
     if not scripts:
         return []
 
-    docs = []
-    for s in scripts:
-        tags = ", ".join(str(t) for t in (s.get("tags") or []))
-        docs.append(f"{s.get('name', '')}: {s.get('description', '')} (tags: {tags})")
+    try:
+        docs = []
+        for s in scripts:
+            tags = ", ".join(str(t) for t in (s.get("tags") or []))
+            docs.append(f"{s.get('name', '')}: {s.get('description', '')} (tags: {tags})")
 
-    model = _get_cross_encoder()
-    scores = model.predict([(user_text, doc) for doc in docs])
+        model = _get_cross_encoder()
+        scores = model.predict([(user_text, doc) for doc in docs])
 
-    ranked = sorted(zip(scores, scripts), key=lambda x: x[0], reverse=True)
-    return [s for _, s in ranked[:k]]
+        ranked = sorted(zip(scores, scripts), key=lambda x: x[0], reverse=True)
+        return [s for _, s in ranked[:k]]
+    except Exception as e:
+        # If reranking fails for any reason, fall back to the first k tools so
+        # the router still has candidates to choose from rather than crashing.
+        print(f"Cross-encoder retrieval failed, falling back to first {k} tools: {e}")
+        return scripts[:k]
 
 def chat_with_auto_pull(model: str, messages: List[Dict[str, str]], **kwargs):
     """
@@ -186,15 +222,17 @@ def extract_parameters(manifest: Dict, tool_name: str, user_text: str,improved_e
 
     tool_spec_clear = tool_spec.copy()
 
+    # Hide temp/log parameters from the model so it doesn't try to fill them;
+    # they are injected afterwards from the caller-provided temp folder.
     params = tool_spec.get("parameters", [])
     tool_spec_clear["parameters"] = [p for p in params if p.get("name") not in name_temp]
 
-    removed = [p["name"] for p in tool_spec.get("parameters", [])if p.get("name") in name_temp]
-    
+    removed = [p["name"] for p in tool_spec.get("parameters", []) if p.get("name") in name_temp]
+
     try:
-        # Créer le prompt avec few-shot examples
-        prompt = improved_extractor.build_prompt(tool_name, user_text,tool_spec_clear)
-        router_system ="You are a parameter extraction expert. Output ONLY valid JSON on one line."
+        # Build the extraction prompt (with few-shot style instructions).
+        prompt = improved_extractor.build_prompt(tool_name, user_text, tool_spec_clear)
+        router_system = "You are a parameter extraction expert. Output ONLY valid JSON on one line."
 
         try:
             response = chat_with_auto_pull(
@@ -213,20 +251,27 @@ def extract_parameters(manifest: Dict, tool_name: str, user_text: str,improved_e
         extracted_raw = data.get("extracted", {})
         confidence = float(data.get("confidence", 0.0))
 
-        # Validation (already converts types via _check_types, no need to
-        # also run improved_extractor.convert_types beforehand)
+        # Validation (already converts types via _check_types, so there is no
+        # need to also run improved_extractor.convert_types beforehand).
         validation_result = parameter_validator.validate(tool_name, extracted_raw)
 
-        # Retourner les paramètres validés
+        # Return the validated parameters.
         final_params = validation_result["params"]
         final_confidence = confidence if validation_result["valid"] else confidence * 0.6
         missing_required = validation_result["missing_required"]
-        
-        return final_params, final_confidence, missing_required,removed
-    
+
+        return final_params, final_confidence, missing_required, removed
+
     except Exception as e:
-        print(f"IMPROVED extraction failed, falling back to simple: {e}")
-        # Fall back to simple extraction
+        # Never let extraction crash the whole request: return empty params so
+        # the caller reports "missing parameters" instead of failing hard. The
+        # required parameters become the missing list.
+        print(f"Parameter extraction failed: {e}")
+        required = [
+            p.get("name") for p in tool_spec.get("parameters", [])
+            if p.get("required", False) and p.get("name") not in name_temp
+        ]
+        return {}, 0.0, required, removed
 
 def build_repair_prompt(tool_name: str, tool_spec: Dict, params: Dict[str, Any], cli_args: List[str], stderr: str) -> str:
     """
@@ -297,9 +342,11 @@ def _format_cli_value(value, param_def: Optional[Dict]) -> str:
 
 
 def build_cli_args(tool_name: str, params: Dict[str, Any], manifest: Dict, manifest_dir: str = None) -> List[str]:
-    """Construit les arguments CLI."""
+    """Build the command-line argument list for the underlying tool script."""
 
     scripts = {s["name"]: s for s in manifest.get("scripts", [])}
+    if tool_name not in scripts:
+        raise KeyError(f"Tool '{tool_name}' not found in manifest")
     spec = scripts[tool_name]
 
     tool_path = spec["path"]
@@ -309,7 +356,7 @@ def build_cli_args(tool_name: str, params: Dict[str, Any], manifest: Dict, manif
     param_list = spec.get("parameters", [])
     param_by_name = {p.get("name", ""): p for p in param_list}
 
-    # Fusionner avec les défauts
+    # Merge extracted params with the manifest defaults.
     defaults = {
         p["name"]: p["default"]
         for p in param_list
@@ -320,7 +367,7 @@ def build_cli_args(tool_name: str, params: Dict[str, Any], manifest: Dict, manif
     cli_style = spec.get("cli_style", "positional")
 
     if cli_style == "positional":
-        # Arguments positionnels
+        # Positional arguments
         positional_order = spec.get("positional_order", [])
 
         cli = []
@@ -336,7 +383,7 @@ def build_cli_args(tool_name: str, params: Dict[str, Any], manifest: Dict, manif
 
         return [sys.executable, tool_path] + cli
     else:
-        # Arguments nommés (--flag style)
+        # Named arguments (--flag style)
         param2flag = {}
         for p in param_list:
             param_name = p.get("name", "")

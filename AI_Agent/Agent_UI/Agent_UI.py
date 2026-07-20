@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Annotated
 import qt
 import vtk
 import slicer
@@ -8,18 +7,19 @@ from slicer.i18n import tr as _
 from slicer.i18n import translate
 from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin
-from slicer.parameterNodeWrapper import (
-    parameterNodeWrapper,
-    WithinRange)
-
-from slicer import vtkMRMLScalarVolumeNode
+from slicer.parameterNodeWrapper import parameterNodeWrapper
 
 # Max number of automatic "fix the parameters from the error and retry"
 # attempts after a real tool execution fails (see Agent_UIWidget.runToolWithRepair).
 MAX_REPAIR_ATTEMPTS = 2
 
+# Ollama model used by the agent. Kept in sync with Agent_CLI (qwen3:8b); the
+# CheckDependencies button pulls this model.
+MODEL_NAME = "qwen3:8b"
+
+
 class DropZone(qt.QFrame):
-    """Zone drag&drop multi-fichiers/dossiers. Émet une liste de paths locaux."""
+    """Drag & drop area for multiple files/folders. Emits a list of local paths."""
     dropped = qt.Signal(list)
 
     def __init__(self, parent=None, title="Drop files or folders here",objectName = "dropZone"):
@@ -100,67 +100,18 @@ class Agent_UI(ScriptedLoadableModule):
         self.parent.title = _("Agent_UI")
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "AGENT")]
         self.parent.dependencies = []
-        self.parent.contributors = ["John Doe (AnyWare Corp.)"]
+        self.parent.contributors = ["Alexandre Buisson (University of North Carolina)"]
         self.parent.helpText = _("""
-This is an example of scripted loadable module bundled in an extension.
-See more information in <a href="https://github.com/organization/projectname#Agent_UI">module documentation</a>.
+Agent_UI is the graphical front-end of the AI Agent extension. Describe what you
+want to do with your dental/orthodontic imaging data in natural language and the
+agent (powered locally by the qwen3:8b model through Ollama) selects the right
+tool, extracts its parameters and runs it. Use the 'Check' button once to install
+the required dependencies and pull the model.
 """)
         self.parent.acknowledgementText = _("""
-This file was originally developed by Jean-Christophe Fillion-Robin, Kitware Inc., Andras Lasso, PerkLab,
-and Steve Pieper, Isomics, Inc. and was partially funded by NIH grant 3P41RR013218-12S1.
+This module was developed at the University of North Carolina as part of the
+AI Agent extension for 3D Slicer.
 """)
-
-        slicer.app.connect("startupCompleted()", registerSampleData)
-
-
-#
-# Register sample data sets in Sample Data module
-#
-
-
-def registerSampleData():
-    """Add data sets to Sample Data module."""
-    # It is always recommended to provide sample data for users to make it easy to try the module,
-    # but if no sample data is available then this method (and associated startupCompeted signal connection) can be removed.
-
-    import SampleData
-
-    iconsPath = os.path.join(os.path.dirname(__file__), "Resources/Icons")
-
-    # To ensure that the source code repository remains small (can be downloaded and installed quickly)
-    # it is recommended to store data sets that are larger than a few MB in a Github release.
-
-    # Agent_UI1
-    SampleData.SampleDataLogic.registerCustomSampleDataSource(
-        # Category and sample name displayed in Sample Data module
-        category="Agent_UI",
-        sampleName="Agent_UI1",
-        # Thumbnail should have size of approximately 260x280 pixels and stored in Resources/Icons folder.
-        # It can be created by Screen Capture module, "Capture all views" option enabled, "Number of images" set to "Single".
-        thumbnailFileName=os.path.join(iconsPath, "Agent_UI1.png"),
-        # Download URL and target file name
-        uris="https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/998cb522173839c78657f4bc0ea907cea09fd04e44601f17c82ea27927937b95",
-        fileNames="Agent_UI1.nrrd",
-        # Checksum to ensure file integrity. Can be computed by this command:
-        #  import hashlib; print(hashlib.sha256(open(filename, "rb").read()).hexdigest())
-        checksums="SHA256:998cb522173839c78657f4bc0ea907cea09fd04e44601f17c82ea27927937b95",
-        # This node name will be used when the data set is loaded
-        nodeNames="Agent_UI1",
-    )
-
-    # Agent_UI2
-    SampleData.SampleDataLogic.registerCustomSampleDataSource(
-        # Category and sample name displayed in Sample Data module
-        category="Agent_UI",
-        sampleName="Agent_UI2",
-        thumbnailFileName=os.path.join(iconsPath, "Agent_UI2.png"),
-        # Download URL and target file name
-        uris="https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/1a64f3f422eb3d1c9b093d1a18da354b13bcf307907c66317e2463ee530b7a97",
-        fileNames="Agent_UI2.nrrd",
-        checksums="SHA256:1a64f3f422eb3d1c9b093d1a18da354b13bcf307907c66317e2463ee530b7a97",
-        # This node name will be used when the data set is loaded
-        nodeNames="Agent_UI2",
-    )
 
 
 #
@@ -171,13 +122,11 @@ def registerSampleData():
 @parameterNodeWrapper
 class Agent_UIParameterNode:
     """
-    The parameters needed by module.
+    Parameters needed by the module.
 
-    inputVolume - The volume to threshold.
-    imageThreshold - The value at which to threshold the input volume.
-    invertThreshold - If true, will invert the threshold.
-    thresholdedVolume - The output volume that will contain the thresholded volume.
-    invertedVolume - The output volume that will contain the inverted thresholded volume.
+    prompt - The natural-language request typed by the user.
+    folders - The list of input files/folders dropped in the drop zone.
+    modeagent - The interaction mode ("Agent (Automated)" or consultant).
     """
 
     prompt: str
@@ -249,34 +198,34 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
         self.dropZoneButton.setStyleSheet("""
         QPushButton {
-            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                                            stop:0 #e74c3c, /* Rouge vif */
-                                            stop:1 #c0392b); /* Rouge légèrement plus foncé */
+            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                            stop:0 #e74c3c, /* bright red */
+                                            stop:1 #c0392b); /* slightly darker red */
             color: white;
             border: none;
             border-radius: 6px;
             font-weight: 600;
             font-size: 10pt;
-            padding: 8px; 
-            margin-top: 4px; /* Déplacer cette déclaration ici */
+            padding: 8px;
+            margin-top: 4px;
         }
 
         QPushButton:hover:!pressed {
-            /* Rouge plus clair au survol */
-            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                                            stop:0 #e9685a, /* Rouge vif légèrement éclairci */
+            /* lighter red on hover */
+            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                            stop:0 #e9685a,
                                             stop:1 #d64d3c);
         }
 
         QPushButton:pressed {
-            /* Rouge foncé au clic (effet d'enfoncement) */
-            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, 
-                                            stop:0 #a93226, /* Rouge très foncé */
+            /* darker red on click (pressed effect) */
+            background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                            stop:0 #a93226,
                                             stop:1 #8e241b);
         }
 
         QPushButton:disabled {
-            /* État désactivé (gris) */
+            /* disabled state (grey) */
             background-color: #bdc3c7;
             color: #95a5a6;
         }
@@ -503,7 +452,7 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             self.ui.SaveButton.enabled = False
 
     def to_html(self, text):
-        """Échappe le texte pour le HTML tout en préservant la mise en forme."""
+        """Escape text for HTML while preserving basic formatting (newlines, spaces)."""
         text = text.replace("&", "&amp;")
         text = text.replace("<", "&lt;")
         text = text.replace(">", "&gt;")
@@ -556,39 +505,49 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             f"{baseStyle}\nQTextEdit {{ color: {placeholderColor}; }}"
         )
 
-    def add_user_message(self, msg):
-        msg_escaped = self.to_html(msg)
-        accent = "#5dade2" if self._isDarkBackground(self.ui.textEdit) else "#3498db"
-        self.ui.textEdit.insertHtml(
-            f'<table width="100%"><tr><td width="20%"></td><td width="80%" align="right">'
-            f'<div style="color: {accent}; padding: 6px 15px; border-radius: 999px; margin: 5px 20px 5px 0; display: inline-block; white-space: pre-wrap; font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">'
-            f'{msg_escaped}'
-            f'</div>'
-            f'</td></tr></table>'
-        )
+    def _scrollChatToEnd(self):
+        """Move the cursor to the end of the chat view and keep it visible."""
         cursor = self.ui.textEdit.textCursor()
         cursor.movePosition(qt.QTextCursor.End)
         self.ui.textEdit.setTextCursor(cursor)
         self.ui.textEdit.ensureCursorVisible()
+
+    def _insertChatBubble(self, inner_html, color, align):
+        """
+        Insert a single chat bubble into the chat view. `align` is "right" for
+        user messages and "left" for agent messages; the margins mirror
+        accordingly. Shared by add_user_message and add_agent_message so the
+        bubble markup lives in a single place.
+        """
+        margin = "5px 20px 5px 0" if align == "right" else "5px 0 5px 20px"
+        bubble = (
+            f'<div style="color: {color}; padding: 6px 15px; border-radius: 999px; '
+            f'margin: {margin}; display: inline-block; white-space: pre-wrap; '
+            f'font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">{inner_html}</div>'
+        )
+        if align == "right":
+            row = (
+                f'<table width="100%"><tr><td width="20%"></td>'
+                f'<td width="80%" align="right">{bubble}</td></tr></table>'
+            )
+        else:
+            row = (
+                f'<table width="100%"><tr><td width="80%" align="left">{bubble}</td>'
+                f'<td width="20%"></td></tr></table>'
+            )
+        self.ui.textEdit.insertHtml(row)
+        self._scrollChatToEnd()
+
+    def add_user_message(self, msg):
+        accent = "#5dade2" if self._isDarkBackground(self.ui.textEdit) else "#3498db"
+        self._insertChatBubble(self.to_html(msg), accent, "right")
 
         content = msg[2:] if msg.startswith("👨:") else msg
         self._appendHistory("user", content)
 
     def add_agent_message(self, msg):
-        msg_escaped = self.to_html(msg)
         textColor = "#ecf0f1" if self._isDarkBackground(self.ui.textEdit) else "#1c2833"
-        self.ui.textEdit.insertHtml(
-            f'<table width="100%"><tr><td width="80%" align="left">'
-            f'<div style="color: {textColor}; padding: 6px 15px; border-radius: 999px; margin: 5px 0 5px 20px; display: inline-block; white-space: pre-wrap; font-family: Segoe UI, Arial, sans-serif; font-size: 11pt;">'
-            f'<b>🤖:</b> {msg_escaped}'
-            f'</div>'
-            f'</td><td width="20%"></td></tr></table>'
-        )
-
-        cursor = self.ui.textEdit.textCursor()
-        cursor.movePosition(qt.QTextCursor.End)
-        self.ui.textEdit.setTextCursor(cursor)
-        self.ui.textEdit.ensureCursorVisible()
+        self._insertChatBubble(f'<b>🤖:</b> {self.to_html(msg)}', textColor, "left")
 
         self._appendHistory("assistant", msg)
 
@@ -702,7 +661,7 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
                 if selected_tool:
                     if missing_required == []:
-                        output_text = f"""After reflexion I would like to run {selected_tool}. Click on the Yes button to launch the module if the parameters are good for you"""
+                        output_text = f"""After reflection, I would like to run {selected_tool}. Click the Yes button to launch the module if the parameters look good to you."""
                         self.add_agent_message(output_text)
 
                         parameters = "\n-".join(f"{key}={value}" for key, value in params.items())
@@ -710,7 +669,7 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                         reply = qt.QMessageBox.question(
                             None,
                             f"Run {selected_tool}",
-                            f"The agent want to run {selected_tool} with this parameter:\n\n-{parameters}\n\n If it seems good for you, click on the Yes button, else on the No button",
+                            f"The agent wants to run {selected_tool} with these parameters:\n\n-{parameters}\n\nIf it looks good to you, click the Yes button, otherwise click No.",
                             qt.QMessageBox.Yes | qt.QMessageBox.No
                         )
 
@@ -727,13 +686,13 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                             known = "\n-".join(f"{key}={value}" for key, value in params.items())
                             known_section = f"\n\nAlready known parameters:\n-{known}"
                         output_text = (
-                            f"After reflexion I would like to run {selected_tool} but for this I need these parameters:\n\n-{missing}"
+                            f"After reflection, I would like to run {selected_tool}, but for this I need these parameters:\n\n-{missing}"
                             f"{known_section}\n\nPlease give me the missing value(s) above."
                         )
                         self.add_agent_message(output_text)
                         
                 else:
-                    output_text = f"""After reflexion I wasn't able to choose a module to run. Try to explain me your need in a other way."""
+                    output_text = f"""After reflection, I wasn't able to choose a module to run. Try to explain your need in another way."""
                     self.add_agent_message(output_text)
             else:
                 self.add_agent_message(output_text)
@@ -804,7 +763,13 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             self.ui.label_4.setText(f"LLM is running {tool_name}")
             slicer.app.processEvents()
 
-            result = subprocess.run(current_cli_args, capture_output=True, text=True)
+            try:
+                result = subprocess.run(current_cli_args, capture_output=True, text=True)
+            except Exception as e:
+                # The tool couldn't even be launched (e.g. missing interpreter
+                # or script); report it and stop rather than crashing the UI.
+                self.add_agent_message(f"Could not launch {tool_name}:\n\n{e}")
+                return
             stdout = result.stdout.strip()
             stderr = result.stderr.strip()
             print(stdout)
@@ -867,7 +832,8 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             sys.path.insert(0, agent_cli_dir)
 
         from Agent_CLI_utils.utils import (
-            load_manifest, build_repair_prompt, build_cli_args, complete_with_defaults, get_tool_def, chat_with_auto_pull
+            load_manifest, build_repair_prompt, build_cli_args, complete_with_defaults,
+            get_tool_def, chat_with_auto_pull, get_router_model
         )
         from Agent_CLI_utils.parameter_validator import ParameterValidator
 
@@ -882,7 +848,7 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                 return None
 
             prompt = build_repair_prompt(tool_name, tool_spec, params, cli_args, stderr)
-            model = os.environ.get("ROUTER_MODEL", "qwen3:8b")
+            model = get_router_model()
 
             response = chat_with_auto_pull(
                 model,
@@ -913,13 +879,20 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         import time
         from pathlib import Path
 
-        text=self.ui.textEdit.toPlainText()
+        text = self.ui.textEdit.toPlainText()
         filename = f"{Path.home()}/Chat_LLM_{time.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
 
-        with open(filename, "w") as file:
-            file.write(text)
-        
-        print(f"The chat has been saved to {filename}")
+        try:
+            with open(filename, "w", encoding="utf-8") as file:
+                file.write(text)
+            print(f"The chat has been saved to {filename}")
+        except Exception as e:
+            qt.QMessageBox.warning(
+                None,
+                "Could not save the chat",
+                f"Saving the chat to '{filename}' failed:\n\n{e}"
+            )
+
         self._checkCanApply()
 
     def OnClearButton(self):
@@ -933,27 +906,38 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             
     def OnRetrieveButton(self):
         import qt
-        fichier = qt.QFileDialog.getOpenFileName(
+        filepath = qt.QFileDialog.getOpenFileName(
             None,
-            "Choisir un fichier texte",
+            "Choose a text file",
             "",
-            "Fichiers texte (*.txt)"
+            "Text files (*.txt)"
         )
 
-        with open(fichier, "r") as file:
-            content = file.read()
-        
-        content = content.replace("🤖:","👨:")
+        # The dialog returns an empty string when the user cancels.
+        if not filepath:
+            return
+
+        try:
+            with open(filepath, "r", encoding="utf-8") as file:
+                content = file.read()
+        except Exception as e:
+            qt.QMessageBox.warning(
+                None,
+                "Could not open the file",
+                f"Reading '{filepath}' failed:\n\n{e}"
+            )
+            return
+
+        content = content.replace("🤖:", "👨:")
         output_list = content.split("👨:")
         output_list.pop(0)
-        print(output_list)
 
-        if len(output_list)<2:
-            qt.QMessageBox.warning(None,"Text file incompatible","Please choose a text (.txt) file from a previous discussion with the agent")
+        if len(output_list) < 2:
+            qt.QMessageBox.warning(None, "Text file incompatible", "Please choose a text (.txt) file from a previous discussion with the agent")
         else:
-            for i in range (len(output_list)):
-                if i%2 == 0:
-                    self.add_user_message("👨:"+output_list[i])
+            for i in range(len(output_list)):
+                if i % 2 == 0:
+                    self.add_user_message("👨:" + output_list[i])
                 else:
                     self.add_agent_message(output_list[i])
 
@@ -963,25 +947,45 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         import subprocess
         import shutil
 
+        # Python packages required by Agent_CLI. Order matters: the pinned
+        # versions must be installed before the packages that would otherwise
+        # pull in a broken/incompatible version as a transitive dependency.
+        #   - transformers>=4.53.0 has a known regression that breaks the
+        #     cross-encoder import with "NameError: name 'nn' is not defined"
+        #     (huggingface/transformers#43784), so it is pinned first.
+        #   - numpy>=2 breaks the ABI most pip-installed torch wheels were built
+        #     against ("RuntimeError: Numpy is not available"), so it is pinned
+        #     before torch is pulled in as a sentence-transformers dependency.
         # Agent_CLI.py runs as a separate "python-real" CLI process, but it
-        # shares Slicer's site-packages, so pip-installing here is what makes
-        # these importable there too.
-        slicer.util.pip_install("ollama")
-        slicer.util.pip_install("pyyaml")
-        # sentence-transformers pulls in torch - this one's a heavier,
-        # slower install than the others, used for the cross-encoder tool
-        # retrieval (cross_encoder_retrieve_candidates in utils.py).
-        # transformers>=4.53.0 has a known regression that breaks this import
-        # with "NameError: name 'nn' is not defined"
-        # (huggingface/transformers#43784). Pin it first so the second
-        # install doesn't pull in the broken version as a dependency.
-        slicer.util.pip_install("transformers<4.53.0")
-        # numpy>=2 breaks the ABI most pip-installed torch wheels were built
-        # against, causing "RuntimeError: Numpy is not available" the first
-        # time a tensor is converted via .numpy(). Pin below 2 before torch
-        # gets pulled in as a sentence-transformers dependency.
-        slicer.util.pip_install("numpy<2")
-        slicer.util.pip_install("sentence-transformers")
+        # shares Slicer's site-packages, so pip-installing here makes these
+        # importable there too.
+        packages = [
+            "ollama",
+            "pyyaml",
+            "transformers<4.53.0",
+            "numpy<2",
+            "sentence-transformers",
+        ]
+
+        failed_packages = []
+        for package in packages:
+            try:
+                slicer.util.pip_install(package)
+            except Exception as e:
+                # Keep going so one failing package doesn't block the others;
+                # report everything that failed at the end.
+                print(f"Failed to install '{package}': {e}")
+                failed_packages.append(package)
+
+        if failed_packages:
+            qt.QMessageBox.warning(
+                None,
+                "Dependency installation issues",
+                "Some Python packages could not be installed:\n\n- "
+                + "\n- ".join(failed_packages)
+                + "\n\nCheck your network connection and try again."
+            )
+            return
 
         # pip_install("ollama") only installs the Python client library - the
         # actual Ollama application/server (the "ollama" binary used below)
@@ -997,13 +1001,13 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             )
             return
 
-        list_model = ["qwen3:8b"]
+        list_model = [MODEL_NAME]
         installed = True
 
         for model in list_model:
             try:
                 result = subprocess.run(
-                    ['ollama', 'pull',model],
+                    ['ollama', 'pull', model],
                     capture_output=True,
                     text=True
                 )
@@ -1017,7 +1021,7 @@ class Agent_UIWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                 installed = False
 
         if installed:
-            qt.QMessageBox.information(None,"Dependencies checked and installed","All the dependencies have been checked and installed, now you can start to talk with your personal agent.")
+            qt.QMessageBox.information(None, "Dependencies checked and installed", "All the dependencies have been checked and installed, now you can start to talk with your personal agent.")
 
         else:
             qt.QMessageBox.warning(
@@ -1054,24 +1058,24 @@ class Agent_UILogic(ScriptedLoadableModuleLogic):
                 folders: str,
                 prompt: str) -> str:
         """
-        Run the processing algorithm.
-        Can be used without GUI widget.
-        :param folders: folders contenant les inputs
-        :param prompt: prompt pour l'agent
-        :return: output text du CLI
+        Run the Agent_CLI routing/execution algorithm.
+        Can be used without the GUI widget.
+        :param folders: input files/folders passed to the tools
+        :param prompt: the natural-language request for the agent
+        :return: the CLI output text
         """
 
         import time
         startTime = time.time()
         logging.info("Processing started")
 
-        # Compute the thresholded output volume using the "Threshold Scalar Volume" CLI module
+        # Delegate the actual work to the Agent_CLI command-line module.
         cliParams = {
             "folders": folders,
             "prompt": prompt
         }
         CLI = slicer.modules.agent_cli
-        self.cliNode = slicer.cli.run(CLI,None, cliParams,wait=False)
+        self.cliNode = slicer.cli.run(CLI, None, cliParams, wait=False)
         output_text = self.cliNode.GetOutputText()
         stopTime = time.time()
         logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
@@ -1100,48 +1104,21 @@ class Agent_UITest(ScriptedLoadableModuleTest):
         self.test_Agent_UI1()
 
     def test_Agent_UI1(self):
-        """Ideally you should have several levels of tests.  At the lowest level
-        tests should exercise the functionality of the logic with different inputs
-        (both valid and invalid).  At higher levels your tests should emulate the
-        way the user would interact with your code and confirm that it still works
-        the way you intended.
-        One of the most important features of the tests is that it should alert other
-        developers when their changes will have an impact on the behavior of your
-        module.  For example, if a developer removes a feature that you depend on,
-        your test should break so they know that the feature is needed.
+        """
+        Smoke test: the logic instantiates and its parameter node exposes the
+        expected fields (prompt, folders, modeagent). The full agent pipeline
+        depends on Ollama and the qwen3:8b model, which are out of scope for an
+        automated unit test, so this only checks the module wiring.
         """
 
         self.delayDisplay("Starting the test")
 
-        # Get/create input data
-
-        import SampleData
-
-        registerSampleData()
-        inputVolume = SampleData.downloadSample("Agent_UI1")
-        self.delayDisplay("Loaded test data set")
-
-        inputScalarRange = inputVolume.GetImageData().GetScalarRange()
-        self.assertEqual(inputScalarRange[0], 0)
-        self.assertEqual(inputScalarRange[1], 695)
-
-        outputVolume = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLScalarVolumeNode")
-        threshold = 100
-
-        # Test the module logic
-
         logic = Agent_UILogic()
+        parameterNode = logic.getParameterNode()
 
-        # Test algorithm with non-inverted threshold
-        logic.process(inputVolume, outputVolume, threshold, True)
-        outputScalarRange = outputVolume.GetImageData().GetScalarRange()
-        self.assertEqual(outputScalarRange[0], inputScalarRange[0])
-        self.assertEqual(outputScalarRange[1], threshold)
-
-        # Test algorithm with inverted threshold
-        logic.process(inputVolume, outputVolume, threshold, False)
-        outputScalarRange = outputVolume.GetImageData().GetScalarRange()
-        self.assertEqual(outputScalarRange[0], inputScalarRange[0])
-        self.assertEqual(outputScalarRange[1], inputScalarRange[1])
+        # The parameter node should expose the module's parameters.
+        self.assertTrue(hasattr(parameterNode, "prompt"))
+        self.assertTrue(hasattr(parameterNode, "folders"))
+        self.assertTrue(hasattr(parameterNode, "modeagent"))
 
         self.delayDisplay("Test passed")

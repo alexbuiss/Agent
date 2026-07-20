@@ -1,41 +1,45 @@
 #!/usr/bin/env python3
 """
-Parameter Validator - Valider et corriger les paramètres extraits
-Étape 2: Validation & Correction Automatique
+Parameter validator - validate and coerce the parameters extracted by the LLM.
+
+This is the second stage after extraction: it checks required parameters,
+converts values to their declared types, validates paths / enums / ranges and
+reports anything missing or out of spec.
 """
 
-import json
-import yaml
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Dict, List, Tuple, Any
 from pathlib import Path
 from collections.abc import Sequence
 
+from Agent_CLI_utils.utils import load_manifest
+
 
 class ParameterValidator:
-    """Valider et corriger les paramètres extraits"""
-    
+    """Validate and coerce the parameters extracted for a tool."""
+
     def __init__(self, manifest_path: str = "manifest.yaml"):
-        """Charger le manifest"""
-        with open(manifest_path, "r", encoding="utf-8") as f:
-            self.manifest = yaml.safe_load(f)
-        
+        try:
+            self.manifest = load_manifest(manifest_path)
+        except Exception as e:
+            raise RuntimeError(f"ParameterValidator could not load manifest: {e}")
+
         self.scripts = {s["name"]: s for s in self.manifest.get("scripts", [])}
-    
+
     def validate(self, tool_name: str, extracted_params: Dict) -> Dict:
         """
-        Valider les paramètres extraits
-        
-        Returns:
+        Validate the extracted parameters.
+
+        Returns a dict with:
             {
                 "valid": bool,
-                "params": dict (validated params),
+                "params": dict (validated/coerced params),
                 "errors": list,
                 "warnings": list,
                 "missing_required": list,
                 "extra_params": list
             }
         """
-        
+
         tool_spec = self.scripts.get(tool_name)
         if not tool_spec:
             return {
@@ -46,40 +50,40 @@ class ParameterValidator:
                 "missing_required": [],
                 "extra_params": []
             }
-        
+
         errors = []
         warnings = []
         corrected_params = extracted_params.copy()
-        
-        # 1. VÉRIFIER PARAMÈTRES REQUIS
+
+        # 1. Check required parameters.
         required_errors, missing_required = self._check_required_params(
             tool_spec, extracted_params
         )
         errors.extend(required_errors)
-        
-        # 2. VÉRIFIER TYPES
+
+        # 2. Check / coerce types.
         type_errors, corrected_params = self._check_types(
             tool_spec, corrected_params
         )
         errors.extend(type_errors)
-        
-        # 3. VÉRIFIER PATHS (syntaxe)
+
+        # 3. Check path syntax.
         path_errors = self._check_paths(tool_spec, corrected_params)
         errors.extend(path_errors)
-        
-        # 4. VÉRIFIER ENUMS (choices)
+
+        # 4. Check enums (choices).
         enum_errors = self._check_enums(tool_spec, corrected_params)
         errors.extend(enum_errors)
-        
-        # 5. VÉRIFIER RANGES (min/max)
+
+        # 5. Check ranges (min/max).
         range_errors = self._check_ranges(tool_spec, corrected_params)
         errors.extend(range_errors)
-        
-        # 6. VÉRIFIER PARAMÈTRES SUPPLÉMENTAIRES
+
+        # 6. Check for extra parameters not in the spec.
         extra_params = self._check_extra_params(tool_spec, extracted_params)
         if extra_params:
             warnings.append(f"Extra parameters not in spec: {extra_params}")
-        
+
         return {
             "valid": len(errors) == 0,
             "params": corrected_params,
@@ -88,49 +92,49 @@ class ParameterValidator:
             "missing_required": missing_required,
             "extra_params": extra_params
         }
-    
+
     def _check_required_params(
         self,
         tool_spec: Dict,
         params: Dict
     ) -> Tuple[List[str], List[str]]:
-        """Vérifier que les paramètres requis sont présents"""
-        
+        """Check that all required parameters are present."""
+
         errors = []
         missing = []
-        
+
         for param in tool_spec.get("parameters", []):
             name = param["name"]
             if param.get("required", False) and name not in params:
                 msg = f"MISSING REQUIRED PARAMETER: {name}"
                 errors.append(msg)
                 missing.append(name)
-        
+
         return errors, missing
-    
+
     def _check_types(
         self,
         tool_spec: Dict,
         params: Dict
     ) -> Tuple[List[str], Dict]:
         """
-        Vérifier et convertir les types
-        Retourne (errors, corrected_params)
+        Check and convert types.
+        Returns (errors, corrected_params).
         """
-        
+
         errors = []
         corrected = params.copy()
-        
+
         for param in tool_spec.get("parameters", []):
             name = param["name"]
             if name not in params:
                 continue
-            
+
             ptype = param.get("type", "string")
             value = params[name]
-            
+
             try:
-                # Tentative de conversion
+                # Attempt conversion.
                 if ptype == "bool":
                     converted = self._convert_bool(value)
                     encode = param.get("encode", "")
@@ -144,44 +148,44 @@ class ParameterValidator:
 
                 elif ptype == "int":
                     corrected[name] = self._convert_int(value)
-                
+
                 elif ptype == "float":
                     corrected[name] = self._convert_float(value)
-                
+
                 elif ptype == "list":
                     encode = param.get("encode", "")
                     corrected[name] = self._convert_list(value, encode)
-                
+
                 elif ptype == "path":
                     corrected[name] = self._convert_path(value)
-                
+
                 else:  # string
                     corrected[name] = str(value)
-            
+
             except ValueError as e:
                 errors.append(f"TYPE ERROR in '{name}': {str(e)}")
-        
+
         return errors, corrected
-    
+
     def _check_paths(self, tool_spec: Dict, params: Dict) -> List[str]:
-        """Vérifier la syntaxe des paths"""
-        
+        """Check path syntax."""
+
         errors = []
-        
+
         for param in tool_spec.get("parameters", []):
             name = param["name"]
             if name not in params or param.get("type") != "path":
                 continue
-            
+
             value = params[name]
-            
-            # Vérifier que c'est un string valide
+
+            # Check that it is a valid string path.
             try:
                 Path(str(value))
-            except Exception as e:
+            except Exception:
                 errors.append(f"INVALID PATH '{name}': {value}")
-            
-            # Vérifier que les folder paths n'ont pas d'extension
+
+            # Folder paths should not carry a file extension.
             if "folder" in name or "dir" in name:
                 str_value = str(value)
                 if str_value.endswith((".nii.gz", ".nii", ".stl", ".ply", ".vtk", ".json", ".txt", ".log")):
@@ -189,118 +193,118 @@ class ParameterValidator:
                         f"FOLDER PATH SHOULD NOT HAVE EXTENSION '{name}': {value}. "
                         f"Remove the filename part."
                     )
-        
+
         return errors
-    
+
     def _check_enums(self, tool_spec: Dict, params: Dict) -> List[str]:
-        """Vérifier que les valeurs font partie des choices"""
-        
+        """Check that values belong to their allowed choices."""
+
         errors = []
-        
+
         for param in tool_spec.get("parameters", []):
             name = param["name"]
             if name not in params or "choices" not in param:
                 continue
-            
+
             value = params[name]
             choices = param["choices"]
-            
+
             if value not in choices:
                 errors.append(
                     f"INVALID VALUE '{name}': {value}. "
                     f"Must be one of: {choices}"
                 )
-        
+
         return errors
-    
+
     def _check_ranges(self, tool_spec: Dict, params: Dict) -> List[str]:
-        """Vérifier les ranges (min/max)"""
-        
+        """Check numeric ranges (min/max)."""
+
         errors = []
-        
+
         for param in tool_spec.get("parameters", []):
             name = param["name"]
             if name not in params:
                 continue
-            
+
             value = params[name]
-            
-            # Vérifier min
+
+            # Check min.
             if "min" in param:
                 try:
                     if float(value) < float(param["min"]):
                         errors.append(
                             f"VALUE TOO SMALL '{name}': {value} < {param['min']}"
                         )
-                except:
-                    pass  # Skip si pas un nombre
-            
-            # Vérifier max
+                except (TypeError, ValueError):
+                    pass  # Skip if not a number.
+
+            # Check max.
             if "max" in param:
                 try:
                     if float(value) > float(param["max"]):
                         errors.append(
                             f"VALUE TOO LARGE '{name}': {value} > {param['max']}"
                         )
-                except:
-                    pass  # Skip si pas un nombre
-        
+                except (TypeError, ValueError):
+                    pass  # Skip if not a number.
+
         return errors
-    
+
     def _check_extra_params(self, tool_spec: Dict, params: Dict) -> List[str]:
-        """Vérifier les paramètres supplémentaires"""
-        
+        """Return parameters supplied that are not declared in the spec."""
+
         spec_names = {p["name"] for p in tool_spec.get("parameters", [])}
         param_names = set(params.keys())
-        
+
         return list(param_names - spec_names)
-    
+
     # ===== CONVERSION METHODS =====
-    
+
     @staticmethod
     def _convert_bool(value) -> bool:
-        """Convertir en booléen"""
+        """Convert a value to a boolean."""
         if isinstance(value, bool):
             return value
-        
+
         if isinstance(value, str):
             if value.lower() in ("true", "yes", "1", "on"):
                 return True
             elif value.lower() in ("false", "no", "0", "off"):
                 return False
-        
+
         if isinstance(value, int):
             return value != 0
-        
+
         raise ValueError(f"Cannot convert '{value}' to boolean")
-    
+
     @staticmethod
     def _convert_int(value) -> int:
-        """Convertir en entier"""
+        """Convert a value to an integer."""
         if isinstance(value, int):
             return value
-        
+
         try:
             return int(float(str(value)))
-        except:
+        except (TypeError, ValueError):
             raise ValueError(f"Cannot convert '{value}' to integer")
-    
+
     @staticmethod
     def _convert_float(value) -> float:
-        """Convertir en float"""
+        """Convert a value to a float."""
         if isinstance(value, (int, float)):
             return float(value)
-        
+
         try:
             return float(str(value))
-        except:
+        except (TypeError, ValueError):
             raise ValueError(f"Cannot convert '{value}' to float")
-    
+
     @staticmethod
     def _convert_list(value, encode: str) -> Any:
-        """Convertir en liste selon l'encodage"""
+        """Convert a value to a list according to its encoding."""
 
-        # ✅ accept list-like (ObservedList, tuple, etc.) but not strings
+        # Accept list-like values (ObservedList, tuple, etc.) but not strings.
         if isinstance(value, Sequence) and not isinstance(value, (str, bytes, dict)):
             return [str(x) for x in list(value)]
 
@@ -321,136 +325,61 @@ class ParameterValidator:
 
         raise ValueError(f"Cannot convert '{value}' to list")
 
-    
     @staticmethod
     def _convert_path(value) -> str:
-        """Convertir en path (juste nettoyer)"""
+        """Convert a value to a path (just trim whitespace)."""
         return str(value).strip()
 
 
 class ValidationReport:
-    """Générer un rapport de validation lisible"""
-    
+    """Generate a human-readable validation report."""
+
     @staticmethod
     def generate_report(tool_name: str, validation_result: Dict) -> str:
-        """Générer un rapport au format lisible"""
-        
+        """Generate a readable report from a validation result."""
+
         report = []
         report.append(f"\n{'='*80}")
         report.append(f"VALIDATION REPORT FOR: {tool_name}")
         report.append(f"{'='*80}")
-        
+
         # Status
-        status = "✅ VALID" if validation_result["valid"] else "❌ INVALID"
+        status = "VALID" if validation_result["valid"] else "INVALID"
         report.append(f"\nStatus: {status}")
-        
+
         # Missing required
         if validation_result["missing_required"]:
-            report.append(f"\n❌ Missing Required Parameters:")
+            report.append(f"\nMissing Required Parameters:")
             for param in validation_result["missing_required"]:
                 report.append(f"   - {param}")
-        
+
         # Errors
         if validation_result["errors"]:
-            report.append(f"\n❌ Errors:")
+            report.append(f"\nErrors:")
             for error in validation_result["errors"]:
                 report.append(f"   - {error}")
-        
+
         # Warnings
         if validation_result["warnings"]:
-            report.append(f"\n⚠️  Warnings:")
+            report.append(f"\nWarnings:")
             for warning in validation_result["warnings"]:
                 report.append(f"   - {warning}")
-        
+
         # Extra params
         if validation_result["extra_params"]:
-            report.append(f"\n⚠️  Extra Parameters (not in spec):")
+            report.append(f"\nExtra Parameters (not in spec):")
             for param in validation_result["extra_params"]:
                 report.append(f"   - {param}")
-        
+
         # Validated params
         if validation_result["params"]:
-            report.append(f"\n✅ Validated Parameters:")
+            report.append(f"\nValidated Parameters:")
             for key, value in validation_result["params"].items():
                 if isinstance(value, list):
                     report.append(f"   {key}: {value} (list with {len(value)} items)")
                 else:
                     report.append(f"   {key}: {value}")
-        
+
         report.append(f"\n{'='*80}\n")
-        
+
         return "\n".join(report)
-
-
-if __name__ == "__main__":
-    # Test
-    validator = ParameterValidator()
-    
-    print("=" * 80)
-    print("TEST 1: ALI_CBCT avec tous les paramètres corrects")
-    print("=" * 80)
-    
-    test_params_1 = {
-        "input": "/data/cbct_patient1.nii.gz",
-        "dir_models": "/models/ali_cbct",
-        "lm_type": "1,2,3,4,5",
-        "output_dir": "/output",
-        "temp_fold": "/tmp/ali_cbct",
-        "DCMInput": "false",  # String, sera converti
-        "spacing": "[1.0, 0.3]",
-        "speed_per_scale": "[1, 1]",
-        "agent_FOV": "[64, 64, 64]",
-        "spawn_radius": "10"  # String, sera converti
-    }
-    
-    result_1 = validator.validate("ali_cbct", test_params_1)
-    print(ValidationReport.generate_report("ali_cbct", result_1))
-    
-    print("\n" + "=" * 80)
-    print("TEST 2: ALI_CBCT avec paramètre requis manquant")
-    print("=" * 80)
-    
-    test_params_2 = {
-        "input": "/data/cbct.nii.gz",
-        "dir_models": "/models/ali_cbct",
-        # lm_type manquant!
-        "output_dir": "/output",
-        "temp_fold": "/tmp/ali_cbct"
-    }
-    
-    result_2 = validator.validate("ali_cbct", test_params_2)
-    print(ValidationReport.generate_report("ali_cbct", result_2))
-    
-    print("\n" + "=" * 80)
-    print("TEST 3: AREG_CBCT avec erreur de path (folder avec extension)")
-    print("=" * 80)
-    
-    test_params_3 = {
-        "t1_folder": "/data/cbct_baseline.nii.gz",  # ERREUR!
-        "t2_folder": "/data/cbct_followup",
-        "output_folder": "/output",
-        "reg_type": "MAND",
-        "temp_folder": "/tmp/areg_cbct",
-        "ApproxReg": False,
-        "mask_folder_t1": "None",
-        "DCMInput": False
-    }
-    
-    result_3 = validator.validate("areg_cbct", test_params_3)
-    print(ValidationReport.generate_report("areg_cbct", result_3))
-    
-    print("\n" + "=" * 80)
-    print("TEST 4: ALI_IOS avec conversion de types")
-    print("=" * 80)
-    
-    test_params_4 = {
-        "input_surface": "/data/ios_scan.stl",
-        "dir_models": "/models/ali_ios",
-        "lm_type": "1 2 3 4 5",
-        "teeth": "1 2 3",
-        "output_dir": "/output",
-        "log_path": "/logs/ali_ios.log"
-    }
-    
-    result_4 = validator.validate("ali_ios", test_params_4)
-    print(ValidationReport.generate_report("ali_ios", result_4))

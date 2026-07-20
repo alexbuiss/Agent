@@ -1,214 +1,42 @@
 #!/usr/bin/env python3
 """
-Parameter Extraction Improved with Few-shot Prompting
-Utilise des exemples du manifest pour améliorer l'extraction
+Improved parameter extraction.
+
+Builds the prompt that asks the LLM to extract a tool's parameters from the
+user request. Type conversion / validation of the extracted values is handled
+separately by ParameterValidator (see parameter_validator.py), so this module
+is only responsible for prompt construction.
 """
 
-import json
-import yaml
-from typing import Dict, List, Tuple, Any
-from pathlib import Path
+from typing import Dict
 
-
-class FewShotExampleBuilder:
-    """Construire des exemples few-shot basés sur le manifest"""
-    
-    def __init__(self, manifest_path: str = "manifest.yaml"):
-        """Charger et parser le manifest"""
-        with open(manifest_path, "r", encoding="utf-8") as f:
-            self.manifest = yaml.safe_load(f)
-        
-        self.scripts = {s["name"]: s for s in self.manifest.get("scripts", [])}
-    
-    def build_few_shot_examples(self, tool_name: str, num_examples: int = 2) -> List[Dict[str, str]]:
-        """
-        Construire des exemples few-shot pour un outil spécifique
-        
-        Returns:
-            Liste de dicts: [{"query": "...", "extracted": {...}}, ...]
-        """
-        
-        tool = self.scripts.get(tool_name)
-        if not tool:
-            return []
-        
-        examples = []
-        
-        # 1. Extraire les examples du manifest (s'il y en a)
-        if "examples" in tool:
-            # Format: ["./input ./output" ou "description"]
-            # On les utilise comme inspiration mais il faut créer des exemples query-params
-            pass
-        
-        # 2. Créer des examples synthétiques basés sur les paramètres
-        examples = self._generate_synthetic_examples(tool, num_examples)
-        
-        return examples
-    
-    def _generate_synthetic_examples(self, tool: Dict, num_examples: int) -> List[Dict]:
-        """
-        Générer des exemples synthétiques basés sur les paramètres du tool
-        """
-        examples = []
-        
-        # Créer exemple 1: avec toutes les valeurs fournies
-        example1 = self._create_example(
-            tool,
-            example_num=1,
-            description="All parameters provided"
-        )
-        if example1:
-            examples.append(example1)
-        
-        # Créer exemple 2: avec paramètres optionnels
-        example2 = self._create_example(
-            tool,
-            example_num=2,
-            description="Required parameters only"
-        )
-        if example2:
-            examples.append(example2)
-        
-        return examples
-    
-    def _create_example(self, tool: Dict, example_num: int, description: str) -> Dict:
-        """
-        Créer UN exemple pour un tool
-        """
-        
-        tool_name = tool["name"]
-        params = tool.get("parameters", [])
-        
-        # Créer query et expected params
-        query_parts = []
-        extracted = {}
-        
-        for param in params:
-            name = param["name"]
-            ptype = param.get("type", "string")
-            required = param.get("required", False)
-            encode = param.get("encode", "")
-            description_text = param.get("description", "")
-            
-            # Ajouter à la query
-            if required or example_num == 1:  # Exemple 1 = tous les params
-                value = self._get_example_value(name, ptype, encode)
-                
-                # Formatter la query
-                if ptype == "list" and encode:
-                    if encode == "comma_no_brackets":
-                        query_parts.append(f"{description_text}: {value.replace(' ', ',')}")
-                    elif encode == "space_separated":
-                        query_parts.append(f"{description_text}: {value}")
-                    elif encode == "comma_separated":
-                        query_parts.append(f"{description_text}: {value}")
-                elif ptype == "bool":
-                    bool_val = "true" if "true" in value else "false"
-                    query_parts.append(f"({name}={bool_val})")
-                else:
-                    query_parts.append(f"{description_text}: {value}")
-                
-                # Ajouter aux params extraits
-                extracted[name] = self._get_example_value_formatted(name, ptype, encode)
-        
-        query = f"{tool_name}: " + ", ".join(query_parts)
-        
-        return {
-            "query": query,
-            "extracted": extracted,
-            "note": description
-        }
-    
-    def _get_example_value(self, param_name: str, ptype: str, encode: str) -> str:
-        """
-        Obtenir une valeur d'exemple pour un paramètre
-        """
-        
-        # Valeurs par défaut selon le type
-        if ptype == "path":
-            if "folder" in param_name or "dir" in param_name:
-                return "/data" if "input" in param_name else "/output"
-            else:
-                return "/data/file.nii.gz"
-        
-        elif ptype == "list":
-            if "lm" in param_name or "landmark" in param_name:
-                if encode == "comma_no_brackets":
-                    return "1,2,3,4,5"
-                elif encode == "space_separated":
-                    return "1 2 3 4 5"
-                else:
-                    return "1,2,3,4,5"
-            elif "teeth" in param_name:
-                if encode == "space_separated":
-                    return "1 2 3"
-                else:
-                    return "1,2,3"
-            else:
-                return "item1,item2,item3"
-        
-        elif ptype == "bool":
-            return "true" if "input" not in param_name else "false"
-        
-        elif ptype == "int":
-            return "10"
-        
-        elif ptype == "float":
-            return "1.0"
-        
-        else:  # string
-            if "suffix" in param_name or "name" in param_name:
-                return "_processed"
-            else:
-                return "value"
-    
-    def _get_example_value_formatted(self, param_name: str, ptype: str, encode: str) -> Any:
-        """
-        Obtenir la valeur formatée pour le JSON d'extraction
-        """
-        value = self._get_example_value(param_name, ptype, encode)
-        
-        if ptype == "bool":
-            return value == "true"
-        elif ptype == "int":
-            return int(value)
-        elif ptype == "float":
-            return float(value)
-        elif ptype == "list" and encode == "python_literal":
-            return value  # "[1.0, 0.3]" reste string
-        else:
-            return value
+from Agent_CLI_utils.utils import load_manifest
 
 
 class ImprovedParameterExtractor:
     """
-    Extracteur de paramètres amélioré avec:
-    - Few-shot prompting
-    - Type conversion automatique
-    - Meilleur parsing
+    Build the parameter-extraction prompt for a given tool, listing every
+    parameter with its type, whether it is required, and its encoding so the
+    model returns values in the exact format the CLI scripts expect.
     """
-    
+
     def __init__(self, manifest_path: str = "manifest.yaml"):
-        with open(manifest_path, "r", encoding="utf-8") as f:
-            self.manifest = yaml.safe_load(f)
-        
+        try:
+            self.manifest = load_manifest(manifest_path)
+        except Exception as e:
+            raise RuntimeError(
+                f"ImprovedParameterExtractor could not load manifest: {e}"
+            )
+
         self.scripts = {s["name"]: s for s in self.manifest.get("scripts", [])}
-        self.example_builder = FewShotExampleBuilder(manifest_path)
-    
-    def build_prompt(self, tool_name: str, user_text: str,tool_spec) -> str:
-        """
-        Construire un prompt amélioré avec few-shot examples
-        """
-        
-        # 1. Construire la section des paramètres avec types
+
+    def build_prompt(self, tool_name: str, user_text: str, tool_spec) -> str:
+        """Build the extraction prompt for `tool_name`."""
+
+        # 1. Build the parameter section (name, type, required flag, encoding).
         params_section = self._build_params_section(tool_spec)
-        
-        # 2. Construire les exemples few-shot
-#         few_shot_examples = self._build_few_shot_section(tool_name, tool_spec)
-#         EXAMPLES OF CORRECT EXTRACTION:
-# {few_shot_examples}
-        
-        # 3. Construire le prompt final
+
+        # 2. Build the final prompt.
         prompt = f"""Extract parameters from the user request for tool: {tool_name}
 
 PARAMETER DEFINITIONS:
@@ -242,12 +70,12 @@ USER REQUEST: "{user_text}"
 Return ONLY valid JSON on one line (no markdown, no explanation):
 {{"extracted": {{...}}, "confidence": 0.0-1.0, "missing_required": [...], "notes": "..."}}
 """
-        
+
         return prompt
-    
+
     def _build_params_section(self, tool_spec: Dict) -> str:
-        """Construire la section des paramètres"""
-        
+        """Build the human-readable parameter list embedded in the prompt."""
+
         lines = []
         for param in tool_spec.get("parameters", []):
             name = param["name"]
@@ -255,174 +83,8 @@ Return ONLY valid JSON on one line (no markdown, no explanation):
             required = "REQUIRED" if param.get("required") else "optional"
             encode = param.get("encode", "")
             description = param.get("description", "")
-            
+
             encode_info = f" (encode: {encode})" if encode else ""
             lines.append(f"  - {name} ({ptype}) [{required}]{encode_info}: {description}")
-        
+
         return "\n".join(lines)
-    
-    def _build_few_shot_section(self, tool_name: str, tool_spec: Dict) -> str:
-        """Construire la section few-shot examples"""
-        
-        examples = self.example_builder.build_few_shot_examples(tool_name)
-        
-        output = []
-        for i, example in enumerate(examples, 1):
-            output.append(f"\nExample {i}: {example.get('note', '')}")
-            output.append(f"  Query: \"{example['query']}\"")
-            output.append(f"  Extracted:")
-            for key, value in example['extracted'].items():
-                if isinstance(value, str):
-                    output.append(f"    {key}: \"{value}\"")
-                elif isinstance(value, bool):
-                    output.append(f"    {key}: {str(value).lower()}")
-                else:
-                    output.append(f"    {key}: {value}")
-        
-        return "\n".join(output)
-    
-    def convert_types(self, extracted: Dict, tool_spec: Dict) -> Tuple[Dict, List[str]]:
-        """
-        Convertir les types extraits selon la spec du manifest
-        
-        Returns:
-            (converted_params, errors)
-        """
-        
-        converted = {}
-        errors = []
-        
-        for param in tool_spec.get("parameters", []):
-            name = param["name"]
-            ptype = param.get("type", "string")
-            
-            if name not in extracted:
-                continue
-            
-            value = extracted[name]
-            
-            try:
-                if ptype == "bool":
-                    converted[name] = self._to_bool(value)
-                
-                elif ptype == "int":
-                    converted[name] = self._to_int(value)
-                
-                elif ptype == "float":
-                    converted[name] = self._to_float(value)
-                
-                elif ptype == "list":
-                    encode = param.get("encode", "")
-                    converted[name] = self._to_list(value, encode)
-                
-                elif ptype == "path":
-                    converted[name] = str(value).strip()
-                
-                else:  # string
-                    converted[name] = str(value)
-            
-            except ValueError as e:
-                errors.append(f"Error converting {name}: {e}")
-        
-        return converted, errors
-    
-    @staticmethod
-    def _to_bool(value) -> bool:
-        """Convertir en booléen"""
-        if isinstance(value, bool):
-            return value
-        if isinstance(value, str):
-            if value.lower() in ("true", "yes", "1", "on"):
-                return True
-            elif value.lower() in ("false", "no", "0", "off"):
-                return False
-        raise ValueError(f"Cannot convert {value} to bool")
-    
-    @staticmethod
-    def _to_int(value) -> int:
-        """Convertir en entier"""
-        if isinstance(value, int):
-            return value
-        try:
-            return int(float(str(value)))
-        except:
-            raise ValueError(f"Cannot convert {value} to int")
-    
-    @staticmethod
-    def _to_float(value) -> float:
-        """Convertir en float"""
-        if isinstance(value, (int, float)):
-            return float(value)
-        try:
-            return float(str(value))
-        except:
-            raise ValueError(f"Cannot convert {value} to float")
-    
-    @staticmethod
-    def _to_list(value, encode: str) -> Any:
-        """Convertir en liste selon l'encodage"""
-        if isinstance(value, list):
-            return value
-        
-        if isinstance(value, str):
-            s = value.strip()
-            
-            # Si c'est du Python literal, retourner as-is
-            if encode == "python_literal":
-                return s  # "[1.0, 0.3]"
-            
-            # Parser selon le séparateur
-            if encode == "space_separated":
-                items = s.split()
-            else:  # comma_no_brackets, comma_separated
-                if s.startswith("[") and s.endswith("]"):
-                    s = s[1:-1]
-                items = [x.strip() for x in s.split(",")]
-            
-            return items
-        
-        raise ValueError(f"Cannot convert {value} to list")
-
-
-if __name__ == "__main__":
-    # Test
-    extractor = ImprovedParameterExtractor()
-    
-    # Test prompt pour ali_cbct
-    print("=" * 80)
-    print("PROMPT POUR ALI_CBCT")
-    print("=" * 80)
-    
-    test_query = "Detect landmarks 1,2,3,4,5 in CBCT /data/cbct.nii.gz using models from /models/ali_cbct, save to /output"
-    prompt = extractor.build_prompt("ali_cbct", test_query)
-    print(prompt)
-    
-    print("\n" + "=" * 80)
-    print("EXEMPLE DE CONVERSION DE TYPES")
-    print("=" * 80)
-    
-    # Test conversion
-    tool_spec = extractor.scripts["ali_cbct"]
-    
-    # Input avec mauvais types
-    bad_extracted = {
-        "input": "/data/cbct.nii.gz",
-        "dir_models": "/models/ali_cbct",
-        "lm_type": "1,2,3,4,5",  # String, mais doit rester string selon encode
-        "output_dir": "/output",
-        "DCMInput": "false",  # String, doit devenir bool
-        "spawn_radius": "10"  # String, doit devenir int
-    }
-    
-    converted, errors = extractor.convert_types(bad_extracted, tool_spec)
-    
-    print("Avant conversion:")
-    print(json.dumps(bad_extracted, indent=2))
-    
-    print("\nAprès conversion:")
-    print(json.dumps(converted, indent=2, default=str))
-    
-    if errors:
-        print("\nErreurs:")
-        for err in errors:
-            print(f"  - {err}")

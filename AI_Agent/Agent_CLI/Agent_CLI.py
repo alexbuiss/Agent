@@ -2,49 +2,38 @@
 
 import re
 import json
-import subprocess
 import os
 import argparse
 import logging
-import ollama
-from Agent_CLI_utils.utils import (load_manifest,build_tool_spec,extract_parameters,build_cli_args,get_tool_def,complete_with_defaults,chat_with_auto_pull,cross_encoder_retrieve_candidates)
+from Agent_CLI_utils.utils import (load_manifest, build_tool_spec, extract_parameters, build_cli_args,
+                                   get_tool_def, complete_with_defaults, chat_with_auto_pull,
+                                   cross_encoder_retrieve_candidates, get_router_model)
 from Agent_CLI_utils.parameter_extraction_improved import ImprovedParameterExtractor
-from Agent_CLI_utils.parameter_validator import ParameterValidator,ValidationReport
+from Agent_CLI_utils.parameter_validator import ParameterValidator
 
 
 logger = logging.getLogger(__name__)
 
-def build_candidates_block(candidates):
-    """
-    Construit un bloc compact (5 lignes) pour le routeur.
-    """
-    lines = []
-    for i, s in enumerate(candidates, 1):
-        name = s.get("name", "")
-        desc = (s.get("description", "") or "").strip()
-        desc = re.sub(r"\s+", " ", desc)
-        desc = desc[:140]  # TRÈS important: court
-        tags = s.get("tags") or []
-        tags = [str(x) for x in tags[:8]]  # max 8 tags
-        tag_str = ", ".join(tags)
-        lines.append(f"{i}) {name} — {desc} | tags: {tag_str}")
-    return "\n".join(lines)
 
-def build_candidates_block_ask(candidates):
+def build_candidates_block(candidates, include_parameters=False):
     """
-    Construit un bloc compact (5 lignes) pour le routeur.
+    Build a compact, one-line-per-tool block describing the candidate tools for
+    the router prompt. When `include_parameters` is True, each line also lists
+    the tool's parameters (used by the consultant/"ask" mode).
     """
     lines = []
     for i, s in enumerate(candidates, 1):
         name = s.get("name", "")
         desc = (s.get("description", "") or "").strip()
         desc = re.sub(r"\s+", " ", desc)
-        desc = desc[:140]  # TRÈS important: court
+        desc = desc[:140]  # Keep the description short.
         tags = s.get("tags") or []
-        tags = [str(x) for x in tags[:8]]  # max 8 tags
+        tags = [str(x) for x in tags[:8]]  # At most 8 tags.
         tag_str = ", ".join(tags)
-        params = s.get("parameters","")
-        lines.append(f"{i}) {name} — {desc} | tags: {tag_str}| parameters:{params}")
+        line = f"{i}) {name} — {desc} | tags: {tag_str}"
+        if include_parameters:
+            line += f"| parameters:{s.get('parameters', '')}"
+        lines.append(line)
     return "\n".join(lines)
 
 
@@ -108,7 +97,7 @@ def _run(input, module_dir):
         - If multiple candidates exist, pick the most specific match and explain briefly in 'reason'.
         """.strip()
 
-        modele = os.environ.get("ROUTER_MODEL", "qwen3:8b")
+        modele = get_router_model()
 
         candidates = cross_encoder_retrieve_candidates(manifest, input.prompt, k=3)
         candidates_block = build_candidates_block(candidates)
@@ -146,7 +135,10 @@ CANDIDATES (choose exactly one name from this list):
         except Exception as e:
             raise RuntimeError(f"Router error: {e}")
 
-        data = json.loads(response["message"]["content"])
+        try:
+            data = json.loads(response["message"]["content"])
+        except (json.JSONDecodeError, KeyError, TypeError) as e:
+            raise RuntimeError(f"Router returned invalid JSON: {e}")
         selected_tool = data.get("tool")
         confidence = float(data.get("confidence", 0.0))
 
@@ -188,8 +180,8 @@ CANDIDATES (choose exactly one name from this list):
 
     else:
         candidates = cross_encoder_retrieve_candidates(manifest, input.prompt, k=3)
-        candidates_block = build_candidates_block_ask(candidates)
-        modele = os.environ.get("ROUTER_MODEL", "qwen3:8b")
+        candidates_block = build_candidates_block(candidates, include_parameters=True)
+        modele = get_router_model()
 
         system_prompt = f"""You are an expert medical image analysis consultant specializing in dental and orthodontic imaging.
 
@@ -237,6 +229,6 @@ if __name__ == "__main__":
     try:
         args = parser.parse_args()
     except SystemExit:
-        print("Erreur de parsing : Vérifiez le nombre d'arguments envoyés !")
+        print("Argument parsing error: check the number of arguments passed to the CLI.")
         raise
     main(args)

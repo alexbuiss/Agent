@@ -4,7 +4,7 @@
   <category>AGENT</category>
   <description><![CDATA[Agent CLI Router]]></description>
   <version>0.1.0</version>
-  <contributor>Aleandre Buisson (UNC)</contributor>
+  <contributor>Alexandre Buisson (UNC)</contributor>
 
   <parameters>
     <label>Inputs</label>
