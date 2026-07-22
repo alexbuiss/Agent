@@ -1,0 +1,68 @@
+{
+    "reranker_stats": {
+        "top_3_acc": 100.0,
+        "top_1_acc": 100.0
+    },
+    "models": {
+        "qwen3.5:9b": {
+            "total_queries": 23,
+            "Router_accuracy_pct": 100.0,
+            "Agent_Param_Correct_pct": 10.92,
+            "Agent_Param_Perfect_pct": 17.39,
+            "Raw_Counts": {
+                "router_perfect": 23,
+                "agent_correct": 13,
+                "agent_perfect": 4
+            },
+            "execution_time": 279.15
+        },
+        "qwen2.5-coder:7b": {
+            "total_queries": 23,
+            "Router_accuracy_pct": 100.0,
+            "Agent_Param_Correct_pct": 87.39,
+            "Agent_Param_Perfect_pct": 73.91,
+            "Raw_Counts": {
+                "router_perfect": 23,
+                "agent_correct": 104,
+                "agent_perfect": 17
+            },
+            "execution_time": 155.6
+        },
+        "hermes3:8b": {
+            "total_queries": 23,
+            "Router_accuracy_pct": 95.65,
+            "Agent_Param_Correct_pct": 86.55,
+            "Agent_Param_Perfect_pct": 78.26,
+            "Raw_Counts": {
+                "router_perfect": 22,
+                "agent_correct": 103,
+                "agent_perfect": 18
+            },
+            "execution_time": 125.3
+        },
+        "llama3:latest": {
+            "total_queries": 23,
+            "Router_accuracy_pct": 100.0,
+            "Agent_Param_Correct_pct": 90.76,
+            "Agent_Param_Perfect_pct": 73.91,
+            "Raw_Counts": {
+                "router_perfect": 23,
+                "agent_correct": 108,
+                "agent_perfect": 17
+            },
+            "execution_time": 102.78
+        },
+        "llama3.1:8b": {
+            "total_queries": 23,
+            "Router_accuracy_pct": 95.65,
+            "Agent_Param_Correct_pct": 82.35,
+            "Agent_Param_Perfect_pct": 73.91,
+            "Raw_Counts": {
+                "router_perfect": 22,
+                "agent_correct": 98,
+                "agent_perfect": 17
+            },
+            "execution_time": 111.52
+        }
+    }
+}

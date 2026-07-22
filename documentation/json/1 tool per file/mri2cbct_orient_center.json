@@ -1,0 +1,41 @@
+{
+    "name": "mri2cbct_orient_center",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_ORIENT_CENTER_MRI.py",
+    "description": "Orient and center MRI scans for standardized positioning. Automatically reorients and centers MRI volumes to a canonical anatomical frame of reference for standardized analysis and comparison across subjects.",
+    "tags": [
+        "mri",
+        "orientation",
+        "centering",
+        "registration",
+        "standardization",
+        "preprocessing",
+        "alignment",
+        "anatomical"
+    ],
+    "parameters": [
+        {
+            "name": "input_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI scans."
+        },
+        {
+            "name": "direction",
+            "type": "str",
+            "default": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+            "description": "New direction for the NIfTI files, specified as a comma-separated string of floats."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for oriented scans."
+        },
+        {
+            "name": "acquisition_z_spacing",
+            "type": "float",
+            "default": 3.0,
+            "description": "Z-axis spacing for MRI (mm)."
+        }
+    ]
+}

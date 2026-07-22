@@ -1,0 +1,20 @@
+{
+    "reranker_stats": {
+        "top_3_acc": 100.0,
+        "top_1_acc": 86.96
+    },
+    "models": {
+        "qwen3:8b": {
+            "total_queries": 23,
+            "Router_accuracy_pct": 100.0,
+            "Agent_Param_Correct_pct": 33.73,
+            "Agent_Param_Perfect_pct": 26.09,
+            "Raw_Counts": {
+                "router_perfect": 23,
+                "agent_correct": 28,
+                "agent_perfect": 6
+            },
+            "execution_time": 311.97
+        }
+    }
+}

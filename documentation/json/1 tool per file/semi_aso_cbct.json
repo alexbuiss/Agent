@@ -1,0 +1,42 @@
+{
+    "name": "semi_aso_cbct",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/SEMI_ASO_CBCT.py",
+    "description": "Semi-Automatic Segmentation Orientation for CBCT using landmarks. Combines manually-placed anatomical landmarks with ICP-based registration to orient and standardize CBCT scans for consistent segmentation.",
+    "tags": [
+        "cbct",
+        "segmentation",
+        "orientation",
+        "landmarks",
+        "icp",
+        "registration",
+        "semi-automatic",
+        "dental"
+    ],
+    "parameters": [
+        {
+            "name": "input",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing scans and landmark files."
+        },
+        {
+            "name": "gold_folder",
+            "type": "path",
+            "required": true,
+            "description": "Reference/gold standard scans and landmarks."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for oriented scans."
+        },
+        {
+            "name": "list_landmark",
+            "type": "list",
+            "required": true,
+            "encode": "space_separated",
+            "description": "Landmark names to use for registration."
+        }
+    ]
+}

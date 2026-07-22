@@ -1,0 +1,59 @@
+{
+    "name": "automatrix",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/Automatrix_CLI.py",
+    "description": "Automatic transformation matrix application to scans and surfaces. Applies pre-computed transformation matrices (rigid, affine, or deformable) to medical images and 3D surface meshes for standardized registration.",
+    "tags": [
+        "transformation",
+        "matrix",
+        "deformation",
+        "registration",
+        "alignment",
+        "affine",
+        "rigid",
+        "warping"
+    ],
+    "parameters": [
+        {
+            "name": "input_patient",
+            "type": "path",
+            "required": true,
+            "description": "Input scan or surface file/folder."
+        },
+        {
+            "name": "input_matrix",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing transformation matrices (.tfm, .h5)."
+        },
+        {
+            "name": "reference_file",
+            "type": "path",
+            "required": true,
+            "description": "Reference file for transformed files."
+        },
+        {
+            "name": "fromAreg",
+            "type": "bool",
+            "default": false,
+            "description": "bool to know if this module is lauch after areg"
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for transformed files."
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Path to log file."
+        },
+        {
+            "name": "is_seg",
+            "type": "bool",
+            "default": false,
+            "description": "Bool to know if the input scan is a segmentation"
+        }
+    ]
+}

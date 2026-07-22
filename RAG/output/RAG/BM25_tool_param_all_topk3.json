@@ -1,0 +1,4322 @@
+{
+    "rag_mode": "BM25",
+    "enable_llm": false,
+    "queries_type": "tool_param_all",
+    "top_k": 3,
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 253,
+        "rag_correct": 192,
+        "rag_accuracy": 75.89,
+        "rag_perfect_accuracy": 56.13,
+        "llm_correct": 0,
+        "llm_accuracy": 0.0,
+        "average_rag_latency": 0.0002,
+        "average_llm_latency": 0.0,
+        "average_total_latency": 0.0002,
+        "total_time": 0.048
+    },
+    "details": [
+        {
+            "query": "Detect landmarks in /data/cbct using /models/ali. Output to /out_dir.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "ali_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Extract landmarks for teeth 8 and 9 from /scans/ios.obj to /results.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Segment Mandible from /vol.nii.gz using /weights/amasss. Save to /output.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register T1 /data/T1 with T2 /data/T2 using MAND type to /reg_out.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "flexreg",
+                "areg_ios",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Align /T1.stl to /T2.stl with model /models/refine. Output to /aligned.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "automatrix",
+                "mri2cbct_resample",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Crop volumes in /raw using /meta/roi.json. Save results to /cropped.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "autocrop3d",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Apply /mats/m.txt to /scans/p.nii.gz with ref /ref.nii.gz to /out.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "mri2cbct_resample",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Batch segment /all_scans with /models/nnunet. Save to /masks_out.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "mri2cbct_resample",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Run CLIC on /patients with /models/clic_v1. Output to /masks.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "pre_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Classify meshes in /meshes with resnet and 3 classes to /analysis.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "clic",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Warp /mesh.vtk using butterfly method. Save to /warped_out.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "mri2cbct_resample",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Create dashboard from /reports/summaries. Output to /web_out.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Summarize notes in /data/notes using t5-base. Save to /summaries.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Approximate MRI /mri_dir to CBCT /cbct_ref. Save to /approx_out.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_resample",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register MRI /mri to CBCT /cbct with mask /seg to /aligned.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "LR crop CBCT /c, MRI /m, and Seg /s. Output to /lr_results.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "autocrop3d",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Center MRI /raw using dir -1,0,0,0,-1,0,0,0,1 to /centered.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "mri2cbct_reg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Resample /raw_vol to [256,256,128]. Output to /resampled_out.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "automatrix",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Crop TMJ from /cbct and /mri with /seg. Save to /tmj_out.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "autocrop3d",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Pre-ASO CBCT /data/raw using /models/aso to /aso_out.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "autocrop3d",
+                "mri2cbct_reg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Standardize Upper IOS /ios with gold /ref. Output to /out.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "flexreg",
+                "ali_ios",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Orient CBCT /scans to /gold with Sella,Nasion to /oriented.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "pre_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Semi-ASO Lower IOS /ios to /gold with Cusp,Fossa to /out.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "semi_aso_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Can you find the dots on the bone scans in /data/scans? Use the models in /models/ali and save them to /output. My computer needs /tmp for a second and these are simple files, not DICOM.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "semi_aso_ios",
+                "mri2cbct_resample"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "I need to mark teeth 8 and 9 on the picture at /data/tooth.stl. Use the /models/ios folder and save the result to /output/marks. Please write down what happened in /output/log.txt.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Please color in the top and bottom jaw from the scans in /data/cbct. Use the AI in /models/nnunet and put the new files in /data/results. Save the log to /data/results/info.log.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "pre_aso_ios",
+                "mri2cbct_resample",
+                "ali_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Can you line up the old scans in /data/T1 with the new ones in /data/T2 for the bottom jaw? Put them in /data/lined_up and use /data/tmp for the work. These are not DICOM.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "clic",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Match the first mouth scan in /data/pre with the second one in /data/post. Use the helper model at /models/refine, save it to /data/matched, and log it to /data/matched/log.txt.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Cut out the small boxes from the big scans in /data/scans using the marker file /data/box.json. Save the small pieces in /data/cutouts and log to /data/cutouts/log.txt.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_resample",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Move the scan /data/patient.nii using the directions in /data/tfm. Use /data/ref.nii as the map and save to /data/output. Keep a log at /data/output/run.log.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "autocrop3d",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Find the teeth in all the files in /data/scans at once. Use the models in /models/weights, save the results to /data/out, and log it to /data/out/batch.log.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "pre_aso_ios",
+                "mri2cbct_resample",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Use the CLIC tool to find teeth in the scans at /data/patients. Use the model folder /models/clic and save the masks to /data/masks.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "areg_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Check the tooth shapes in /data/meshes. Use the classification mode with 3 groups and the resnet model. Save to /data/shapes and log to /data/shapes/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "mri2cbct_resample",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Warp the tooth shape at /data/tooth.stl. Use the butterfly way and save the new shape in /data/warped.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "docshapeaxi",
+                "flexreg",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Make a simple webpage to look at the results in /data/summaries. Save the files to /data/web_page.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_ios",
+                "autocrop3d"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Read the patient notes in /data/notes and give me a short summary. Use the t5-base model and save to /data/summary. Log it to /data/summary/log.txt.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Make the MRI scans in /data/mri look like the CBCT scans in /data/cbct. Save the results to /data/approximated.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_ios",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Line up the MRI folder /data/mri with the CBCT folder /data/cbct. Use the masks in /data/masks and save them to /data/registered.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Cut the scans into left and right sides. Use CBCT /data/cbct, MRI /data/mri, and Seg /data/seg. Put the pieces in /data/sides.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Straighten the MRI scans in /data/mri_raw. Use direction -1,0,0,0,-1,0,0,0,1 and Z-spacing 1.5. Save them to /data/straight.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Change the resolution of all my scans in /data/raw to size [256, 256, 128]. Save the new versions to /data/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Cut out the jaw joints from the scans in /data/cbct and /data/mri. Use /data/seg for reference and the model in /models/tmj. Save to /data/joints and log to /data/joints/log.txt.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "semi_aso_ios",
+                "pre_aso_ios",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Clean up the scans in /data/raw for ASO. Use the model in /models/aso, save to /data/pre, and log it to /data/pre/log.txt. These are not DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "automatrix",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Turn the mouth scans in /data/ios the right way using /data/gold. Do teeth 8 and 9 for the top jaw. Save to /data/turned and log to /data/turned/log.txt.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Fix the angle of the scans in /data/scans using the landmarks Sella and Nasion. Use /data/gold as a guide and save to /data/fixed.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "semi_aso_ios",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Turn the mouth shapes in /data/ios using landmarks Cusp and Fossa. Use the top jaw with /data/gold. Save to /data/fixed and log to /data/fixed/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Can you find the landmark points on the patient scans in /data/scans? Use the models in /models/ali and save everything to /output. Use /tmp for the temporary files and note that these are not DICOM files.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "I need to find landmarks for teeth 8 and 9 on the scan file /data/teeth.stl. Use the models in /models/ios and save the results to /output/landmarks. Please keep a log at /output/process.log.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_cbct",
+                "pre_aso_ios",
+                "mri2cbct_resample"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Please segment the Mandible and Maxilla from the scans in /data/cbct_scans. Use the models at /models/nnunet, save them to /data/results, and save the log to /data/results/amasss.log.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "mri2cbct_resample",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Help me align my first scans in /data/T1 with the second scans in /data/T2 using MAND registration. Put the results in /data/aligned and use /data/tmp for temporary files. These are not DICOMs.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "pre_aso_ios",
+                "mri2cbct_approx",
+                "clic"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Can you register the dental scans in /data/pre to the ones in /data/post? Use the refinement model at /models/refine, save the output to /data/registered, and log it to /data/reg.log.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "areg_cbct",
+                "mri2cbct_resample"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "I want to crop my scans in /data/volumes using the marker file /data/markers.json. Save the new files in /data/cropped and use a physical box size. Log the progress to /data/cropped/log.txt.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "autocrop3d",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Apply the movement matrices in /data/tfm to the scan /data/patient.nii. Use /data/ref.nii as a reference and save the result to /data/output. Log it to /data/output/matrix.log.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "pre_aso_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Please run a batch tooth segmentation on the folder /data/scans. Use the models in /models/weights, save the output to /data/segmented, and log the work to /data/segmented/seg.log.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "semi_aso_ios",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Run the CLIC segmentation on the scans in /data/patients. Use the Mask-RCNN model at /models/clic and put the masks in /data/masks.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "areg_cbct",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Analyze the tooth shapes of the meshes in /data/stls using the classification task. Use 3 classes and the resnet model. Save results to /data/analysis and log to /data/analysis/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "pre_aso_ios",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Do a flexible registration for the tooth mesh at /data/tooth.vtk. Use the butterfly method and save the new mesh in /data/flex_output.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "areg_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Make a web dashboard to show the results in /data/results. Save the HTML dashboard files in /data/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Summarize the patient notes in /data/notes using the t5-base model. Put the summaries in /data/summaries and save the log to /data/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Approximate the MRI scans in /data/mri using the CBCT scans in /data/cbct. Put the results in /data/approximated.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register my MRI folder /data/mri to the CBCT folder /data/cbct. Use the masks in /data/masks and save the registered images to /data/registered.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Crop the left and right sides of the scans. CBCT: /data/cbct, MRI: /data/mri, Seg: /data/seg. Put the output crops in /data/lr_crops.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Standardize the MRI scans in /data/mri_raw. Set the direction to -1,0,0,0,-1,0,0,0,1 and Z-spacing to 1.5. Save to /data/mri_centered.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Resample all my images in /data/raw to size [256, 256, 128]. Use /data/resampled for the output folder.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_lr_crop",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Find and crop the TMJ regions from the scans in /data/cbct and /data/mri. Use the segments in /data/seg and the model at /models/tmj. Save to /data/tmj_out and log to /data/tmj_out/log.txt.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "autocrop3d",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Prepare the CBCT scans in /data/raw for ASO. Use the model in /models/aso, save to /data/preprocessed, and log to /data/preprocessed/log.txt. The input is not DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "mri2cbct_resample",
+                "automatrix"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Orient my dental scans in /data/ios for ASO using the gold standard in /data/gold. Process teeth 8 and 9 for the Upper jaw with occlusion. Save to /data/oriented and log to /data/oriented/log.txt.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "semi_aso_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Fix the orientation of my CBCT scans in /data/scans using the gold standard in /data/gold. Use the landmarks Sella and Nasion. Save results to /data/oriented.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "semi_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Orient my dental meshes in /data/ios using the gold folder /data/gold. Use landmarks Cusp and Fossa for the Upper jaw with no occlusion. Save to /data/oriented and log to /data/oriented/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Execute automated cephalometric landmark identification on high-resolution CBCT volumetric datasets located in /data/volumetric_scans. Implement the specialized neural architectures residing in /opt/models/cephalometric_v4. Output the coordinate vectors to /results/landmarks and utilize /tmp/proc for transient histogram equalization data. Note: Input imagery is in NIfTI format.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Perform precise odontometric landmark extraction on the intraoral surface mesh at /clinical/scans/maxillary_arch.stl. Targeted landmarks include 'cusp_tip' and 'central_fossa' for FDI tooth positions 11 and 21. Deploy models from /weights/ios_v2 and export findings to /analysis/metrics. Append telemetry to /analysis/logs/ali_ios.log.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "semi_aso_ios",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Initiate deep-learning-based anatomical segmentation on the CBCT cohort in /research/cohort_A. Targeted structures: 'Mandible, Maxilla, Cranial_Base'. Utilize nnUNet checkpoints in /models/segmentation/amasss. Redirect masks to /output/segmentation and establish a diagnostic log at /output/segmentation/process.log.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "areg_cbct",
+                "amasss_cli"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Execute voxel-based rigid registration of longitudinal CBCT datasets. Baseline (T1) is located in /data/T1; follow-up (T2) is in /data/T2. Specify 'MAX' registration protocol. Persist the aligned volumes and transformation matrices to /results/registration and use /tmp/reg for intermediary caching. Format: Non-DICOM.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "automatrix",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Implement surface-to-surface ICP registration for sequential intraoral scans stored in /ios/T1 and /ios/T2. Leverage the segmentation-refinement neural network at /models/ios/refine_net for enhanced alignment precision. Output registered meshes to /ios/aligned and document convergence metrics in /ios/aligned/registration.log.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "flexreg",
+                "semi_aso_ios",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Perform automated spatial cropping of volumetric scans in /archive/full_volumes based on region-of-interest markers defined in /archive/markers/roi.mrk.json. Preserve physical coordinate box scaling. Export truncated volumes to /archive/roi_crops and log the clipping coordinates to /archive/roi_crops/crop_metrics.log.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "semi_aso_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Apply composite rigid transformation matrices from /transformations/matrices to the patient volume at /patients/P001/volume.nii.gz. Reference spatial domain: /reference/atlas_v3.nii.gz. Target directory: /patients/P001/aligned. Record the spatial mapping in /patients/P001/aligned/matrix_application.log.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "mri2cbct_approx",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Deploy the nnUNet-based dental segmentation pipeline on the CBCT repository at /scans/raw_cbct. Utilize the weight configurations in /opt/nnunet/models/dental_seg. Store resulting multi-label segmentations (teeth, cortical bone) in /scans/segmented and maintain a runtime log at /scans/segmented/batch_execution.log.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "autocrop3d",
+                "areg_cbct",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Execute instance segmentation using the Mask R-CNN architecture on CBCT scans within /clinical/dataset. Model parameters are localized in /models/mask_rcnn_clic. Save the inferred instance masks to /clinical/segmentation_results.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "automatrix",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Conduct morphometric shape analysis and classification on the surface mesh library in /morphology/meshes. Task: 'classification' using a 'resnet' backbone with 3 discrete classes. Models: 'ShapeAXI_V1'. Save results to /morphology/analysis and log metrics to /morphology/analysis/shape.log.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "mri2cbct_resample",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Perform flexible patch-based deformable registration on the dental surface file /models/surface_01.vtk. Implement the 'butterfly' patch methodology for non-rigid mapping. Output the resultant deformed mesh to /results/flex_registration.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "amasss_cli",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Synthesize an interactive analytical dashboard from the clinical summary data in /reports/study_01. Generate the HTML visualization suite in /reports/dashboard_output.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Perform transformer-based NLP summarization on the corpus of clinical narratives in /records/patient_notes. Utilize the 't5-base' architecture for abstractive summarization. Export findings to /records/summaries and log the NLP pipeline execution to /records/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Execute multimodal intensity normalization and spatial domain approximation of MRI datasets in /imaging/mri to the reference CBCT frame in /imaging/cbct. Save the synthesized volumes to /imaging/approximated_scans.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Implement multimodal deformable registration to align the MRI cohort in /data/mri_seq with the CBCT reference in /data/cbct_seq. Incorporate anatomical constraints using CBCT masks from /data/cbct_masks. Persist registered volumes to /data/multimodal_alignment.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Perform bilateral hemimandibular ROI extraction for morphometric asymmetry assessment from registered MRI-CBCT pairs. Inputs: CBCT (/data/cbct), MRI (/data/mri), and Segmentations (/data/seg). Export the asymmetric crops to /data/analysis/lr_crops.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "autocrop3d",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Standardize the anatomical orientation and spatial centering of the MRI volumes in /raw/mri_data. Reorient to cardinal direction [-1, 0, 0, 0, -1, 0, 0, 0, 1] and resample to a Z-axis spacing of 1.5mm. Output: /standardized/mri_volumes.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_orient_center",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Perform isotropic voxel resampling and grid interpolation of the multimodal dataset in /study/raw. Target resolution: [256, 256, 128] with 0.3mm spacing. Save resampled volumes to /study/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Execute automated nnUNet-based segmentation and spatial cropping of the Temporomandibular Joint (TMJ) complex. Process CBCT (/data/cbct), MRI (/data/mri), and segmentations (/data/seg) using weights from /models/tmj_v2. Save ROIs to /data/tmj_crops and log to /data/tmj_crops/tmj.log.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_reg",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Implement standardized orientation normalization for Automatic Segmentation Orientation (ASO) on the CBCT series in /dataset/raw_scans. Deploy models from /opt/aso/pre_aso_v1. Export volumes to /dataset/pre_aso. Input: DICOM. Log: /dataset/pre_aso/pre_aso.log.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "mri2cbct_reg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Standardize intraoral surface orientation for ASO using reference templates from /gold_standard/templates. Process FDI positions '11, 21' for the 'Upper' jaw in an 'occlusion' state. Source: /ios/raw. Save to /ios/oriented and log to /ios/oriented/pre_aso.log.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "semi_aso_ios",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Perform semi-automatic CBCT orientation using landmark-guided ICP registration. Source: /data/unaligned. Reference: /atlas/gold. Utilize landmarks 'Sella, Nasion, Porion' for spatial alignment. Export oriented volumes to /data/standardized.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Implement semi-automatic dental mesh orientation using point-based ICP. Source: /surfaces/raw. Reference: /surfaces/gold. Landmarks: 'Mesial, Distal'. Jaw: 'Lower'. Occlusion: false. Save oriented meshes to /surfaces/standardized and log to /surfaces/standardized/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Peux-tu identifier les points de repère anatomiques sur les volumes CBCT dans /data/scans ? Utilise les modèles de /models/ali, enregistre les résultats dans /output et utilise /tmp pour les fichiers temporaires. Ce ne sont pas des DICOM.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "J'ai besoin d'extraire les landmarks dentaires pour les dents 8 et 9 sur le scan /data/ios_scan.stl. Utilise les modèles dans /weights/ios et sauvegarde dans /results/ios. Log le processus dans /results/ios/ali.log.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "ali_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Effectue une segmentation automatique de la mandibule et du maxillaire sur les scans dans /data/volumes. Utilise les modèles nnUNet de /models/amasss, place les masques dans /output/seg et log l'opération dans /output/seg/amasss.log.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "mri2cbct_tmj_crop",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Ajuste les scans initiaux (T1) de /data/T1 avec les scans de suivi (T2) dans /data/T2 en utilisant une registration de type MAND. Sauvegarde l'alignement dans /data/reg_out et utilise /data/tmp pour le cache. Entrée non-DICOM.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "flexreg",
+                "areg_cbct",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Réalise le recalage des surfaces dentaires entre /scans/T1 et /scans/T2. Utilise le modèle de raffinement dans /models/refine, enregistre le résultat dans /scans/aligned et crée un log dans /scans/aligned/reg.log.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "docshapeaxi",
+                "areg_ios",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Découpe les zones d'intérêt des volumes dans /data/raw en utilisant le fichier de marqueurs ROI /data/roi.json. Enregistre les fichiers recadrés dans /data/cropped et conserve les dimensions physiques. Log : /data/cropped/log.txt.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_reg",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Applique les matrices de transformation de /data/matrices au scan /data/patient.nii.gz. Utilise /data/ref.nii.gz comme référence et sauvegarde le volume transformé dans /data/output. Log le transfert dans /data/output/matrix.log.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "semi_aso_cbct",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Lance une segmentation dentaire par lot sur le dossier /data/cbct_scans. Utilise les poids du modèle dans /models/dental_weights, sauvegarde dans /data/masks et enregistre le log dans /data/masks/batch.log.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Utilise l'outil CLIC pour segmenter les structures dentaires dans /data/patients. Les modèles sont dans /models/clic et les masques de sortie iront dans /data/clic_masks.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "amasss_cli",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Analyse la morphologie des maillages dans /data/meshes. Effectue une classification avec 3 classes via le modèle resnet. Enregistre les résultats dans /data/shape_results et log dans /data/shape_results/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "semi_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Effectue un recalage flexible (deformable) sur la surface /data/tooth.vtk. Utilise la méthode 'butterfly' et place le résultat dans /data/warped_output.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "automatrix",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Génère un tableau de bord interactif à partir des résumés cliniques dans /data/reports. Sauvegarde les fichiers HTML dans /data/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "semi_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Produis une synthèse des notes médicales situées dans /data/notes avec le modèle t5-base. Enregistre les résumés dans /data/summaries et le log dans /data/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Réalise une approximation d'image IRM vers CBCT pour les fichiers dans /data/mri en utilisant /data/cbct comme référence. Sauvegarde les sorties dans /data/approx_images.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Aligne les séquences IRM de /data/mri sur les volumes CBCT de /data/cbct. Utilise les masques de /data/masks pour guider le recalage et sauvegarde dans /data/aligned_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_lr_crop",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Sépare les côtés gauche et droit des scans pour une analyse d'asymétrie. CBCT : /data/cbct, IRM : /data/mri, Seg : /data/seg. Place les dossiers de découpe dans /data/lr_output.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "semi_aso_ios",
+                "mri2cbct_resample"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Réoriente et centre les IRM brutes dans /data/mri_raw. Utilise la direction standard [-1,0,0,0,-1,0,0,0,1] et un espacement Z de 1.5. Sortie : /data/centered_mri.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "automatrix",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Rééchantillonne tous les volumes du dossier /data/raw vers une taille de [256, 256, 128]. Sauvegarde les nouveaux fichiers dans /data/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_orient_center",
+                "ali_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Extrais les régions de l'articulation temporo-mandibulaire (ATM) des scans CBCT et IRM. Utilise les segmentations dans /data/seg et le modèle /models/tmj. Sauvegarde dans /data/tmj_crops et log dans /data/tmj_crops/run.log.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Prépare les scans CBCT dans /data/raw pour l'orientation ASO. Utilise le modèle dans /models/aso, enregistre dans /data/pre_aso et log dans /data/pre_aso/log.txt. Entrée non-DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Standardise l'orientation des scans intraoraux de /data/ios par rapport à la référence /data/gold. Traite les dents 8 et 9 (maxillaire) avec occlusion. Sortie : /data/oriented_ios. Log : /data/oriented_ios/process.log.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "areg_ios",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Réoriente les scans CBCT dans /data/scans en utilisant les points Sella et Nasion. Utilise le dossier de référence /data/gold et sauvegarde dans /data/fixed_orientation.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "mri2cbct_resample"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Ajuste l'orientation des surfaces IOS dans /data/ios via les landmarks Cusp et Fossa. Utilise la mâchoire supérieure et la référence /data/gold. Sauvegarde dans /data/semi_aso_out et log dans /data/semi_aso_out/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "ali_ios",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "I am currently reviewing a complex clinical case involving a patient with severe craniofacial asymmetry. We have just acquired a new set of high-resolution CBCT scans which are stored in the directory /clinical_data/patient_045/scans. For our pre-surgical planning, I need you to identify all relevant anatomical landmarks. Please use the specialized neural network models located in /software/ai_models/v4/ali_weights. It is crucial that the resulting coordinate files are exported directly to /clinical_data/patient_045/results/landmarks for further analysis by the surgical team.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_cbct",
+                "medx_summarize"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0006,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0006,
+            "reasoning": null
+        },
+        {
+            "query": "The orthodontics department has sent over several intraoral scans for a digital wax-up. Specifically, for the mesh file /ortho/capture/upper_arch_final.obj, we need to extract the precise dental landmarks for the central incisors, specifically teeth 8 and 9. We should be using the IOS-specific landmarking weights found in /shared/models/ios_ref. Once the processing is complete, please ensure the output data is saved within the /ortho/analysis/incisors directory to maintain our file organization standards.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0005,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0005,
+            "reasoning": null
+        },
+        {
+            "query": "As part of our automated bone density study, we need to isolate the mandibular structure from the surrounding tissue in the volume located at /imaging/ct_vault/patient_x_head.nii.gz. I would like you to run the AMASSS segmentation pipeline, focusing exclusively on the Mandible structure. Please point the script to the nnU-Net model weights in /apps/amasss/models. Due to the size of these files, make sure the generated segmentation masks are placed in the dedicated output folder at /imaging/segmentations/mandibular_only.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0005,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0005,
+            "reasoning": null
+        },
+        {
+            "query": "We are conducting a longitudinal study on bone remodeling and need to compare the baseline scan (T1) with the six-month follow-up (T2). The baseline data is located in /research/study_alpha/baseline_scans while the follow-up data is in /research/study_alpha/followup_6m. I need you to perform a rigid registration based on the Mandibular (MAND) alignment type. The transformation results and the registered volumes should be meticulously saved into /research/study_alpha/alignment_outputs/rigid_mand.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "ali_cbct",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0005,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0005,
+            "reasoning": null
+        },
+        {
+            "query": "For the digital dental alignment project, we need to register the surface mesh of the initial intraoral scan /lab/ios/initial_arch.stl with the target arch model /lab/ios/target_arch.stl. Please utilize the high-precision refinement model located in /lab/weights/ios_refine_v2. To ensure that the prosthetic team can access the files immediately, save the final aligned mesh directly into the folder /lab/ios/aligned_results.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "flexreg",
+                "automatrix",
+                "ali_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "The raw volumetric datasets in /storage/raw_cbct_dump are currently too large for our analysis pipeline. We need to perform an automated cropping procedure to focus on the regions of interest. I have prepared a JSON file containing all the necessary ROI coordinates at /storage/config/crop_roi_definitions.json. Please process the scans and save the cropped, smaller volumes into /storage/processed/cropped_scans, ensuring that the physical voxel dimensions are preserved during the operation.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_resample",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0005,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0005,
+            "reasoning": null
+        },
+        {
+            "query": "Following the previous registration step, we now have a set of transformation matrices stored in /work/matrices/batch_01. I need you to apply these specific transformations to the patient volume /work/data/target_patient.nii.gz. You must use /work/data/atlas_reference.nii.gz as the spatial reference file for this operation. The resulting transformed volume needs to be exported to /work/output/transformed_data for final verification.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "semi_aso_cbct",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "We have a large backlog of CBCT scans in the directory /radiology/archive/scans_2025 that require dental segmentation for a retrospective study. I need you to run a batch processing operation using our specialized dental segmentation models found in /ai/dental_seg/nnunet_weights. This is a large-scale task, so please ensure that all the generated tooth masks are organized and saved within the /radiology/outputs/segmented_teeth directory.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "semi_aso_cbct",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "To improve our diagnostic workflow, we are implementing a new Mask-RCNN based segmentation for tooth structures. Please process the cohort of patients located in /hospital/data/patient_cohort_A. You should apply the CLIC model weights which are stored at /hospital/models/clic_mask_rcnn_v3. All individual segmentation maps should be stored in the /hospital/results/clic_segmentations folder for clinical review.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "automatrix",
+                "medx_summarize"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "For our research into tooth morphology, we need to classify a large set of dental meshes based on their shape characteristics. The STL mesh files are located in /research/morphology/meshes. I want you to perform a classification task using the resnet architecture with a configuration for 3 distinct classes. Please use the shape analysis weights from /research/models/shapeaxi_tooth. The final classification reports and data should be saved to /research/morphology/classification_results.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "ali_ios",
+                "medx_dashboard"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0005,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0005,
+            "reasoning": null
+        },
+        {
+            "query": "We are dealing with a highly deformed tooth structure that requires a non-rigid alignment. Please apply a flexible registration to the mesh file at /lab/segmentations/deformed_tooth.vtk. I want you to use the 'butterfly' patch interpolation method to ensure a smooth deformation field. The resulting warped surface mesh should be saved into our results directory at /lab/registrations/flexible_outputs.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "areg_cbct",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "Now that we have completed the summarization of over five hundred patient records, we need to visualize the key findings. Please take all the clinical summary files located in /data/summaries/extracted_text and generate an interactive medx dashboard. The resulting HTML and visualization assets should be compiled and saved into the webserver directory at /var/www/html/clinical_dashboards.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "Our database contains thousands of free-text clinical notes in /clinical_notes/raw_text that are difficult for surgeons to read quickly. I need you to perform a natural language summarization on these notes. Please utilize the t5-base transformer model for this task to ensure high-quality extraction of clinical intent. All the condensed summaries should be saved to the /clinical_notes/summarized_reports directory.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "In this multimodal study, we are attempting to synthesize CBCT-like intensity values from MRI data to aid in bone visualization. Please process the MRI volumes found in /imaging/mri_database. You must use the existing CBCT scans in /imaging/cbct_reference_library as the ground truth reference for the intensity approximation. The synthesized volumes should be exported to /imaging/synthesized_cbct_results.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "To improve our surgical planning, we need to align the soft tissue information from MRI with the hard tissue data from CBCT. Please register the MRI scans in /data/multimodal/mri_scans with the CBCT volumes in /data/multimodal/cbct_scans. You must use the anatomical segmentation masks in /data/multimodal/guidance_masks to facilitate the registration. The aligned multimodal volumes should be saved in /data/multimodal/aligned_registration_outputs.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "batchdentalseg",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "For our bilateral symmetry analysis of the temporomandibular joint, we need to separate the left and right sides of our imaging data. Please process the CBCTs in /data/symmetry/cbct, the MRIs in /data/symmetry/mri, and the existing segmentations in /data/symmetry/seg. I need the left and right ROI crops to be generated and stored in /data/symmetry/separated_crops.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "The raw MRI scans we received from the outside imaging center are not in a standard orientation. Please take all the volumes in /incoming/raw_mri and perform a reorientation and centering procedure. Use the standard radiological direction matrix [-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0] and ensure the acquisition Z-spacing is set to 1.5. The standardized output should be saved to /hospital/standard_mri/centered_data.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "automatrix",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0005,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0005,
+            "reasoning": null
+        },
+        {
+            "query": "To standardize our dataset for deep learning training, all volumes must have the same spatial dimensions. Please take the MRI data in /training/raw_data/MRI and resample every volume to a fixed size of [256, 256, 128]. I want the output to be saved in /training/processed_data/resampled_256. It's important to keep the resolution consistent across the entire batch.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_orient_center",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "We are specifically investigating disorders of the temporomandibular joint (TMJ). I need you to extract the TMJ regions from both the CBCT scans in /research/tmj_study/cbct and the MRI scans in /research/tmj_study/mri. You will need to use the corresponding segmentation masks in /research/tmj_study/masks and the TMJ detection model in /research/models/tmj_net. Please export the localized crops to /research/tmj_study/tmj_localized_crops.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "autocrop3d",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "Before we can perform the full ASO registration, we need to run the preprocessing script on our raw CBCT volumes. Please take all the scans from the /clinic/inbox/raw_cbct folder. Use the ASO-specific preprocessing model weights located at /opt/aso/models/pre_aso_v1. The resulting pre-oriented volumes should be saved to /clinic/processed/pre_aso_cbct_data for the next stage of the pipeline.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "mri2cbct_approx",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "We need to standardize the orientation of several intraoral scans to a common coordinate system. Please process the Upper jaw scans found in the directory /scans/ortho/raw_ios. You must align them to the gold-standard reference models in /scans/ortho/gold_standards. Focus on teeth 8 and 9 for the primary alignment. The resulting oriented mesh files should be saved in /scans/ortho/standardized_ios.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "semi_aso_ios",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "For our cephalometric analysis, we are using a semi-automated approach to orient the CBCT volumes. Please process the scans in /data/ceph/scans_to_orient and align them with the reference volumes in /data/ceph/gold_atlas. The orientation should be calculated using the Sella and Nasion landmarks. Please save all the reoriented CBCT volumes into the output folder /data/ceph/reoriented_volumes.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "semi_aso_ios",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "The prosthetic lab requires the intraoral scans to be oriented based on specific landmarks. Please take the Lower jaw scans from /lab/prosthetic/raw_scans and align them to the gold-standard reference directory at /lab/prosthetic/references. Use the Cusp and Fossa points as the primary landmarks for this semi-automated orientation. All processed files should be saved in /lab/prosthetic/ready_for_design.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0004,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0004,
+            "reasoning": null
+        },
+        {
+            "query": "Identify landmarks on the CBCT scans in /data/scans and save them to /output, but I haven't specified the model directory.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Extract landmarks from /scans/ios.stl for teeth 8 and 9. Where should I put the output?",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "clic",
+                "mri2cbct_tmj_crop",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Run the jaw segmentation on /data/vol.nii.gz using the models in /models/nnunet.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "semi_aso_ios",
+                "batchdentalseg",
+                "ali_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register the T1 scans in /data/T1 and T2 in /data/T2. I want the results in /registered, but which alignment type should I use?",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "flexreg",
+                "areg_cbct",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Align the dental mesh /T1.obj with the target /T2.obj using the refine model in /models/ref.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "automatrix",
+                "batchdentalseg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Crop the volumes in /data/raw and save them to /data/cropped. I forgot to provide the ROI marker file.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_lr_crop",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Apply the matrices from /transforms to the patient file /pat.nii.gz, but I didn't provide a reference file.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "ali_ios",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Start the batch segmentation for the scans in /inbox/scans. Use the weights in /weights/dental.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "pre_aso_ios",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Run CLIC segmentation for the patient data in /data/patients. I have the output folder /results ready.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "medx_dashboard",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Classify the meshes in /data/meshes using the ResNet architecture and 3 classes. I didn't specify the output directory.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "clic",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Apply flexible registration to the mesh /data/tooth.vtk. I want to use the 'butterfly' method.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "automatrix",
+                "flexreg",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Generate a clinical dashboard from the summaries in /data/summaries.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Summarize the medical notes in /data/notes. Save the results to /data/output.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Perform MRI to CBCT intensity approximation for the files in /data/mri. I have the output folder /data/results.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Align MRI sequences in /mri with CBCT volumes in /cbct. I have an output folder /aligned.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_orient_center",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Crop the left and right sides of the CBCT in /cbct and MRI in /mri. Where should the cropped files go?",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Reorient the raw MRI data in /raw_mri to /centered_mri. What direction matrix should I use?",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "automatrix",
+                "medx_dashboard",
+                "ali_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Resample all volumes in /data/raw to [256, 256, 128]. I have an output folder /resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_reg",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Extract TMJ regions from CBCT /c and MRI /m using the models in /models/tmj.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Prepare the CBCT scans in /data/raw for ASO orientation and save to /data/pre_aso. Which model should I use?",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "automatrix",
+                "semi_aso_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Standardize the IOS scan in /data/ios. Dents 8 and 9 are selected. Reference is /gold.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "clic",
+                "ali_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Orient the CBCT scans in /scans using the reference /gold. Landmarks are Sella and Nasion.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "semi_aso_ios",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Adjust the IOS orientation for the Upper jaw using /gold. Landmarks are Cusp and Fossa.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "ali_cbct",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Segment the mandible and maxilla from CBCT scans in /patients/study_a using nnUNet models at /models/amasss. Output to /results/segmentations and temp files in /tmp/amasss",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Identify landmarks on DICOM CBCT scans in /data/dicom_folder. Use model folder /ai/models/ali. Detect points 1,5,10. Save to /output/landmarks and use /tmp/work for processing. Set DCMInput to true.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Run ALI IOS on mesh /meshes/scan01.stl. Models: /models/ios_v2. Detect landmarks: 11 12 13 14. Target teeth: 18 19 20. Output: /processed/ios. Log: /logs/ios_01.log",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "semi_aso_ios",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Perform maxilla registration (MAX) between T1 /data/T1 and T2 /data/T2. Results to /output/reg. Temp folder /tmp/reg. Input is DICOM.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "mri2cbct_resample",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register IOS surfaces from /ios/baseline to /ios/followup. Use model /models/refinement. Save to /ios/aligned. Log at /logs/reg_ios.txt. Mode: Auto_IOS.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "areg_ios",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Crop 3D volumes in /scans using markers from /markers/points.mrk.json. Output to /scans/cropped. Box size: true. Log to /logs/crop.log",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_lr_crop",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Apply transformation matrix from /matrices to patient scan /data/patient.nii.gz. Reference: /data/ref.nii.gz. Output: /data/out. Log: /logs/matrix.log. is_seg: false.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "clic",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Perform Mask-RCNN segmentation on CBCTs in /in_scans with model /models/clic. Output to /out_segs.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "automatrix",
+                "amasss_cli"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Shape analysis on VTK meshes in /meshes. Output: /analysis. Data type: surface, Task: classification, Model: my_model, NN: resnet, Classes: 2. Log: /logs/shape.log",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "ali_ios",
+                "medx_dashboard"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Generate MedX Dashboard from summaries in /summaries/output. Save HTML to /dashboards/v1.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Summarize medical notes in /notes using t5-base model. Output to /notes/summaries. Log to /logs/sum.log",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Approximate MRI from /mri_data to CBCT in /cbct_data. Save results to /mri2cbct/approx.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register MRI /mri_vol to CBCT /cbct_vol with mask /masks/cbct_mask.nii.gz. Output to /registered_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Crop left-right regions for MRI /mri and CBCT /cbct using segmentation /seg. Save to /cropped_asymmetry.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "autocrop3d",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Orient and center MRI scans in /raw_mri. Output to /centered_mri. Spacing: 1.5. Direction: '-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0'",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "pre_aso_ios",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Resample CBCT /cbct_in and MRI /mri_in (including T2 and segments) to size [256, 256, 128] with spacing [0.5, 0.5, 0.5]. Output to /resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_lr_crop",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Crop TMJ region using nnUNet model /models/tmj from CBCT /data/cbct and MRI /data/mri with segmentations /data/seg. Output to /tmj_out. Log to /tmp/tmj.log",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "autocrop3d",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Preprocess CBCT scans in /raw for ASO. Use model /models/aso_pre. Output to /preprocessed. Temp log: /tmp/aso.log. DCMInput: true.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "automatrix",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Orient IOS scans in /ios_raw for tooth 14,15,16. Gold standard: /gold/ios. Output: /ios_oriented. Jaw: Upper, Occlusion: false. Log: /logs/pre_aso.log",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "semi_aso_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Semi-auto orientation of CBCT /scans using gold /gold_std. Landmarks: Nasion,Sella,Porion. Output: /oriented_cbct",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "pre_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Semi-auto orient IOS in /data/ios using landmarks L1,L2,L3. Reference: /data/ref. Output: /data/out. Jaw: Lower, Occlusion: true. Log: /data/log.txt",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Detect landmarks 21,22,23 on CBCT /patient/vol.nrrd. Models in /models/ali. Save to /results. Temp in /tmp/ali. DCMInput: false.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "ALI IOS on mesh /mesh/input.vtk with models /models/ios. Landmarks: 1 2. Teeth: 3 4. Output: /out. Log: /out/log.txt",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "ali_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Segment skull structures Maxilla and Mandible from /in/cbct using /models/amasss. Save to /out/seg. Temp: /out/tmp",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register CBCT T1 /t1 to T2 /t2. Reg type: CB. Output: /reg_output. Temp: /reg_tmp. DCMInput: true.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "areg_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "IOS Registration T1: /s1, T2: /s2. Model: /mod/reg. Output: /aligned. Log: /aligned/reg.log. Mode: Auto_IOS",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "flexreg",
+                "areg_ios",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "AutoCrop3D: Scans at /vol, Markers at /vol/m.json. Output: /vol/crop. Box size: false. Log: /vol/crop.log",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "areg_cbct",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Apply matrix to /pat/scan.nii.gz from /pat/mat. Reference: /pat/ref.nii.gz. Output: /pat/out. Log: /pat/log. is_seg: true. fromAreg: true.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "CLIC segmentation for /scans/dicom. Models: /clic_v1. Output: /segs.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "mri2cbct_approx",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "ShapeAXI analysis on /data/meshes. Out: /data/results. Type: mesh, Task: regression, Model: net, NN: vgg, Classes: 1. Log: /data/res.log",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "ali_ios",
+                "medx_dashboard"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Create MedX Dashboard from /results/summaries. Save to /results/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Summarize notes at /in/notes. Model: t5-large. Output: /out/notes. Log: /out/notes.log",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "MRI approximation /mri to CBCT /cbct. Output: /mri_approx.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Register MRI /mri_folder to CBCT /cbct_folder with mask /masks/m.nii.gz. Output: /reg_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "clic",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Left-Right asymmetry crop for CBCT /c, MRI /m, Seg /s. Output: /lrcrop.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_tmj_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Standardize MRI /raw_mri to /standard_mri. Z-spacing: 2.0. Direction: '1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0'",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "mri2cbct_approx",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Resample datasets in /raw to size [128, 128, 64] and spacing [1.0, 1.0, 2.0]. Output: /res.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_lr_crop",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "TMJ Cropping from CBCT /cbct_path and MRI /mri_path. Segs: /seg_path. Model: /tmj_mod. Out: /tmj_crop. Temp: /tmj_tmp.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_tmj_crop",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Pre-ASO CBCT preprocessing on /input_scans. Model: /aso_model. Out: /output_scans. Log: /log_aso. DCMInput: false.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "mri2cbct_approx",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Pre-ASO IOS for teeth 2,3,4. Input: /ios_in, Gold: /ios_gold, Out: /ios_out. Jaw: Lower, Occlusion: true. Log: /ios_pre.log",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "flexreg",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Semi-ASO CBCT alignment. Input: /in, Reference: /ref, Out: /out. Landmarks: A,B,C.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Semi-ASO IOS alignment. Input: /in, Gold: /gold, Out: /out. Landmarks: L1,L2. Jaw: Upper, Occlusion: false. Log: /log.txt",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "areg_cbct",
+                "semi_aso_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Run flexible registration on surface /meshes/upper_jaw.vtk with curve patches. Output folder: /meshes/registered/",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "automatrix",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Can you do patch-based deformable registration on /scans/dental_surface.stl? Use the delete patch type. Save to /scans/flexreg_result/",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "areg_cbct",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Segment dental structures from CBCT folder /data/study_cohort/ using models /opt/nnunet/dental/. Output to /data/study_cohort/segmentations/. Log to /data/study_cohort/seg_log.txt",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "amasss_cli",
+                "clic",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Can you process multiple CBCT scans for dental segmentation? Scans are in /hospital/dental_clinic/cbct_archive/. Models: /hospital/models/teeth_seg/. Results folder: /hospital/dental_clinic/auto_seg/. Log: /hospital/dental_clinic/process.log",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_ios",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Podes identificar os pontos de referência anatômicos nos volumes CBCT em /data/scans? Usa os modelos de /models/ali, guarda os resultados em /output e utiliza /tmp para ficheiros temporários. Não são DICOM.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_lr_crop",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Preciso de extrair os marcos dentários para os dentes 8 e 9 no scan /data/ios_scan.stl. Usa os modelos em /weights/ios e guarda em /results/ios. Regista o processo em /results/ios/ali.log.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "semi_aso_cbct",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Executa uma segmentação automática da mandíbula e do maxilar nos scans em /data/volumes. Usa os modelos nnUNet de /models/amasss, coloca as máscaras em /output/seg e regista a operação em /output/seg/amasss.log.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "areg_cbct",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Alinha os scans iniciais (T1) de /data/T1 com os scans de acompanhamento (T2) em /data/T2 usando um registo de tipo MAND. Guarda o alinhamento em /data/reg_out e usa /data/tmp para o cache. Entrada não-DICOM.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_ios",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0003,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0003,
+            "reasoning": null
+        },
+        {
+            "query": "Realiza o registo das superfícies dentárias entre /scans/T1 e /scans/T2. Utiliza o modelo de refinamento em /models/refine, guarda o resultado em /scans/aligned e cria um log em /scans/aligned/reg.log.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Recorta as regiões de interesse dos volumes em /data/raw usando o ficheiro de marcadores ROI /data/roi.json. Guarda os ficheiros recortados em /data/cropped e mantém as dimensões físicas. Log: /data/cropped/log.txt.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_orient_center",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Aplica as matrizes de transformação de /data/matrices ao scan /data/patient.nii.gz. Usa /data/ref.nii.gz como referência e guarda o volume transformado em /data/output. Regista a transferência em /data/output/matrix.log.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "pre_aso_cbct",
+                "autocrop3d"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Inicia uma segmentação dentária por lote na pasta /data/cbct_scans. Usa os pesos do modelo em /models/dental_weights, guarda em /data/masks e regista o log em /data/masks/batch.log.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "ali_cbct",
+                "areg_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Usa a ferramenta CLIC para segmentar as estruturas dentárias em /data/patients. Os modelos estão em /models/clic e as máscaras de saída irão para /data/clic_masks.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "pre_aso_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Analisa a morfologia das malhas em /data/meshes. Efetua uma classificação com 3 classes via modelo resnet. Guarda os resultados em /data/shape_results e log em /data/shape_results/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "flexreg",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Efetua um registo flexível (deformável) na superfície /data/tooth.vtk. Utiliza o método 'butterfly' e coloca o resultado em /data/warped_output.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Gera um painel interativo (dashboard) a partir dos resumos clínicos em /data/reports. Guarda os ficheiros HTML em /data/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "flexreg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Produz uma síntese das notas médicas situadas em /data/notes com o modelo t5-base. Guarda os resumos em /data/summaries e o log em /data/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Realiza uma aproximação de imagem RM para CBCT para os ficheiros em /data/mri usando /data/cbct como referência. Guarda os resultados em /data/approx_images.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Alinha as sequências RM de /data/mri com os volumes CBCT de /data/cbct. Usa as máscaras de /data/masks para guiar o registo e guarda em /data/aligned_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_orient_center",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Separa os lados esquerdo e direito dos scans para análise de assimetria. CBCT: /data/cbct, RM: /data/mri, Seg: /data/seg. Coloca os ficheiros de recorte em /data/lr_output.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "areg_ios",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Reorienta e centra as RM brutas em /data/mri_raw. Usa a direção padrão [-1,0,0,0,-1,0,0,0,1] e um espaçamento Z de 1.5. Saída: /data/centered_mri.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "areg_ios",
+                "mri2cbct_orient_center",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Reamostra todos os volumes da pasta /data/raw para um tamanho de [256, 256, 128]. Guarda os novos ficheiros em /data/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_orient_center",
+                "ali_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Extrai as regiões da articulação temporomandibular (ATM) dos scans CBCT e RM. Usa as segmentações em /data/seg e o modelo /models/tmj. Guarda em /data/tmj_crops e log em /data/tmj_crops/run.log.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "semi_aso_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Prepara os scans CBCT em /data/raw para a orientação ASO. Usa o modelo em /models/aso, guarda em /data/pre_aso e log em /data/pre_aso/log.txt. Entrada não-DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Padroniza a orientação dos scans intraaurais de /data/ios em relação à referência /data/gold. Processa os dentes 8 e 9 (maxila) com oclusão. Saída: /data/oriented_ios. Log: /data/oriented_ios/process.log.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "flexreg",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Reorienta os scans CBCT em /data/scans usando os pontos Sella e Nasion. Usa a pasta de referência /data/gold e guarda em /data/fixed_orientation.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Ajusta a orientação das superfícies IOS em /data/ios via landmarks Cusp e Fossa. Usa a mandíbula superior e a referência /data/gold. Guarda em /data/semi_aso_out e log em /data/semi_aso_out/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "ali_ios",
+                "automatrix",
+                "flexreg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Detecta los puntos de referencia anatómicos en los volúmenes CBCT en /data/scans. Usa los modelos de /models/ali, guarda en /output y usa /tmp para archivos temporales. No son archivos DICOM.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Extrae los landmarks dentales para los dientes 8 y 9 en el escaneo /data/ios_scan.stl. Usa los modelos en /weights/ios y guarda en /results/ios. Registra el proceso en /results/ios/ali.log.",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Realiza una segmentación automática de la mandíbula y el maxilar en los escaneos de /data/volumes. Usa los modelos nnUNet de /models/amasss, guarda las máscaras en /output/seg y registra la operación en /output/seg/amasss.log.",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "mri2cbct_tmj_crop",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Alinea los escaneos iniciales (T1) de /data/T1 con los de seguimiento (T2) en /data/T2 usando registro tipo MAND. Guarda el alineamiento en /data/reg_out y usa /data/tmp para el caché. Entrada no-DICOM.",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Lleva a cabo el registro de superficies dentales entre /scans/T1 y /scans/T2. Utiliza el modelo de refinamiento en /models/refine, guarda el resultado en /scans/aligned y crea un log en /scans/aligned/reg.log.",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "flexreg",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Recorta las regiones de interés de los volúmenes en /data/raw usando el archivo de marcadores ROI /data/roi.json. Guarda los archivos recortados en /data/cropped y mantén las dimensiones físicas. Log: /data/cropped/log.txt.",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "semi_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Aplica las matrices de transformación de /data/matrices al escaneo /data/patient.nii.gz. Usa /data/ref.nii.gz como referencia y guarda el volumen transformado en /data/output. Log en /data/output/matrix.log.",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "semi_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Ejecuta una segmentación dental por lotes en la carpeta /data/cbct_scans. Usa los pesos del modelo en /models/dental_weights, guarda en /data/masks y registra el log en /data/masks/batch.log.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "ali_cbct",
+                "batchdentalseg",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Usa la herramienta CLIC para segmentar las estructuras dentales en /data/patients. Los modelos están en /models/clic y las máscaras de salida irán a /data/clic_masks.",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "flexreg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Analiza la morfología de las mallas en /data/meshes. Realiza una clasificación de 3 clases con el modelo resnet. Guarda los resultados en /data/shape_results y el log en /data/shape_results/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Realiza un registro flexible (deformable) en la superficie /data/tooth.vtk. Usa el método 'butterfly' y coloca el resultado en /data/warped_output.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "semi_aso_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Genera un panel interactivo (dashboard) a partir de los resúmenes clínicos en /data/reports. Guarda los archivos HTML en /data/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "flexreg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Produce una síntesis de las notas médicas en /data/notes con el modelo t5-base. Guarda los resúmenes en /data/summaries y el log en /data/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Realiza una aproximación de imagen RM a CBCT para los archivos en /data/mri usando /data/cbct como referencia. Guarda los resultados en /data/approx_images.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Alinea las secuencias RM de /data/mri con los volúmenes CBCT de /data/cbct. Usa las máscaras de /data/masks para guiar el registro y guarda en /data/aligned_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Separa los lados izquierdo y derecho de los escaneos para análisis de asimetría. CBCT: /data/cbct, RM: /data/mri, Seg: /data/seg. Coloca los recortes en /data/lr_output.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Reorienta y centra las RM brutas en /data/mri_raw. Usa la dirección estándar [-1,0,0,0,-1,0,0,0,1] y un espaciado Z de 1.5. Salida: /data/centered_mri.",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Remuestrea todos los volúmenes en la carpeta /data/raw a un tamaño de [256, 256, 128]. Guarda los nuevos archivos en /data/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "flexreg",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0001,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0001,
+            "reasoning": null
+        },
+        {
+            "query": "Extrae las regiones de la articulación temporomandibular (ATM) de los escaneos CBCT y RM. Usa las segmentaciones en /data/seg y el modelo /models/tmj. Guarda en /data/tmj_crops y log en /data/tmj_crops/run.log.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Prepara los escaneos CBCT en /data/raw para la orientación ASO. Usa el modelo en /models/aso, guarda en /data/pre_aso y log en /data/pre_aso/log.txt. Entrada no-DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Estandariza la orientación de los escaneos intraorales de /data/ios respecto a la referencia /data/gold. Procesa los dientes 8 y 9 (maxilar) con oclusión. Salida: /data/oriented_ios. Log: /data/oriented_ios/process.log.",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "flexreg",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Reorienta los escaneos CBCT en /data/scans usando los puntos Sella y Nasion. Usa la carpeta de referencia /data/gold y guarda en /data/fixed_orientation.",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        },
+        {
+            "query": "Ajusta la orientación de las superficies IOS en /data/ios mediante los landmarks Cusp y Fossa. Usa el maxilar superior y la referencia /data/gold. Guarda en /data/semi_aso_out y log en /data/semi_aso_out/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "ali_ios",
+                "semi_aso_ios",
+                "automatrix"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0002,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0002,
+            "reasoning": null
+        }
+    ]
+}

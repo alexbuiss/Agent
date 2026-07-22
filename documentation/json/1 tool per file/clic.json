@@ -1,0 +1,36 @@
+{
+    "name": "clic",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/CLIC.py",
+    "description": "CLIC - Mask-RCNN CBCT segmentation (GPU/CPU) integrated in 3D Slicer. Instance segmentation of dental and anatomical structures from CBCT using Mask R-CNN with GPU acceleration support for real-time performance.",
+    "tags": [
+        "cbct",
+        "segmentation",
+        "mask-rcnn",
+        "slicer",
+        "gpu",
+        "deep-learning",
+        "instance-segmentation",
+        "dental",
+        "gpu-acceleration"
+    ],
+    "parameters": [
+        {
+            "name": "input_path",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans."
+        },
+        {
+            "name": "model_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing Mask-RCNN model."
+        },
+        {
+            "name": "output_dir",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for segmentations."
+        }
+    ]
+}

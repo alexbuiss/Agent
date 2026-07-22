@@ -1,0 +1,630 @@
+[
+  {
+    "name": "ali_cbct",
+    "description": "Automated Anatomic Landmarks Identification on CBCT scans using AI agents. Detects anatomical reference points on cone-beam CT volumes for precise dental and maxillofacial measurements and analysis.",
+    "tags": [
+      "cbct",
+      "landmarks",
+      "ali",
+      "segmentation",
+      "dicom",
+      "nifti",
+      "agent",
+      "ai",
+      "anatomy",
+      "dental",
+      "maxillofacial",
+      "detection"
+    ],
+    "examples": [
+      "Locate landmarks on CBCT_patient1",
+      "mark points A, B, S and N",
+      "I would like to identify anatomical reference points on my cbct file. I need the landmarks A, Me, ROr and LOr.",
+      "Can you identify landmarks from a list based on the CBCT data imported into the software?",
+      "please identify the following landmarks in the atttached cbcts: Pog, B, A, Por",
+      "\"Identify landmarks on my CBCT scan patient001.nii.gz\"",
+      "\"Run automatic landmark detection on all the CBCT files in my folder /data/cbct_cases/\"",
+      "\"I need to find craniofacial landmarks on this CBCT, can you do that automatically?\"",
+      "\"Place landmarks on the upper jaw bones for pre_op_scan.nii.gz\"",
+      "\"Detect skeletal landmarks on my patient's cone beam CT\""
+    ]
+  },
+  {
+    "name": "ali_ios",
+    "description": "Automatic Landmark Identification in Intraoral Scans (IOS). Detects dental and anatomical landmarks on 3D surface meshes from intraoral scanners for orthodontic and prosthodontic analysis.",
+    "tags": [
+      "ios",
+      "landmarks",
+      "ali",
+      "segmentation",
+      "surface",
+      "mesh",
+      "dental",
+      "intraoral",
+      "3d",
+      "detection",
+      "anatomy"
+    ],
+    "examples": [
+      "Locate landmarks on the scan of patient_1",
+      "identify all of the maxillary cuspids and the midpoint of the maxillary incisal edges",
+      "I would like to identify anatomical reference points on my ios file. I need the landmarks A, Me, ROr and LOr.",
+      "Can you identify landmarks from a list based on the IOS data imported into the software?",
+      "please identify the landmarks in the most occlusal points of the superior canines and first superior molars in the attached intraoral scans",
+      "\"Find tooth landmarks on my intraoral scan model_lower.vtk\"",
+      "\"I want to identify landmarks on tooth #14 and #30 from my IOS file\"",
+      "\"Run automatic landmarking on all IOS files in /cases/ios_scans/\"",
+      "\"Detect landmarks on the upper right molar from my digital model\"",
+      "\"Place landmarks on the segmented intraoral scan using Universal Numbering System labels\""
+    ]
+  },
+  {
+    "name": "amasss_cli",
+    "description": "AMASSS - Anatomical Structures Segmentation from CBCT using deep learning. Automatic segmentation of maxilla, mandible, and other anatomical structures using nnUNet-based models trained on dental CBCT data.",
+    "tags": [
+      "cbct",
+      "segmentation",
+      "nnunet",
+      "anatomical",
+      "mandible",
+      "maxilla",
+      "jaw",
+      "dental",
+      "anatomy",
+      "deep-learning",
+      "ai"
+    ],
+    "examples": [
+      "Please segment the maxilla and mandible from CBCT of patient_1",
+      "segment the maxilla, mandible, condyles, cranial base and airway",
+      "I would like to segment the mandible from the file P001_CBCT_Or.nii.gz",
+      "Can you perform segmentation of anatomical structures, including the base of the skull and maxilla, mandible, mandibular canal, and tooth by tooth, using the provided CBCT scan?",
+      "please segment the mandible and cranial base in the attached cbcts",
+      "\"Segment the skull structures from my CBCT patient_scan.nii.gz\"",
+      "\"I need to segment the mandible and maxilla from this cone beam scan\"",
+      "\"Run AMASSS segmentation on all the CBCTs in this folder\"",
+      "\"Automatically segment the cranial bones from case_003.nii.gz\"",
+      "\"Can you generate surface models of the segmented structures from my CBCT?\""
+    ]
+  },
+  {
+    "name": "areg_cbct",
+    "description": "Automatic Registration of CBCT images for longitudinal studies. Registers baseline and follow-up CBCT scans using deformable or rigid registration to track anatomical changes over time.",
+    "tags": [
+      "cbct",
+      "registration",
+      "voxel",
+      "transformation",
+      "dicom",
+      "longitudinal",
+      "deformable",
+      "rigid",
+      "alignment"
+    ],
+    "examples": [
+      "Register T2 CBCTs of all patients onto T1 CBCTs.",
+      "register T0 and T1 scans at the cranial base",
+      "Register my T1 and T2 cbct files together. The T1 is the fix image and t2 the moving one.",
+      "Can you provide orientation and registration for a T2 CBCT scan over a T1 CBCT scan?",
+      "please, register the t1 and t2 scans attached at the cranial base and mandilbe",
+      "Register my T1 and T2 CBCT scans",
+      "I want to superimpose my pre and post treatment cone beams",
+      "I have segmentation masks already - use them to register my CBCTs",
+      "Do a fully automated registration of all CBCT pairs in my study folder",
+      "Orient and then register my pre and post treatment scans in one step"
+    ]
+  },
+  {
+    "name": "areg_ios",
+    "description": "Automatic Registration of Intraoral Scans using Iterative Closest Point (ICP). Registers baseline and follow-up IOS surfaces for longitudinal dental tracking and treatment outcome assessment.",
+    "tags": [
+      "ios",
+      "registration",
+      "icp",
+      "surface",
+      "transformation",
+      "mesh",
+      "longitudinal",
+      "alignment",
+      "dental"
+    ],
+    "examples": [
+      "Please register T2 scans to T1 scans.",
+      "register T0 and T1 maxillary models using the 1st molars as reference",
+      "Register my t1 and t2 intra oral scan together.",
+      "Can you provide orientation and registration for a T2 IOS over a T1 IOS?",
+      "please register the t1 and t2 of the attached intraoral scans",
+      "Superimpose my T1 and T2 dental models from the IOS scanner",
+      "Register these two intraoral scans to compare tooth movement",
+      "\"Register my two intraoral scans together\"",
+      "\"Align T1_lower_arch.vtk and T2_lower_arch.vtk\"",
+      "\"I have two digital dental models from different timepoints \u2014 can you register them?\""
+    ]
+  },
+  {
+    "name": "autocrop3d",
+    "description": "Automatic 3D region cropping using ROI markers. Extracts and crops regions of interest from 3D volumetric medical images (CT, MRI, CBCT) using point-based or region markers for focused analysis.",
+    "tags": [
+      "crop",
+      "roi",
+      "volume",
+      "marker",
+      "nifti",
+      "nrrd",
+      "cbct",
+      "mri",
+      "ct",
+      "extraction",
+      "region"
+    ],
+    "examples": [
+      "Crop the CBCT to a region of interest",
+      "crop the maxillary cleft region, with mesial limit at the maxillary midline, distal limit distal to maxillary canine, anterior limit at ANS and posterior limit mesial to maxillary 2nd premolar",
+      "Crop my cbct files using markers",
+      "Can you crop with a radius of ...mm from the landmark...?",
+      "please, crop the area around the tmj of the attached MRI and CBCT scans",
+      "Crop my CBCT scan to focus on the mandible",
+      "I have 50 CBCT scans that all need to be cropped to the same region of interest",
+      "Crop this scan using the ROI I defined in Volume Rendering",
+      "Trim all CBCTs in my study to the TMJ region",
+      "Crop my segmentation files and generate VTK surfaces from the result"
+    ]
+  },
+  {
+    "name": "automatrix",
+    "description": "Automatic transformation matrix application to scans and surfaces. Applies pre-computed transformation matrices (rigid, affine, or deformable) to medical images and 3D surface meshes for standardized registration.",
+    "tags": [
+      "transformation",
+      "matrix",
+      "deformation",
+      "registration",
+      "alignment",
+      "affine",
+      "rigid",
+      "warping"
+    ],
+    "examples": [
+      "Mirror all T1 CBCTs",
+      "apply matrix1 to the surface model 2",
+      "Mirror my landmarks and my cbct file",
+      "Can you apply the matrix to the inputted file/folder?",
+      "please, apply the registration matrix to the attached cbct",
+      "Apply a transformation matrix to my CBCT scan",
+      "Mirror my IOS scan",
+      "Apply the registration matrix to all scans in my patient folder",
+      "I need to apply different matrices to different patients in my study",
+      "Transform my landmarks using this .tfm file"
+    ]
+  },
+  {
+    "name": "batchdentalseg",
+    "description": "Batch Dental Segmentation using nnUNet in 3D Slicer. Automated segmentation of dental structures (teeth, bone, soft tissue) from CBCT scans using pre-trained nnUNet deep learning models with batch processing support.",
+    "tags": [
+      "dental",
+      "segmentation",
+      "nnunet",
+      "cbct",
+      "slicer",
+      "teeth",
+      "bone",
+      "deep-learning",
+      "batch",
+      "plugin"
+    ],
+    "examples": [
+      "Segment teeth, maxilla, and mandible from all CBCTs",
+      "segment in blue all the primary teeth, in yellow all the permanent teeth that have crown and root, in red all the crowns only, in green all the bone, and in purple all the soft tissue",
+      "Please segment dental parts of the skull from my folder T1 cbct",
+      "Can you perform dental segmentation/pediatric dental segmentation/nasomaxillary dental segmentation/universal labeling dental segmentation from the provided file?",
+      "please, segment all of the teeth and mandibular canal of the attached cbct scan",
+      "Segment all the teeth in my CBCT scans",
+      "I need to run dental segmentation on a batch of 25 patient scans",
+      "Segment the mixed dentition from my pediatric patient's CBCT",
+      "Run DentalSegmentator on all my files for permanent dentition",
+      "Automatically label every tooth from this cone beam scan"
+    ]
+  },
+  {
+    "name": "clic",
+    "description": "CLIC - Mask-RCNN CBCT segmentation (GPU/CPU) integrated in 3D Slicer. Instance segmentation of dental and anatomical structures from CBCT using Mask R-CNN with GPU acceleration support for real-time performance.",
+    "tags": [
+      "cbct",
+      "segmentation",
+      "mask-rcnn",
+      "slicer",
+      "gpu",
+      "deep-learning",
+      "instance-segmentation",
+      "dental",
+      "gpu-acceleration"
+    ],
+    "examples": [
+      "Help me analyze the impacted canine of patient_1",
+      "segment all primary teeth in blue, and all permanent teeth in yellow",
+      "Segment dental structures from my cbct by using cnn masks",
+      "Can you perform the click mask-rcnn operation using the provided CBCT scan and model?",
+      "please, segment the maxila and superior teeth of the attached cbct",
+      "Check if my patient has impacted canines on this CBCT",
+      "Classify and localize the impacted canines in this scan",
+      "I need to assess canine impaction severity from my CBCT",
+      "Run impacted canine detection on all the CBCTs in my clinic folder",
+      "Where exactly are the impacted canines in my patient's cone beam?"
+    ]
+  },
+  {
+    "name": "docshapeaxi",
+    "description": "Shape Analysis of dental surfaces using ShapeAXI. Statistical shape analysis and classification of 3D dental meshes with GradCAM visualization for interpretability and morphometric feature extraction.",
+    "tags": [
+      "shape",
+      "analysis",
+      "surface",
+      "gradcam",
+      "classification",
+      "mesh",
+      "3d",
+      "morphometry",
+      "dental",
+      "interpretability"
+    ],
+    "examples": [
+      "Classify severity of cleft lip and palate",
+      "classify the airway of this patient",
+      "Analyze my dental meshes and classify them also.",
+      "Can you shape analyze dental surfaces using ShapeAXI?",
+      "please, classify the airway restriction and condyle reabsorption in the attached models",
+      "Classify my airway models for obstruction severity",
+      "I need to assess adenoid hypertrophy from my airway shapes",
+      "Classify my condyle shapes for severity of condylar changes",
+      "Run shape classification on my folder of airway VTK files and get explainability maps",
+      "Predict the percentage of airway obstruction from my 3D models"
+    ]
+  },
+  {
+    "name": "flexreg",
+    "description": "Flexible Patch-based Registration for dental surfaces. Registers 3D dental surface meshes using patch-based deformable registration with butterfly and curve patch methods for precision tooth movement tracking.",
+    "tags": [
+      "registration",
+      "surface",
+      "patch",
+      "deformation",
+      "mesh",
+      "dental",
+      "3d",
+      "deformable",
+      "alignment",
+      "tooth"
+    ],
+    "examples": [
+      "Superimpose T2 onto T1 of all intraoral scans",
+      "register models T0-T1",
+      "register these 2 dental meshes using a special patch type",
+      "Can you perform Flexible Patch-based Registration for dental surfaces?",
+      "please. utilize the outlined patch in the palatal region of the attached ios scan to register t1 and t2 of the ios scans attached",
+      "Register my two IOS scans using the palatal rugae region",
+      "Create a butterfly patch for my intraoral scan registration",
+      "I want to register upper arch IOS scans using a custom palatal region patch",
+      "Register my T1 and T2 dental models using a specific region I'll draw",
+      "Use teeth 4, 5, and 6 for the butterfly patch to register my scans"
+    ]
+  },
+  {
+    "name": "medx_dashboard",
+    "description": "MedX Dashboard - Interactive visualization of medical data and analysis summaries. Generates HTML dashboards for visual exploration of clinical outcomes, measurements, and longitudinal study results.",
+    "tags": [
+      "dashboard",
+      "visualization",
+      "medx",
+      "summarization",
+      "html",
+      "clinical",
+      "web",
+      "reporting",
+      "analytics"
+    ],
+    "examples": [
+      "Visualize my clinical outcomes",
+      "give me a summary of all the encounters related to this patient's airway, including clinicians notes, PSGs, any imaging and their reports",
+      "create me a dashboard of my medical data",
+      "Can you generate HTML dashboards for visual exploration of clinical results?",
+      "\"Summarize the clinical notes in my folder using MedX\"",
+      "\"Run MedX Summarize on the patient records in /data/clinical_notes/\"",
+      "\"Extract and summarize the TMJ comorbidities from these clinical documents\"",
+      "\"Generate structured summaries from the raw patient notes in this folder\"",
+      "\"I have patient notes in PDF and Word format \u2014 summarize them all\"",
+      "\"Process the mixed folder of .pdf, .docx, and .txt files and generate summaries\""
+    ]
+  },
+  {
+    "name": "medx_summarize",
+    "description": "MedX Summarize - Automatic medical text summarization using transformers. Generates concise clinical summaries from patient notes (PDF, DOCX, TXT) using transformer-based NLP models for quick clinical review.",
+    "tags": [
+      "nlp",
+      "summarization",
+      "medx",
+      "pdf",
+      "docx",
+      "transformers",
+      "text",
+      "clinical",
+      "ai",
+      "document"
+    ],
+    "examples": [
+      "Summarize my clinical notes",
+      "summarize the clinical notes related to the cleft palatal surgery for this patient",
+      "summarize me my 200 notes in the folder /raw_notes.",
+      "Can you generate a summary of the clinical condition from the provided medical record data?",
+      "please summarize the findings of the attached patient notes",
+      "\"Generate the dashboard and preview it in the 3D Slicer slice viewer\"",
+      "\"Enable the 'Load in 3D Slicer' option and show the dashboard image in Slicer\"",
+      "\"Run MedX Dashboard and display the result directly in the Slicer interface\"",
+      "\"Show the cohort comorbidity dashboard inside 3D Slicer\"",
+      "\"Show me the population-level comorbidity statistics for my TMJ cohort\""
+    ]
+  },
+  {
+    "name": "mri2cbct_approx",
+    "description": "MRI to CBCT approximation and preprocessing for multimodal registration. Preprocesses MRI and CBCT scans with intensity normalization and spatial reorientation for subsequent multimodal registration and fusion.",
+    "tags": [
+      "mri",
+      "cbct",
+      "registration",
+      "approximation",
+      "transformation",
+      "multimodal",
+      "preprocessing",
+      "normalization"
+    ],
+    "examples": [
+      "Please standardize my CBCT and MRI images before registering them",
+      "register this MRI and CBCT",
+      "Preprocess my cbct and mri files.",
+      "Can you use the provided files for CBCT and MRI approximation?",
+      "please, normalize the orietnation and segmentation and intensity value of the mri and cbct scans for registration",
+      "Approximate my MRI to the CBCT scan",
+      "Approximate MRI and CBCT files from folders XXX",
+      "approx MRI and CBCT",
+      "Can you suggest a tool able to define a close relationship of the same skeletal structures in MRI and CBCT?",
+      "."
+    ]
+  },
+  {
+    "name": "mri2cbct_reg",
+    "description": "MRI to CBCT image registration with intensity normalization. Registers MRI volumes to CBCT reference frames using deformable registration with automatic intensity normalization for joint imaging analysis.",
+    "tags": [
+      "mri",
+      "cbct",
+      "registration",
+      "normalization",
+      "segmentation",
+      "multimodal",
+      "intensity",
+      "deformable"
+    ],
+    "examples": [
+      "Register my CBCTs to MRIs",
+      "register this MRI and CBCT",
+      "Register together an mri and a cbct file",
+      "Can you use the provided files for CBCT and MRI orientation and registration?",
+      "please, register the attched mri and cbct scans at the tmj region",
+      "Register my MRI to the CBCT scan",
+      "I have a bilateral TMJ MRI from DICOM - help me process it correctly",
+      "Run the full MRI to CBCT registration pipeline: orient, resample, approximate, crop, and register",
+      "Superimpose/Register MRI and CBCT files from folders XXX",
+      "Register my MRI and CBCT"
+    ]
+  },
+  {
+    "name": "mri2cbct_lr_crop",
+    "description": "Crop MRI and CBCT volumes for left-right asymmetry analysis. Extracts left and right hemimandibular or hemimaxillary regions from registered MRI-CBCT pairs for bilaterial morphometric comparison and asymmetry assessment.",
+    "tags": [
+      "mri",
+      "cbct",
+      "crop",
+      "left-right",
+      "asymmetry",
+      "hemimandible",
+      "morphometry",
+      "bilateral",
+      "analysis"
+    ],
+    "examples": [
+      "Crop out the left and right side of the mandible from my MRI and CBCT images",
+      "crop these images mesial to the lower 1st molars, distal to the masseter processes, lateral to the ear and mesial to the midline",
+      "Crop from my mri and cbct files the left and the right part",
+      "Can you crop the TMJ region from MRI and CBCT registered?",
+      "please, crop the hemimandibulat and hemimaxilary regions of the attached cbct",
+      "Crop my MRI to be the same size as the CBCT",
+      "Crop MRI and CBCT files from folders XXX into right and left files",
+      "could you crop this MRI around the TMJ",
+      "Can you suggest a tool able to identify facial asymmetry on 3D scans?",
+      "I want to compare the patient's right and left hemiface"
+    ]
+  },
+  {
+    "name": "mri2cbct_orient_center",
+    "description": "Orient and center MRI scans for standardized positioning. Automatically reorients and centers MRI volumes to a canonical anatomical frame of reference for standardized analysis and comparison across subjects.",
+    "tags": [
+      "mri",
+      "orientation",
+      "centering",
+      "registration",
+      "standardization",
+      "preprocessing",
+      "alignment",
+      "anatomical"
+    ],
+    "examples": [
+      "Standardize the orientation of my MRI scans",
+      "orient and center these images following the Frankfort horizontal plane, midsagittal plane and inferior border of the orbits",
+      "standardize position of MRI files, first orient them then center",
+      "Can you register and centralize the MRI scan?",
+      "please adjust the orientation of the attached mri scan",
+      "Orient the CBCT in the same orientation as the MRI",
+      "Orient and center MRI files in folder XXX",
+      "Orient and center This file",
+      "Can you suggest a tool for automated MRI orientation?",
+      "I want to orient the MRI along the Frankfurt plane and the midsagittal plane"
+    ]
+  },
+  {
+    "name": "mri2cbct_resample",
+    "description": "Resample MRI and CBCT to uniform spacing. Interpolates medical images to isotropic or anisotropic target resolution for standardized processing and compatibility with subsequent deep learning or analysis pipelines.",
+    "tags": [
+      "mri",
+      "cbct",
+      "resample",
+      "spacing",
+      "interpolation",
+      "preprocessing",
+      "voxel",
+      "standardization"
+    ],
+    "examples": [
+      "Resample the scans",
+      "resample MRI to match the CBCT",
+      "Can you resample my cbct file using a space of 5mm",
+      "Can you resample the CBCT/MRI/Seg T1 and T2 scans?",
+      "please, resample the attached cbct and mri scans",
+      "Resample my MRI and CBCT to matching resolution",
+      "Please resample all the scans in the folder to the same voxel size.",
+      "Resample MRI and CBCT files in folder XXX",
+      "Please use mri2cbct_resample to resample the CBCT scans in input_folder, to a target size of 521\u00d7521\u00d7450 with 0.3 mm voxel spacing centered and save the results in output_folder.",
+      "Resample my CBCT scans ( input_folder_CBCT) to a 521\u00d7521\u00d7450 volume with 0.3 mm spacing, and save the results in output_folder."
+    ]
+  },
+  {
+    "name": "mri2cbct_tmj_crop",
+    "description": "Automatic Temporomandibular Joint (TMJ) region segmentation and cropping. Automatically segments and extracts TMJ regions from MRI and CBCT scans using trained nnUNet models for focused TMJ analysis and disorder assessment.",
+    "tags": [
+      "tmj",
+      "crop",
+      "segmentation",
+      "nnunet",
+      "cbct",
+      "mri",
+      "joint",
+      "temporomandibular",
+      "anatomy",
+      "medical"
+    ],
+    "examples": [
+      "Crop out the TMJ from my scans",
+      "extract right and left TMJs",
+      "Crop the temporomandibular joint from several cbct and mri files",
+      "Can you crop the TMJ region?",
+      "please, crop the tmj region of the attached mri and cbct scan",
+      "Crop the TMJ region from both my MRI and CBCT",
+      "I have a bilateral TMJ MRI from DICOM - help me process it correctly",
+      "Please segment all the scans in the height of condyle neck.",
+      "Automatically segment and crop each TMJ region (right and left sides separately) from files in folder XXX",
+      "cut around the TMJ"
+    ]
+  },
+  {
+    "name": "pre_aso_cbct",
+    "description": "Preprocessing for Automatic Segmentation Orientation - CBCT. Preprocesses CBCT scans with standardized resampling, orientation correction, and field-of-view adjustment for subsequent automated segmentation pipelines.",
+    "tags": [
+      "cbct",
+      "preprocessing",
+      "orientation",
+      "resampling",
+      "registration",
+      "standardization",
+      "fov",
+      "dental"
+    ],
+    "examples": [
+      "Standardize the orientation of my CBCTs to Frankfurt plane",
+      "standardize all images to 0.3 voxel size, orientation to frankfort horizontal and midsagittal plane, and a field of view of 8x8",
+      "Preprocess my cbct files before the automatic orientation",
+      "Can you orient and segment fully-automated CBCT scan?",
+      "please orient the attached cbct to the frankfrut plane",
+      "Run the full MRI to CBCT registration pipeline: orient, resample, approximate, crop, and register",
+      "Orient all the scans using the frankfurt horizontal and midsagittal plane as reference.",
+      "Preprocess CBCT scans in folder XXX for posterior automatic segmentation orientation",
+      "Please use pre_aso_cbct to preprocess the CBCT scan (input folder) by correcting the orientation on Frankfurt plane, resampling the volume to 521\u00d7521\u00d7450 with 0.3 mm voxel spacing, saving the processed scan in output_folder.",
+      "Use pre_aso_cbct to preprocess this CBCT (input folde4) by correcting the orientation on Frankfurt plane and resampling it to 521\u00d7521\u00d7450 with 0.3 mm voxel size, then save the result in output_folder."
+    ]
+  },
+  {
+    "name": "pre_aso_ios",
+    "description": "Preprocessing for Automatic Segmentation Orientation - IOS. Orients and preprocesses intraoral scan surfaces for standardized coordinate frames and tooth-specific segmentation and analysis.",
+    "tags": [
+      "ios",
+      "preprocessing",
+      "orientation",
+      "surface",
+      "mesh",
+      "dental",
+      "tooth",
+      "3d",
+      "standardization"
+    ],
+    "examples": [
+      "Standardize the orientations of my scans",
+      "segment each tooth individually",
+      "Preprocess my ios files before the automatic orientation",
+      "Can you orient and segment fully-automated IOS?",
+      "please, orient the attacehd ios scans to the occlusal and midsagittal planes",
+      "Orient my intraoral sacn as relative tot he occlusal plane",
+      "orient all dental models using a plane between the canine and first molars and the midsagittal plane as reference.",
+      "Preprocess digital dental models in folder XXX for posterior automatic segmentation orientation",
+      "Please use pre_aso_ios to process the intraoral scans in input_folder, orient them, analyze the selected teeth in list_teeth, specify the jaw and occlusion, and save the processed scans in output_folder.",
+      "Use pre_aso_ios to orient and preprocess the intraoral scans in input_folder for the selected teeth and jaws, saving the results in output_folder"
+    ]
+  },
+  {
+    "name": "semi_aso_cbct",
+    "description": "Semi-Automatic Segmentation Orientation for CBCT using landmarks. Combines manually-placed anatomical landmarks with ICP-based registration to orient and standardize CBCT scans for consistent segmentation.",
+    "tags": [
+      "cbct",
+      "segmentation",
+      "orientation",
+      "landmarks",
+      "icp",
+      "registration",
+      "semi-automatic",
+      "dental"
+    ],
+    "examples": [
+      "Orient my CBCTs and allow me to place my own landmarks for orientation",
+      "orient all images with the Frankfort horizontal parallel to the horizontal plane",
+      "Orient automatically my cbct preprocessed files",
+      "Can you orient and segment semi-automated CBCT scan from the list of reference landmarks?",
+      "I have identified my landmarks for orientation . Now orient my T1 CBCT",
+      "Please orient the scans using N, S, Ba as a plane of reference and RPo N LPo as another.",
+      "Run automatic segmentation orientation of the CBCT scans in folder XXX",
+      "Please use semi_aso_cbct to orient this CBCT scan (input folder) based on the selected anatomical landmarks (list_landmark), aligning the volume to the Frankfurt plane, and save the standardized CBCT in output_folder.",
+      "Use semi_aso_cbct to orient this CBCT (input) using the marked landmarks (list_landmark) so that the scan is aligned with the Frankfurt plane, and export the result to output_folder.",
+      "\u201cOrient this CBCT to the Frankfurt plane using the selected landmarks."
+    ]
+  },
+  {
+    "name": "semi_aso_ios",
+    "description": "Semi-Automatic Segmentation Orientation for IOS using landmarks. Uses manually-placed anatomical landmarks on dental surfaces with ICP registration to establish canonical tooth and jaw coordinate frames for analysis.",
+    "tags": [
+      "ios",
+      "segmentation",
+      "orientation",
+      "landmarks",
+      "icp",
+      "surface",
+      "semi-automatic",
+      "dental",
+      "mesh"
+    ],
+    "examples": [
+      "Orient my intraoral scans and allow me to place my own landmarks for orientation",
+      "orient the models maintaining the occlusal plane parallel to the horizontal plane",
+      "Orient automatically my ios preprocessed files",
+      "Can you orient and segment semi-automated IOS from the list of reference landmarks?",
+      "I have identified my orientation landmarks. Now orient  my IOS.",
+      "Orient the dental models using as reference the landmarks UR6O,UL6O, UR3O, UL3O",
+      "Run automatic segmentation orientation of the digital dental models in folder XXX",
+      "Please use semi_aso_ios to orient these ios (input folder) based on the selected anatomical landmarks (list_landmark), and segmented and save the standardized CBCT in output_folder.",
+      "Use semi_aso_ios to orient and segmented (input folder) using the marked landmarks (list_landmark) and export the result to output_folder.",
+      "Orient these ios using the selected landmarks."
+    ]
+  }
+]

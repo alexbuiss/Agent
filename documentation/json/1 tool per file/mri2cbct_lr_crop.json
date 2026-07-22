@@ -1,0 +1,42 @@
+{
+    "name": "mri2cbct_lr_crop",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_LR_CROP.py",
+    "description": "Crop MRI and CBCT volumes for left-right asymmetry analysis. Extracts left and right hemimandibular or hemimaxillary regions from registered MRI-CBCT pairs for bilaterial morphometric comparison and asymmetry assessment.",
+    "tags": [
+        "mri",
+        "cbct",
+        "crop",
+        "left-right",
+        "asymmetry",
+        "hemimandible",
+        "morphometry",
+        "bilateral",
+        "analysis"
+    ],
+    "parameters": [
+        {
+            "name": "input_folder_CBCT",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans."
+        },
+        {
+            "name": "input_folder_MRI",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI scans."
+        },
+        {
+            "name": "input_folder_Seg",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing segmentations."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for cropped volumes."
+        }
+    ]
+}

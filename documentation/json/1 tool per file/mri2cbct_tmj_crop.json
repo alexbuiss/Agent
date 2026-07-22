@@ -1,0 +1,55 @@
+{
+    "name": "mri2cbct_tmj_crop",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_TMJ_CROP.py",
+    "description": "Automatic Temporomandibular Joint (TMJ) region segmentation and cropping. Automatically segments and extracts TMJ regions from MRI and CBCT scans using trained nnUNet models for focused TMJ analysis and disorder assessment.",
+    "tags": [
+        "tmj",
+        "crop",
+        "segmentation",
+        "nnunet",
+        "cbct",
+        "mri",
+        "joint",
+        "temporomandibular",
+        "anatomy",
+        "medical"
+    ],
+    "parameters": [
+        {
+            "name": "cbct_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans."
+        },
+        {
+            "name": "mri_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI scans."
+        },
+        {
+            "name": "seg_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing segmentations scans."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for cropped TMJ regions."
+        },
+        {
+            "name": "model_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing nnUNet TMJ segmentation model."
+        },
+        {
+            "name": "tmp_folder",
+            "type": "path",
+            "required": true,
+            "description": "Log file path."
+        }
+    ]
+}

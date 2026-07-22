@@ -1,0 +1,51 @@
+{
+    "name": "autocrop3d",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/AutoCrop3D_CLI.py",
+    "description": "Automatic 3D region cropping using ROI markers. Extracts and crops regions of interest from 3D volumetric medical images (CT, MRI, CBCT) using point-based or region markers for focused analysis.",
+    "tags": [
+        "crop",
+        "roi",
+        "volume",
+        "marker",
+        "nifti",
+        "nrrd",
+        "cbct",
+        "mri",
+        "ct",
+        "extraction",
+        "region"
+    ],
+    "parameters": [
+        {
+            "name": "scan_files_path",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing scan files (.nii, .nrrd, etc.)."
+        },
+        {
+            "name": "path_ROI_file",
+            "type": "path",
+            "required": true,
+            "description": "Path to ROI marker file (.mrk.json) or folder."
+        },
+        {
+            "name": "output_path",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for cropped volumes."
+        },
+        {
+            "name": "box_Size",
+            "type": "bool",
+            "default": true,
+            "encode": "python_literal",
+            "description": "ROI box size in physical coordinates."
+        },
+        {
+            "name": "logPath",
+            "type": "path",
+            "required": true,
+            "description": "Progress log file path."
+        }
+    ]
+}

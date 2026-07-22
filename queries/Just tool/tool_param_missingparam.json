@@ -1,0 +1,94 @@
+[
+  [
+    "Identify landmarks on the CBCT scans in /data/scans and save them to /output, but I haven't specified the model directory.",
+    "ali_cbct"
+  ],
+  [
+    "Extract landmarks from /scans/ios.stl for teeth 8 and 9. Where should I put the output?",
+    "ali_ios"
+  ],
+  [
+    "Run the jaw segmentation on /data/vol.nii.gz using the models in /models/nnunet.",
+    "amasss_cli"
+  ],
+  [
+    "Register the T1 scans in /data/T1 and T2 in /data/T2. I want the results in /registered, but which alignment type should I use?",
+    "areg_cbct"
+  ],
+  [
+    "Align the dental mesh /T1.obj with the target /T2.obj using the refine model in /models/ref.",
+    "areg_ios"
+  ],
+  [
+    "Crop the volumes in /data/raw and save them to /data/cropped. I forgot to provide the ROI marker file.",
+    "autocrop3d"
+  ],
+  [
+    "Apply the matrices from /transforms to the patient file /pat.nii.gz, but I didn't provide a reference file.",
+    "automatrix"
+  ],
+  [
+    "Start the batch segmentation for the scans in /inbox/scans. Use the weights in /weights/dental.",
+    "batchdentalseg"
+  ],
+  [
+    "Run CLIC segmentation for the patient data in /data/patients. I have the output folder /results ready.",
+    "clic"
+  ],
+  [
+    "Classify the meshes in /data/meshes using the ResNet architecture and 3 classes. I didn't specify the output directory.",
+    "docshapeaxi"
+  ],
+  [
+    "Apply flexible registration to the mesh /data/tooth.vtk. I want to use the 'butterfly' method.",
+    "flexreg"
+  ],
+  [
+    "Generate a clinical dashboard from the summaries in /data/summaries.",
+    "medx_dashboard"
+  ],
+  [
+    "Summarize the medical notes in /data/notes. Save the results to /data/output.",
+    "medx_summarize"
+  ],
+  [
+    "Perform MRI to CBCT intensity approximation for the files in /data/mri. I have the output folder /data/results.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Align MRI sequences in /mri with CBCT volumes in /cbct. I have an output folder /aligned.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Crop the left and right sides of the CBCT in /cbct and MRI in /mri. Where should the cropped files go?",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Reorient the raw MRI data in /raw_mri to /centered_mri. What direction matrix should I use?",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Resample all volumes in /data/raw to [256, 256, 128]. I have an output folder /resampled.",
+    "mri2cbct_resample"
+  ],
+  [
+    "Extract TMJ regions from CBCT /c and MRI /m using the models in /models/tmj.",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Prepare the CBCT scans in /data/raw for ASO orientation and save to /data/pre_aso. Which model should I use?",
+    "pre_aso_cbct"
+  ],
+  [
+    "Standardize the IOS scan in /data/ios. Dents 8 and 9 are selected. Reference is /gold.",
+    "pre_aso_ios"
+  ],
+  [
+    "Orient the CBCT scans in /scans using the reference /gold. Landmarks are Sella and Nasion.",
+    "semi_aso_cbct"
+  ],
+  [
+    "Adjust the IOS orientation for the Upper jaw using /gold. Landmarks are Cusp and Fossa.",
+    "semi_aso_ios"
+  ]
+]

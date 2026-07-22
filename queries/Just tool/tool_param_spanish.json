@@ -1,0 +1,94 @@
+[
+  [
+    "Detecta los puntos de referencia anatómicos en los volúmenes CBCT en /data/scans. Usa los modelos de /models/ali, guarda en /output y usa /tmp para archivos temporales. No son archivos DICOM.",
+    "ali_cbct"
+  ],
+  [
+    "Extrae los landmarks dentales para los dientes 8 y 9 en el escaneo /data/ios_scan.stl. Usa los modelos en /weights/ios y guarda en /results/ios. Registra el proceso en /results/ios/ali.log.",
+    "ali_ios"
+  ],
+  [
+    "Realiza una segmentación automática de la mandíbula y el maxilar en los escaneos de /data/volumes. Usa los modelos nnUNet de /models/amasss, guarda las máscaras en /output/seg y registra la operación en /output/seg/amasss.log.",
+    "amasss_cli"
+  ],
+  [
+    "Alinea los escaneos iniciales (T1) de /data/T1 con los de seguimiento (T2) en /data/T2 usando registro tipo MAND. Guarda el alineamiento en /data/reg_out y usa /data/tmp para el caché. Entrada no-DICOM.",
+    "areg_cbct"
+  ],
+  [
+    "Lleva a cabo el registro de superficies dentales entre /scans/T1 y /scans/T2. Utiliza el modelo de refinamiento en /models/refine, guarda el resultado en /scans/aligned y crea un log en /scans/aligned/reg.log.",
+    "areg_ios"
+  ],
+  [
+    "Recorta las regiones de interés de los volúmenes en /data/raw usando el archivo de marcadores ROI /data/roi.json. Guarda los archivos recortados en /data/cropped y mantén las dimensiones físicas. Log: /data/cropped/log.txt.",
+    "autocrop3d"
+  ],
+  [
+    "Aplica las matrices de transformación de /data/matrices al escaneo /data/patient.nii.gz. Usa /data/ref.nii.gz como referencia y guarda el volumen transformado en /data/output. Log en /data/output/matrix.log.",
+    "automatrix"
+  ],
+  [
+    "Ejecuta una segmentación dental por lotes en la carpeta /data/cbct_scans. Usa los pesos del modelo en /models/dental_weights, guarda en /data/masks y registra el log en /data/masks/batch.log.",
+    "batchdentalseg"
+  ],
+  [
+    "Usa la herramienta CLIC para segmentar las estructuras dentales en /data/patients. Los modelos están en /models/clic y las máscaras de salida irán a /data/clic_masks.",
+    "clic"
+  ],
+  [
+    "Analiza la morfología de las mallas en /data/meshes. Realiza una clasificación de 3 clases con el modelo resnet. Guarda los resultados en /data/shape_results y el log en /data/shape_results/log.txt.",
+    "docshapeaxi"
+  ],
+  [
+    "Realiza un registro flexible (deformable) en la superficie /data/tooth.vtk. Usa el método 'butterfly' y coloca el resultado en /data/warped_output.",
+    "flexreg"
+  ],
+  [
+    "Genera un panel interactivo (dashboard) a partir de los resúmenes clínicos en /data/reports. Guarda los archivos HTML en /data/dashboard.",
+    "medx_dashboard"
+  ],
+  [
+    "Produce una síntesis de las notas médicas en /data/notes con el modelo t5-base. Guarda los resúmenes en /data/summaries y el log en /data/summaries/medx.log.",
+    "medx_summarize"
+  ],
+  [
+    "Realiza una aproximación de imagen RM a CBCT para los archivos en /data/mri usando /data/cbct como referencia. Guarda los resultados en /data/approx_images.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Alinea las secuencias RM de /data/mri con los volúmenes CBCT de /data/cbct. Usa las máscaras de /data/masks para guiar el registro y guarda en /data/aligned_mri.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Separa los lados izquierdo y derecho de los escaneos para análisis de asimetría. CBCT: /data/cbct, RM: /data/mri, Seg: /data/seg. Coloca los recortes en /data/lr_output.",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Reorienta y centra las RM brutas en /data/mri_raw. Usa la dirección estándar [-1,0,0,0,-1,0,0,0,1] y un espaciado Z de 1.5. Salida: /data/centered_mri.",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Remuestrea todos los volúmenes en la carpeta /data/raw a un tamaño de [256, 256, 128]. Guarda los nuevos archivos en /data/resampled.",
+    "mri2cbct_resample"
+  ],
+  [
+    "Extrae las regiones de la articulación temporomandibular (ATM) de los escaneos CBCT y RM. Usa las segmentaciones en /data/seg y el modelo /models/tmj. Guarda en /data/tmj_crops y log en /data/tmj_crops/run.log.",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Prepara los escaneos CBCT en /data/raw para la orientación ASO. Usa el modelo en /models/aso, guarda en /data/pre_aso y log en /data/pre_aso/log.txt. Entrada no-DICOM.",
+    "pre_aso_cbct"
+  ],
+  [
+    "Estandariza la orientación de los escaneos intraorales de /data/ios respecto a la referencia /data/gold. Procesa los dientes 8 y 9 (maxilar) con oclusión. Salida: /data/oriented_ios. Log: /data/oriented_ios/process.log.",
+    "pre_aso_ios"
+  ],
+  [
+    "Reorienta los escaneos CBCT en /data/scans usando los puntos Sella y Nasion. Usa la carpeta de referencia /data/gold y guarda en /data/fixed_orientation.",
+    "semi_aso_cbct"
+  ],
+  [
+    "Ajusta la orientación de las superficies IOS en /data/ios mediante los landmarks Cusp y Fossa. Usa el maxilar superior y la referencia /data/gold. Guarda en /data/semi_aso_out y log en /data/semi_aso_out/semi.log.",
+    "semi_aso_ios"
+  ]
+]

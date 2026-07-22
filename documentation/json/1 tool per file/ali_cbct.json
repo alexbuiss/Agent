@@ -1,0 +1,63 @@
+{
+    "name": "ali_cbct",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/ALI_CBCT.py",
+    "description": "Automated Anatomic Landmarks Identification on CBCT scans using AI agents. Detects anatomical reference points on cone-beam CT volumes for precise dental and maxillofacial measurements and analysis.",
+    "tags": [
+        "cbct",
+        "landmarks",
+        "ali",
+        "segmentation",
+        "dicom",
+        "nifti",
+        "agent",
+        "ai",
+        "anatomy",
+        "dental",
+        "maxillofacial",
+        "detection"
+    ],
+    "parameters": [
+        {
+            "name": "input",
+            "type": "path",
+            "required": true,
+            "description": "CBCT files (.nii/.nrrd/...) or folder containing the scans."
+        },
+        {
+            "name": "dir_models",
+            "type": "path",
+            "required": true,
+            "description": "Model folder used by ALI."
+        },
+        {
+            "name": "lm_type",
+            "type": "list",
+            "required": true,
+            "encode": "comma_no_brackets",
+            "description": "List of landmark types to detect, separated by comma (no brackets)."
+        },
+        {
+            "name": "output_dir",
+            "type": "path",
+            "required": true,
+            "description": "Output folder where landmarks are saved"
+        },
+        {
+            "name": "temp_fold",
+            "type": "path",
+            "required": true,
+            "description": "Temporary folder for intermediary histogram/spacing"
+        },
+        {
+            "name": "DCMInput",
+            "type": "bool",
+            "default": false,
+            "encode": "lower_str_bool",
+            "description": "Whether input is DICOM format (true) or not (false)"
+        }
+    ],
+    "examples": [
+        "ali cbct on a .nii : \"./ALI_CBCT.nii.gz\" \"models/\" \"1,2,3\" \"./out\" \"./tmp\" false \"[1,0.3]\" \"[1,1]\" \"[64,64,64]\" 10",
+        "ali cbct on DICOM folder : \"./patient01_dcm/\" \"models/\" \"LM1,LM2\" \"./out\" \"./tmp\" true \"[0.6,0.3]\" \"[1,1]\" \"[64,64,64]\" 10"
+    ]
+}

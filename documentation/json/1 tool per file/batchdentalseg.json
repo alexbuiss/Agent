@@ -1,0 +1,43 @@
+{
+    "name": "batchdentalseg",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/BATCHDENTALSEG.py",
+    "description": "Batch Dental Segmentation using nnUNet in 3D Slicer. Automated segmentation of dental structures (teeth, bone, soft tissue) from CBCT scans using pre-trained nnUNet deep learning models with batch processing support.",
+    "tags": [
+        "dental",
+        "segmentation",
+        "nnunet",
+        "cbct",
+        "slicer",
+        "teeth",
+        "bone",
+        "deep-learning",
+        "batch",
+        "plugin"
+    ],
+    "parameters": [
+        {
+            "name": "input_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing dental CBCT scans."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for segmented dental structures."
+        },
+        {
+            "name": "models_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing nnUNet model weights."
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Progress log file."
+        }
+    ]
+}

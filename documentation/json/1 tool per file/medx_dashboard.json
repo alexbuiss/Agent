@@ -1,0 +1,30 @@
+{
+    "name": "medx_dashboard",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MedX_Dashboard.py",
+    "description": "MedX Dashboard - Interactive visualization of medical data and analysis summaries. Generates HTML dashboards for visual exploration of clinical outcomes, measurements, and longitudinal study results.",
+    "tags": [
+        "dashboard",
+        "visualization",
+        "medx",
+        "summarization",
+        "html",
+        "clinical",
+        "web",
+        "reporting",
+        "analytics"
+    ],
+    "parameters": [
+        {
+            "name": "summary_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing summary files."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for dashboard HTML."
+        }
+    ]
+}

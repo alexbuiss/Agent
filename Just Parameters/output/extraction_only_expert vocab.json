@@ -1,0 +1,502 @@
+{
+    "mode": "parameter_extraction_only",
+    "queries_type": "expert vocab",
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 23,
+        "avg_extraction_latency": 2.3245,
+        "total_with_expected_params": 23,
+        "total_perfect_matches": 17,
+        "query_accuracy_percentage": 73.91,
+        "total_expected_individual_params": 119,
+        "total_correct_individual_params": 109,
+        "param_accuracy_percentage": 91.6
+    },
+    "details": [
+        {
+            "prompt": "Execute automated cephalometric landmark identification on high-resolution CBCT volumetric datasets located in /data/volumetric_scans. Implement the specialized neural architectures residing in /opt/models/cephalometric_v4. Output the coordinate vectors to /results/landmarks and utilize /tmp/proc for transient histogram equalization data. Note: Input imagery is in NIfTI format.",
+            "expected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/data/volumetric_scans",
+                "dir_models": "/opt/models/cephalometric_v4",
+                "lm_type": "1,2,3,4,5",
+                "output_dir": "/results/landmarks",
+                "temp_fold": "/tmp/proc",
+                "DCMInput": false
+            },
+            "extracted_params": {
+                "input": "/data/volumetric_scans",
+                "dir_models": "/opt/models/cephalometric_v4",
+                "lm_type": "1,2,3",
+                "output_dir": "/results/landmarks",
+                "temp_fold": "/tmp/proc",
+                "DCMInput": false
+            },
+            "extraction_latency": 2.2954201698303223,
+            "extraction_reasoning": "ali_cbct"
+        },
+        {
+            "prompt": "Perform precise odontometric landmark extraction on the intraoral surface mesh at /clinical/scans/maxillary_arch.stl. Targeted landmarks include 'cusp_tip' and 'central_fossa' for FDI tooth positions 11 and 21. Deploy models from /weights/ios_v2 and export findings to /analysis/metrics. Append telemetry to /analysis/logs/ali_ios.log.",
+            "expected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/clinical/scans/maxillary_arch.stl",
+                "dir_models": "/weights/ios_v2",
+                "lm_type": "cusp_tip central_fossa",
+                "teeth": "11 21",
+                "output_dir": "/analysis/metrics",
+                "log_path": "/analysis/logs/ali_ios.log"
+            },
+            "extracted_params": {
+                "input": "/clinical/scans/maxillary_arch.stl",
+                "dir_models": "/weights/ios_v2",
+                "lm_type": "cusp_tip central_fossa",
+                "teeth": "11 21",
+                "output_dir": "/analysis/metrics",
+                "log_path": "/analysis/logs/ali_ios.log"
+            },
+            "extraction_latency": 2.294398784637451,
+            "extraction_reasoning": "extracted parameters based on the user's prompt"
+        },
+        {
+            "prompt": "Initiate deep-learning-based anatomical segmentation on the CBCT cohort in /research/cohort_A. Targeted structures: 'Mandible, Maxilla, Cranial_Base'. Utilize nnUNet checkpoints in /models/segmentation/amasss. Redirect masks to /output/segmentation and establish a diagnostic log at /output/segmentation/process.log.",
+            "expected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/research/cohort_A",
+                "modelDirectory": "/models/segmentation/amasss",
+                "skullStructure": "Mandible, Maxilla, Cranial_Base",
+                "output_folder": "/output/segmentation",
+                "temp_fold": "/output/segmentation/process.log"
+            },
+            "extracted_params": {
+                "inputVolume": "/research/cohort_A",
+                "modelDirectory": "/models/segmentation/amasss",
+                "skullStructure": "'Mandible, Maxilla, Cranial_Base'",
+                "output_folder": "/output/segmentation",
+                "temp_fold": "/output/segmentation/process.log"
+            },
+            "extraction_latency": 2.053839921951294,
+            "extraction_reasoning": "Extracting parameters from user prompt..."
+        },
+        {
+            "prompt": "Execute voxel-based rigid registration of longitudinal CBCT datasets. Baseline (T1) is located in /data/T1; follow-up (T2) is in /data/T2. Specify 'MAX' registration protocol. Persist the aligned volumes and transformation matrices to /results/registration and use /tmp/reg for intermediary caching. Format: Non-DICOM.",
+            "expected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAX",
+                "output_folder": "/results/registration",
+                "DCMInput": false,
+                "temp_folder": "/tmp/reg"
+            },
+            "extracted_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAX",
+                "output_folder": "/results/registration",
+                "temp_folder": "/tmp/reg",
+                "DCMInput": false,
+                "mask_folder_t1": "None"
+            },
+            "extraction_latency": 2.250286817550659,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Implement surface-to-surface ICP registration for sequential intraoral scans stored in /ios/T1 and /ios/T2. Leverage the segmentation-refinement neural network at /models/ios/refine_net for enhanced alignment precision. Output registered meshes to /ios/aligned and document convergence metrics in /ios/aligned/registration.log.",
+            "expected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/ios/T1",
+                "T2": "/ios/T2",
+                "output": "/ios/aligned",
+                "model": "/models/ios/refine_net",
+                "log_path": "/ios/aligned/registration.log",
+                "areg_mode": "Auto_IOS"
+            },
+            "extracted_params": {
+                "T1": "/ios/T1",
+                "T2": "/ios/T2",
+                "output": "/ios/aligned",
+                "model": "/models/ios/refine_net",
+                "log_path": "/ios/aligned/registration.log",
+                "areg_mode": "Auto_IOS"
+            },
+            "extraction_latency": 3.555968999862671,
+            "extraction_reasoning": "Implement surface-to-surface ICP registration for sequential intraoral scans stored in /ios/T1 and /ios/T2. Leverage the segmentation-refinement neural network at /models/ios/refine_net for enhanced alignment precision. Output registered meshes to /ios/aligned and document convergence metrics in /ios/aligned/registration.log."
+        },
+        {
+            "prompt": "Perform automated spatial cropping of volumetric scans in /archive/full_volumes based on region-of-interest markers defined in /archive/markers/roi.mrk.json. Preserve physical coordinate box scaling. Export truncated volumes to /archive/roi_crops and log the clipping coordinates to /archive/roi_crops/crop_metrics.log.",
+            "expected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/archive/full_volumes",
+                "path_ROI_file": "/archive/markers/roi.mrk.json",
+                "output_path": "/archive/roi_crops",
+                "box_Size": true,
+                "logPath": "/archive/roi_crops/crop_metrics.log"
+            },
+            "extracted_params": {
+                "scan_files_path": "/archive/full_volumes",
+                "path_ROI_file": "/archive/markers/roi.mrk.json",
+                "output_path": "/archive/roi_crops",
+                "box_Size": true,
+                "logPath": "/archive/roi_crops/crop_metrics.log"
+            },
+            "extraction_latency": 2.1551826000213623,
+            "extraction_reasoning": "Automated spatial cropping of volumetric scans"
+        },
+        {
+            "prompt": "Apply composite rigid transformation matrices from /transformations/matrices to the patient volume at /patients/P001/volume.nii.gz. Reference spatial domain: /reference/atlas_v3.nii.gz. Target directory: /patients/P001/aligned. Record the spatial mapping in /patients/P001/aligned/matrix_application.log.",
+            "expected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/patients/P001/volume.nii.gz",
+                "input_matrix": "/transformations/matrices",
+                "reference_file": "/reference/atlas_v3.nii.gz",
+                "fromAreg": false,
+                "output_folder": "/patients/P001/aligned",
+                "log_path": "/patients/P001/aligned/matrix_application.log",
+                "is_seg": false
+            },
+            "extracted_params": {
+                "input_patient": "/patients/P001/volume.nii.gz",
+                "input_matrix": "/transformations/matrices",
+                "reference_file": "/reference/atlas_v3.nii.gz",
+                "output_folder": "/patients/P001/aligned",
+                "log_path": "/patients/P001/aligned/matrix_application.log",
+                "is_seg": false,
+                "fromAreg": false
+            },
+            "extraction_latency": 2.439284086227417,
+            "extraction_reasoning": "Automatrix"
+        },
+        {
+            "prompt": "Deploy the nnUNet-based dental segmentation pipeline on the CBCT repository at /scans/raw_cbct. Utilize the weight configurations in /opt/nnunet/models/dental_seg. Store resulting multi-label segmentations (teeth, cortical bone) in /scans/segmented and maintain a runtime log at /scans/segmented/batch_execution.log.",
+            "expected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/scans/raw_cbct",
+                "output_folder": "/scans/segmented",
+                "models_folder": "/opt/nnunet/models/dental_seg",
+                "log_path": "/scans/segmented/batch_execution.log"
+            },
+            "extracted_params": {
+                "input_folder": "/scans/raw_cbct",
+                "output_folder": "/scans/segmented",
+                "models_folder": "/opt/nnunet/models/dental_seg",
+                "log_path": "/scans/segmented/batch_execution.log"
+            },
+            "extraction_latency": 2.2957329750061035,
+            "extraction_reasoning": "Deploy the nnUNet-based dental segmentation pipeline on the CBCT repository at /scans/raw_cbct."
+        },
+        {
+            "prompt": "Execute instance segmentation using the Mask R-CNN architecture on CBCT scans within /clinical/dataset. Model parameters are localized in /models/mask_rcnn_clic. Save the inferred instance masks to /clinical/segmentation_results.",
+            "expected_tool": "clic",
+            "expected_params": {
+                "input_path": "/clinical/dataset",
+                "model_folder": "/models/mask_rcnn_clic",
+                "output_dir": "/clinical/segmentation_results"
+            },
+            "extracted_params": {
+                "input_path": "/clinical/dataset",
+                "model_folder": "/models/mask_rcnn_clic",
+                "output_dir": "/clinical/segmentation_results"
+            },
+            "extraction_latency": 1.4875340461730957,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Conduct morphometric shape analysis and classification on the surface mesh library in /morphology/meshes. Task: 'classification' using a 'resnet' backbone with 3 discrete classes. Models: 'ShapeAXI_V1'. Save results to /morphology/analysis and log metrics to /morphology/analysis/shape.log.",
+            "expected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/morphology/meshes",
+                "output_dir": "/morphology/analysis",
+                "data_type": "mesh",
+                "task": "classification",
+                "model": "ShapeAXI_V1",
+                "nn": "resnet",
+                "num_classes": 3,
+                "log_path": "/morphology/analysis/shape.log"
+            },
+            "extracted_params": {
+                "input_dir": "/morphology/meshes",
+                "output_dir": "/morphology/analysis",
+                "data_type": "",
+                "task": "classification",
+                "model": "ShapeAXI_V1",
+                "nn": "resnet",
+                "num_classes": 3,
+                "log_path": "/morphology/analysis/shape.log"
+            },
+            "extraction_latency": 2.719090223312378,
+            "extraction_reasoning": "Conduct morphometric shape analysis and classification on the surface mesh library in /morphology/meshes."
+        },
+        {
+            "prompt": "Perform flexible patch-based deformable registration on the dental surface file /models/surface_01.vtk. Implement the 'butterfly' patch methodology for non-rigid mapping. Output the resultant deformed mesh to /results/flex_registration.",
+            "expected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/models/surface_01.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/results/flex_registration"
+            },
+            "extracted_params": {
+                "input_surface": "/models/surface_01.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/results/flex_registration"
+            },
+            "extraction_latency": 1.7414441108703613,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the flexreg tool."
+        },
+        {
+            "prompt": "Synthesize an interactive analytical dashboard from the clinical summary data in /reports/study_01. Generate the HTML visualization suite in /reports/dashboard_output.",
+            "expected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/reports/study_01",
+                "output_folder": "/reports/dashboard_output"
+            },
+            "extracted_params": {
+                "summary_folder": "/reports/study_01",
+                "output_folder": "/reports/dashboard_output"
+            },
+            "extraction_latency": 1.3970346450805664,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the MedX Dashboard tool."
+        },
+        {
+            "prompt": "Perform transformer-based NLP summarization on the corpus of clinical narratives in /records/patient_notes. Utilize the 't5-base' architecture for abstractive summarization. Export findings to /records/summaries and log the NLP pipeline execution to /records/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/records/patient_notes",
+                "input_model": "t5-base",
+                "output_folder": "/records/summaries",
+                "log_path": "/records/summaries/medx.log"
+            },
+            "extracted_params": {
+                "input_notes": "/records/patient_notes",
+                "input_model": "t5-base",
+                "output_folder": "/records/summaries",
+                "log_path": "/records/summaries/medx.log"
+            },
+            "extraction_latency": 2.0340635776519775,
+            "extraction_reasoning": "Perform transformer-based NLP summarization on the corpus of clinical narratives in /records/patient_notes."
+        },
+        {
+            "prompt": "Execute multimodal intensity normalization and spatial domain approximation of MRI datasets in /imaging/mri to the reference CBCT frame in /imaging/cbct. Save the synthesized volumes to /imaging/approximated_scans.",
+            "expected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "cbct_folder": "/imaging/cbct",
+                "mri_folder": "/imaging/mri",
+                "output_folder": "/imaging/approximated_scans"
+            },
+            "extracted_params": {
+                "cbct_folder": "/imaging/cbct",
+                "mri_folder": "/imaging/mri",
+                "output_folder": "/imaging/approximated_scans"
+            },
+            "extraction_latency": 1.611081600189209,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Implement multimodal deformable registration to align the MRI cohort in /data/mri_seq with the CBCT reference in /data/cbct_seq. Incorporate anatomical constraints using CBCT masks from /data/cbct_masks. Persist registered volumes to /data/multimodal_alignment.",
+            "expected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "output_folder": "/data/multimodal_alignment",
+                "mri_folder": "/data/mri_seq",
+                "cbct_folder": "/data/cbct_seq",
+                "cbct_label2": "/data/cbct_masks"
+            },
+            "extracted_params": {
+                "output_folder": "/data/multimodal_alignment",
+                "mri_folder": "/data/mri_seq",
+                "cbct_folder": "/data/cbct_seq",
+                "cbct_label2": "/data/cbct_masks"
+            },
+            "extraction_latency": 3.046553373336792,
+            "extraction_reasoning": "Implement multimodal deformable registration to align the MRI cohort in /data/mri_seq with the CBCT reference in /data/cbct_seq. Incorporate anatomical constraints using CBCT masks from /data/cbct_masks. Persist registered volumes to /data/multimodal_alignment."
+        },
+        {
+            "prompt": "Perform bilateral hemimandibular ROI extraction for morphometric asymmetry assessment from registered MRI-CBCT pairs. Inputs: CBCT (/data/cbct), MRI (/data/mri), and Segmentations (/data/seg). Export the asymmetric crops to /data/analysis/lr_crops.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/data/cbct",
+                "input_folder_MRI": "/data/mri",
+                "input_folder_Seg": "/data/seg",
+                "output_folder": "/data/analysis/lr_crops"
+            },
+            "extracted_params": {
+                "input_folder_CBCT": "/data/cbct",
+                "input_folder_MRI": "/data/mri",
+                "input_folder_Seg": "/data/seg",
+                "output_folder": "/data/analysis/lr_crops"
+            },
+            "extraction_latency": 2.2150485515594482,
+            "extraction_reasoning": "Perform bilateral hemimandibular ROI extraction for morphometric asymmetry assessment from registered MRI-CBCT pairs."
+        },
+        {
+            "prompt": "Standardize the anatomical orientation and spatial centering of the MRI volumes in /raw/mri_data. Reorient to cardinal direction [-1, 0, 0, 0, -1, 0, 0, 0, 1] and resample to a Z-axis spacing of 1.5mm. Output: /standardized/mri_volumes.",
+            "expected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/raw/mri_data",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/standardized/mri_volumes",
+                "acquisition_z_spacing": 1.5
+            },
+            "extracted_params": {
+                "input_folder": "/raw/mri_data",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/standardized/mri_volumes",
+                "acquisition_z_spacing": 1.5
+            },
+            "extraction_latency": 2.8814759254455566,
+            "extraction_reasoning": "Standardize the anatomical orientation and spatial centering of the MRI volumes in /raw/mri_data."
+        },
+        {
+            "prompt": "Perform isotropic voxel resampling and grid interpolation of the multimodal dataset in /study/raw. Target resolution: [256, 256, 128] with 0.3mm spacing. Save resampled volumes to /study/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/study/raw/MRI",
+                "input_folder_T2_MRI": "/study/raw/MRI_T2",
+                "input_folder_CBCT": "/study/raw/CBCT",
+                "input_folder_T2_CBCT": "/study/raw/CBCT_T2",
+                "input_folder_Seg": "/study/raw/Seg",
+                "input_folder_T2_Seg": "/study/raw/Seg_T2",
+                "output_folder": "/study/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "center": false
+            },
+            "extracted_params": {
+                "input_folder_MRI": "/study/raw",
+                "input_folder_T2_MRI": "/study/raw",
+                "input_folder_CBCT": "/study/raw",
+                "input_folder_T2_CBCT": "/study/raw",
+                "input_folder_Seg": "/study/raw",
+                "input_folder_T2_Seg": "/study/raw",
+                "output_folder": "/study/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "center": false
+            },
+            "extraction_latency": 3.8606319427490234,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'mri2cbct_resample' tool."
+        },
+        {
+            "prompt": "Execute automated nnUNet-based segmentation and spatial cropping of the Temporomandibular Joint (TMJ) complex. Process CBCT (/data/cbct), MRI (/data/mri), and segmentations (/data/seg) using weights from /models/tmj_v2. Save ROIs to /data/tmj_crops and log to /data/tmj_crops/tmj.log.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/data/tmj_crops",
+                "model_folder": "/models/tmj_v2",
+                "tmp_folder": "/data/tmj_crops/tmj.log"
+            },
+            "extracted_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/data/tmj_crops",
+                "model_folder": "/models/tmj_v2",
+                "tmp_folder": "/data/tmj_crops/tmj.log"
+            },
+            "extraction_latency": 2.4470064640045166,
+            "extraction_reasoning": "Automated nnUNet-based segmentation and spatial cropping of the Temporomandibular Joint (TMJ) complex."
+        },
+        {
+            "prompt": "Implement standardized orientation normalization for Automatic Segmentation Orientation (ASO) on the CBCT series in /dataset/raw_scans. Deploy models from /opt/aso/pre_aso_v1. Export volumes to /dataset/pre_aso. Input: DICOM. Log: /dataset/pre_aso/pre_aso.log.",
+            "expected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/dataset/raw_scans",
+                "output_folder": "/dataset/pre_aso",
+                "model_folder": "/opt/aso/pre_aso_v1",
+                "temp_folder": "/dataset/pre_aso/pre_aso.log",
+                "DCMInput": true
+            },
+            "extracted_params": {
+                "input": "/dataset/raw_scans",
+                "output_folder": "/dataset/pre_aso",
+                "model_folder": "/opt/aso/pre_aso_v1",
+                "temp_folder": "/dataset/pre_aso/pre_aso.log",
+                "DCMInput": true
+            },
+            "extraction_latency": 2.3747363090515137,
+            "extraction_reasoning": "Implement standardized orientation normalization for Automatic Segmentation Orientation (ASO) on the CBCT series in /dataset/raw_scans."
+        },
+        {
+            "prompt": "Standardize intraoral surface orientation for ASO using reference templates from /gold_standard/templates. Process FDI positions '11, 21' for the 'Upper' jaw in an 'occlusion' state. Source: /ios/raw. Save to /ios/oriented and log to /ios/oriented/pre_aso.log.",
+            "expected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/ios/raw",
+                "gold_folder": "/gold_standard/templates",
+                "output_folder": "/ios/oriented",
+                "list_teeth": "11,21",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": "/ios/oriented/pre_aso.log"
+            },
+            "extracted_params": {
+                "input_folder": "/ios/raw",
+                "gold_folder": "/gold_standard/templates",
+                "output_folder": "/ios/oriented",
+                "list_teeth": "11,21",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": "/ios/oriented/pre_aso.log"
+            },
+            "extraction_latency": 2.4743411540985107,
+            "extraction_reasoning": "Standardize intraoral surface orientation for ASO using reference templates from /gold_standard/templates."
+        },
+        {
+            "prompt": "Perform semi-automatic CBCT orientation using landmark-guided ICP registration. Source: /data/unaligned. Reference: /atlas/gold. Utilize landmarks 'Sella, Nasion, Porion' for spatial alignment. Export oriented volumes to /data/standardized.",
+            "expected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/data/unaligned",
+                "gold_folder": "/atlas/gold",
+                "output_folder": "/data/standardized",
+                "list_landmark": "Sella Nasion Porion"
+            },
+            "extracted_params": {
+                "input": "/data/unaligned",
+                "gold_folder": "/atlas/gold",
+                "output_folder": "/data/standardized",
+                "list_landmark": "Sella Nasion Porion"
+            },
+            "extraction_latency": 1.6766915321350098,
+            "extraction_reasoning": "semi_aso_cbct"
+        },
+        {
+            "prompt": "Implement semi-automatic dental mesh orientation using point-based ICP. Source: /surfaces/raw. Reference: /surfaces/gold. Landmarks: 'Mesial, Distal'. Jaw: 'Lower'. Occlusion: false. Save oriented meshes to /surfaces/standardized and log to /surfaces/standardized/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/surfaces/raw",
+                "gold_folder": "/surfaces/gold",
+                "output_folder": "/surfaces/standardized",
+                "list_landmark": "Mesial,Distal",
+                "occlusion": false,
+                "jaw": "Lower",
+                "log_path": "/surfaces/standardized/semi.log"
+            },
+            "extracted_params": {
+                "input_folder": "/surfaces/raw",
+                "gold_folder": "/surfaces/gold",
+                "output_folder": "/surfaces/standardized",
+                "list_landmark": "'Mesial, Distal'",
+                "occlusion": false,
+                "jaw": "Lower",
+                "log_path": "/surfaces/standardized/semi.log"
+            },
+            "extraction_latency": 2.156473398208618,
+            "extraction_reasoning": "extracted parameters from user prompt"
+        }
+    ]
+}

@@ -1,0 +1,979 @@
+{
+    "mode": "parameter_extraction_only",
+    "queries_type": "beginners",
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 46,
+        "avg_extraction_latency": 2.0155,
+        "total_with_expected_params": 46,
+        "total_perfect_matches": 25,
+        "query_accuracy_percentage": 54.35,
+        "total_expected_individual_params": 238,
+        "total_correct_individual_params": 202,
+        "param_accuracy_percentage": 84.87
+    },
+    "details": [
+        {
+            "prompt": "Can you find the dots on the bone scans in /data/scans? Use the models in /models/ali and save them to /output. My computer needs /tmp for a second and these are simple files, not DICOM.",
+            "expected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/data/scans",
+                "dir_models": "/models/ali",
+                "lm_type": "1,2,3",
+                "output_dir": "/output",
+                "temp_fold": "/tmp",
+                "DCMInput": false
+            },
+            "extracted_params": {
+                "input": "/data/scans",
+                "dir_models": "/models/ali",
+                "lm_type": "dots",
+                "output_dir": "/output",
+                "temp_fold": "/tmp",
+                "DCMInput": false
+            },
+            "extraction_latency": 2.2237112522125244,
+            "extraction_reasoning": "Extracted parameters from user's prompt"
+        },
+        {
+            "prompt": "I need to mark teeth 8 and 9 on the picture at /data/tooth.stl. Use the /models/ios folder and save the result to /output/marks. Please write down what happened in /output/log.txt.",
+            "expected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/data/tooth.stl",
+                "dir_models": "/models/ios",
+                "lm_type": "cusp fossa",
+                "teeth": "8 9",
+                "output_dir": "/output/marks",
+                "log_path": "/output/log.txt"
+            },
+            "extracted_params": {
+                "input": "/data/tooth.stl",
+                "dir_models": "/models/ios",
+                "lm_type": "",
+                "teeth": "8 9",
+                "output_dir": "/output/marks",
+                "log_path": "/output/log.txt"
+            },
+            "extraction_latency": 1.8801147937774658,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Please color in the top and bottom jaw from the scans in /data/cbct. Use the AI in /models/nnunet and put the new files in /data/results. Save the log to /data/results/info.log.",
+            "expected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/data/cbct",
+                "modelDirectory": "/models/nnunet",
+                "skullStructure": "Mandible,Maxilla",
+                "output_folder": "/data/results",
+                "temp_fold": "/data/results/info.log"
+            },
+            "extracted_params": {
+                "inputVolume": "/data/cbct",
+                "modelDirectory": "/models/nnunet",
+                "skullStructure": "top and bottom jaw",
+                "output_folder": "/data/results",
+                "temp_fold": "/data/results/info.log"
+            },
+            "extraction_latency": 1.8498055934906006,
+            "extraction_reasoning": "Extracted parameters based on user's prompt."
+        },
+        {
+            "prompt": "Can you line up the old scans in /data/T1 with the new ones in /data/T2 for the bottom jaw? Put them in /data/lined_up and use /data/tmp for the work. These are not DICOM.",
+            "expected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAND",
+                "output_folder": "/data/lined_up",
+                "DCMInput": false,
+                "temp_folder": "/data/tmp"
+            },
+            "extracted_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAND",
+                "><!-- Assuming rigid registration for bottom jaw alignment. If not specified, default is MAND. --><!-- For other types of registration (MAX or CB), please specify the type.--><br> ": "",
+                "output_folder": "/data/lined_up",
+                "temp_folder": "/data/tmp",
+                "DCMInput": false,
+                "mask_folder_t1": "None"
+            },
+            "extraction_latency": 3.627840757369995,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters to align the old scans with the new ones."
+        },
+        {
+            "prompt": "Match the first mouth scan in /data/pre with the second one in /data/post. Use the helper model at /models/refine, save it to /data/matched, and log it to /data/matched/log.txt.",
+            "expected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/data/pre",
+                "T2": "/data/post",
+                "output": "/data/matched",
+                "model": "/models/refine",
+                "log_path": "/data/matched/log.txt",
+                "areg_mode": "Auto_IOS"
+            },
+            "extracted_params": {
+                "T1": "/data/pre",
+                "T2": "/data/post",
+                "output": "/data/matched",
+                "model": "/models/refine",
+                "log_path": "/data/matched/log.txt",
+                "areg_mode": "Auto_IOS"
+            },
+            "extraction_latency": 1.8970372676849365,
+            "extraction_reasoning": "areg_ios"
+        },
+        {
+            "prompt": "Cut out the small boxes from the big scans in /data/scans using the marker file /data/box.json. Save the small pieces in /data/cutouts and log to /data/cutouts/log.txt.",
+            "expected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/data/scans",
+                "path_ROI_file": "/data/box.json",
+                "output_path": "/data/cutouts",
+                "box_Size": true,
+                "logPath": "/data/cutouts/log.txt"
+            },
+            "extracted_params": {
+                "scan_files_path": "/data/scans",
+                "path_ROI_file": "/data/box.json",
+                "output_path": "/data/cutouts",
+                "logPath": "/data/cutouts/log.txt"
+            },
+            "extraction_latency": 1.8130302429199219,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Move the scan /data/patient.nii using the directions in /data/tfm. Use /data/ref.nii as the map and save to /data/output. Keep a log at /data/output/run.log.",
+            "expected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/data/patient.nii",
+                "input_matrix": "/data/tfm",
+                "reference_file": "/data/ref.nii",
+                "output_folder": "/data/output",
+                "log_path": "/data/output/run.log",
+                "fromAreg": false,
+                "is_seg": false
+            },
+            "extracted_params": {
+                "input_patient": "/data/patient.nii",
+                "input_matrix": "/data/tfm",
+                "reference_file": "/data/ref.nii",
+                "output_folder": "/data/output",
+                "log_path": "/data/output/run.log",
+                "is_seg": false
+            },
+            "extraction_latency": 1.7666261196136475,
+            "extraction_reasoning": "Automatrix CLI"
+        },
+        {
+            "prompt": "Find the teeth in all the files in /data/scans at once. Use the models in /models/weights, save the results to /data/out, and log it to /data/out/batch.log.",
+            "expected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/data/scans",
+                "output_folder": "/data/out",
+                "models_folder": "/models/weights",
+                "log_path": "/data/out/batch.log"
+            },
+            "extracted_params": {
+                "input_folder": "/data/scans",
+                "output_folder": "/data/out",
+                "models_folder": "/models/weights",
+                "log_path": "/data/out/batch.log"
+            },
+            "extraction_latency": 1.3607804775238037,
+            "extraction_reasoning": "batchdentalseg"
+        },
+        {
+            "prompt": "Use the CLIC tool to find teeth in the scans at /data/patients. Use the model folder /models/clic and save the masks to /data/masks.",
+            "expected_tool": "clic",
+            "expected_params": {
+                "input_path": "/data/patients",
+                "model_folder": "/models/clic",
+                "output_dir": "/data/masks"
+            },
+            "extracted_params": {
+                "input_path": "/data/patients",
+                "model_folder": "/models/clic",
+                "output_dir": "/data/masks"
+            },
+            "extraction_latency": 1.3444738388061523,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Check the tooth shapes in /data/meshes. Use the classification mode with 3 groups and the resnet model. Save to /data/shapes and log to /data/shapes/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/data/meshes",
+                "output_dir": "/data/shapes",
+                "data_type": "mesh",
+                "task": "classification",
+                "model": "tooth_model",
+                "nn": "resnet",
+                "num_classes": 3,
+                "log_path": "/data/shapes/log.txt"
+            },
+            "extracted_params": {
+                "input_dir": "/data/meshes",
+                "output_dir": "/data/shapes",
+                "data_type": "",
+                "task": "classification",
+                "model": "resnet",
+                "nn": "",
+                "num_classes": 3,
+                "log_path": "/data/shapes/log.txt"
+            },
+            "extraction_latency": 2.525418758392334,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'docshapeaxi' tool."
+        },
+        {
+            "prompt": "Warp the tooth shape at /data/tooth.stl. Use the butterfly way and save the new shape in /data/warped.",
+            "expected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/data/tooth.stl",
+                "patch_type": "butterfly",
+                "output_folder": "/data/warped"
+            },
+            "extracted_params": {
+                "input_surface": "/data/tooth.stl",
+                "patch_type": "butterfly",
+                "output_folder": "/data"
+            },
+            "extraction_latency": 1.3725247383117676,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Make a simple webpage to look at the results in /data/summaries. Save the files to /data/web_page.",
+            "expected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/data/summaries",
+                "output_folder": "/data/web_page"
+            },
+            "extracted_params": {
+                "summary_folder": "/data/summaries",
+                "output_folder": "/data/web_page"
+            },
+            "extraction_latency": 0.884467601776123,
+            "extraction_reasoning": "none"
+        },
+        {
+            "prompt": "Read the patient notes in /data/notes and give me a short summary. Use the t5-base model and save to /data/summary. Log it to /data/summary/log.txt.",
+            "expected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/data/notes",
+                "input_model": "t5-base",
+                "output_folder": "/data/summary",
+                "log_path": "/data/summary/log.txt"
+            },
+            "extracted_params": {
+                "input_notes": "/data/notes",
+                "input_model": "t5-base",
+                "output_folder": "/data/summary",
+                "log_path": "/data/summary/log.txt"
+            },
+            "extraction_latency": 1.757615327835083,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the MedX Summarize tool."
+        },
+        {
+            "prompt": "Make the MRI scans in /data/mri look like the CBCT scans in /data/cbct. Save the results to /data/approximated.",
+            "expected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "output_folder": "/data/approximated"
+            },
+            "extracted_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "output_folder": "/data/approximated"
+            },
+            "extraction_latency": 1.5272955894470215,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Line up the MRI folder /data/mri with the CBCT folder /data/cbct. Use the masks in /data/masks and save them to /data/registered.",
+            "expected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "output_folder": "/data/registered",
+                "mri_folder": "/data/mri",
+                "cbct_folder": "/data/cbct",
+                "cbct_label2": "/data/masks"
+            },
+            "extracted_params": {
+                "output_folder": "/data/registered",
+                "mri_folder": "/data/mri",
+                "cbct_folder": "/data/cbct",
+                "cbct_label2": "/data/masks"
+            },
+            "extraction_latency": 1.9484078884124756,
+            "extraction_reasoning": "Parameter extraction for 'mri2cbct_reg' tool based on user's prompt."
+        },
+        {
+            "prompt": "Cut the scans into left and right sides. Use CBCT /data/cbct, MRI /data/mri, and Seg /data/seg. Put the pieces in /data/sides.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/data/cbct",
+                "input_folder_MRI": "/data/mri",
+                "input_folder_Seg": "/data/seg",
+                "output_folder": "/data/sides"
+            },
+            "extracted_params": {
+                "input_folder_CBCT": "/data/cbct",
+                "input_folder_MRI": "/data/mri",
+                "input_folder_Seg": "/data/seg",
+                "output_folder": "/data/sides"
+            },
+            "extraction_latency": 1.846442461013794,
+            "extraction_reasoning": "Extracting parameters for mri2cbct_lr_crop tool"
+        },
+        {
+            "prompt": "Straighten the MRI scans in /data/mri_raw. Use direction -1,0,0,0,-1,0,0,0,1 and Z-spacing 1.5. Save them to /data/straight.",
+            "expected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/data/mri_raw",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/data/straight",
+                "acquisition_z_spacing": 1.5
+            },
+            "extracted_params": {
+                "input_folder": "/data/mri_raw",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/data/straight",
+                "acquisition_z_spacing": 1.5
+            },
+            "extraction_latency": 3.6219990253448486,
+            "extraction_reasoning": "User wants to straighten MRI scans from /data/mri_raw using the provided direction (-1,0,0,0,-1,0,0,0,1) and Z-axis spacing (1.5). The output will be saved in /data/straight."
+        },
+        {
+            "prompt": "Change the resolution of all my scans in /data/raw to size [256, 256, 128]. Save the new versions to /data/resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/data/raw/MRI",
+                "input_folder_T2_MRI": "/data/raw/MRI_T2",
+                "input_folder_CBCT": "/data/raw/CBCT",
+                "input_folder_T2_CBCT": "/data/raw/CBCT_T2",
+                "input_folder_Seg": "/data/raw/Seg",
+                "input_folder_T2_Seg": "/data/raw/Seg_T2",
+                "output_folder": "/data/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "center": false
+            },
+            "extracted_params": {
+                "input_folder_MRI": "/data/raw",
+                "input_folder_T2_MRI": "/data/raw",
+                "input_folder_CBCT": "/data/raw",
+                "input_folder_T2_CBCT": "/data/raw",
+                "input_folder_Seg": "/data/raw",
+                "input_folder_T2_Seg": "/data/raw",
+                "output_folder": "/data/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "><!-- default spacing values are used as the user did not specify custom spacing values --><!-- center is set to False by default, but this does not affect the resampling process in this case -->": "",
+                "center": false
+            },
+            "extraction_latency": 5.2410054206848145,
+            "extraction_reasoning": "User wants to resample MRI and CBCT scans from /data/raw to uniform spacing with a resolution of [256, 256, 128] and save them in /data/resampled."
+        },
+        {
+            "prompt": "Cut out the jaw joints from the scans in /data/cbct and /data/mri. Use /data/seg for reference and the model in /models/tmj. Save to /data/joints and log to /data/joints/log.txt.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/data/joints",
+                "model_folder": "/models/tmj",
+                "tmp_folder": "/data/joints/log.txt"
+            },
+            "extracted_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/data/joints",
+                "model_folder": "/models/tmj",
+                "tmp_folder": "/data/joints"
+            },
+            "extraction_latency": 2.04388689994812,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Clean up the scans in /data/raw for ASO. Use the model in /models/aso, save to /data/pre, and log it to /data/pre/log.txt. These are not DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/data/raw",
+                "output_folder": "/data/pre",
+                "model_folder": "/models/aso",
+                "temp_folder": "/data/pre/log.txt",
+                "DCMInput": false
+            },
+            "extracted_params": {
+                "input": "/data/raw",
+                "output_folder": "/data/pre",
+                "model_folder": "/models/aso",
+                "temp_folder": "/data/pre/log.txt",
+                "DCMInput": false
+            },
+            "extraction_latency": 1.6970274448394775,
+            "extraction_reasoning": "pre_aso_cbct"
+        },
+        {
+            "prompt": "Turn the mouth scans in /data/ios the right way using /data/gold. Do teeth 8 and 9 for the top jaw. Save to /data/turned and log to /data/turned/log.txt.",
+            "expected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/turned",
+                "list_teeth": "8,9",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": "/data/turned/log.txt"
+            },
+            "extracted_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/turned",
+                "list_teeth": "8,9",
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/data/turned/log.txt"
+            },
+            "extraction_latency": 1.9731557369232178,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Fix the angle of the scans in /data/scans using the landmarks Sella and Nasion. Use /data/gold as a guide and save to /data/fixed.",
+            "expected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/data/scans",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/fixed",
+                "list_landmark": "Sella Nasion"
+            },
+            "extracted_params": {
+                "input": "/data/scans",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/fixed",
+                "list_landmark": "Sella Nason"
+            },
+            "extraction_latency": 1.4426543712615967,
+            "extraction_reasoning": "extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Turn the mouth shapes in /data/ios using landmarks Cusp and Fossa. Use the top jaw with /data/gold. Save to /data/fixed and log to /data/fixed/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/fixed",
+                "list_landmark": "Cusp,Fossa",
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/data/fixed/semi.log"
+            },
+            "extracted_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/fixed",
+                "list_landmark": "Cusp,Fossa",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": "/data/fixed/semi.log"
+            },
+            "extraction_latency": 1.9890191555023193,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Can you find the landmark points on the patient scans in /data/scans? Use the models in /models/ali and save everything to /output. Use /tmp for the temporary files and note that these are not DICOM files.",
+            "expected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/data/scans",
+                "dir_models": "/models/ali",
+                "lm_type": "1,2,3",
+                "output_dir": "/output",
+                "temp_fold": "/tmp",
+                "DCMInput": false
+            },
+            "extracted_params": {
+                "input": "/data/scans",
+                "dir_models": "/models/ali",
+                "lm_type": "1,2,3",
+                "output_dir": "/output",
+                "temp_fold": "/tmp",
+                "DCMInput": false
+            },
+            "extraction_latency": 1.7034595012664795,
+            "extraction_reasoning": "Parameter extraction from user prompt"
+        },
+        {
+            "prompt": "I need to find landmarks for teeth 8 and 9 on the scan file /data/teeth.stl. Use the models in /models/ios and save the results to /output/landmarks. Please keep a log at /output/process.log.",
+            "expected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/data/teeth.stl",
+                "dir_models": "/models/ios",
+                "lm_type": "cusp fossa",
+                "teeth": "8 9",
+                "output_dir": "/output/landmarks",
+                "log_path": "/output/process.log"
+            },
+            "extracted_params": {
+                "input": "/data/teeth.stl",
+                "dir_models": "/models/ios",
+                "lm_type": "",
+                "teeth": "8 9",
+                "output_dir": "/output/landmarks",
+                "log_path": "/output/process.log"
+            },
+            "extraction_latency": 1.8957140445709229,
+            "extraction_reasoning": "extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Please segment the Mandible and Maxilla from the scans in /data/cbct_scans. Use the models at /models/nnunet, save them to /data/results, and save the log to /data/results/amasss.log.",
+            "expected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/data/cbct_scans",
+                "modelDirectory": "/models/nnunet",
+                "skullStructure": "Mandible,Maxilla",
+                "output_folder": "/data/results",
+                "temp_fold": "/data/results/amasss.log"
+            },
+            "extracted_params": {
+                "inputVolume": "/data/cbct_scans",
+                "modelDirectory": "/models/nnunet",
+                "skullStructure": "Mandible,Maxilla",
+                "output_folder": "/data/results",
+                "temp_fold": "/data/results/amasss.log"
+            },
+            "extraction_latency": 2.2705628871917725,
+            "extraction_reasoning": "Segmenting Mandible and Maxilla from CBCT scans using AMASSS"
+        },
+        {
+            "prompt": "Help me align my first scans in /data/T1 with the second scans in /data/T2 using MAND registration. Put the results in /data/aligned and use /data/tmp for temporary files. These are not DICOMs.",
+            "expected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAND",
+                "output_folder": "/data/aligned",
+                "DCMInput": false,
+                "temp_folder": "/data/tmp"
+            },
+            "extracted_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAND",
+                "output_folder": "/data/aligned",
+                "temp_folder": "/data/tmp"
+            },
+            "extraction_latency": 2.0100185871124268,
+            "extraction_reasoning": "Based on your prompt, I will extract the required parameters to align your first scans with the second scans."
+        },
+        {
+            "prompt": "Can you register the dental scans in /data/pre to the ones in /data/post? Use the refinement model at /models/refine, save the output to /data/registered, and log it to /data/reg.log.",
+            "expected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/data/pre",
+                "T2": "/data/post",
+                "output": "/data/registered",
+                "model": "/models/refine",
+                "log_path": "/data/reg.log",
+                "areg_mode": "Auto_IOS"
+            },
+            "extracted_params": {
+                "T1": "/data/pre",
+                "T2": "/data/post",
+                "output": "/data/registered",
+                "model": "/models/refine",
+                "log_path": "/data/reg.log",
+                "areg_mode": "Auto_IOS"
+            },
+            "extraction_latency": 1.8544907569885254,
+            "extraction_reasoning": "extracting parameters from user prompt"
+        },
+        {
+            "prompt": "I want to crop my scans in /data/volumes using the marker file /data/markers.json. Save the new files in /data/cropped and use a physical box size. Log the progress to /data/cropped/log.txt.",
+            "expected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/data/volumes",
+                "path_ROI_file": "/data/markers.json",
+                "output_path": "/data/cropped",
+                "box_Size": true,
+                "logPath": "/data/cropped/log.txt"
+            },
+            "extracted_params": {
+                "scan_files_path": "/data/volumes",
+                "path_ROI_file": "/data/markers.json",
+                "output_path": "/data/cropped",
+                "box_Size": true,
+                "logPath": "/data/cropped/log.txt"
+            },
+            "extraction_latency": 1.7404165267944336,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Apply the movement matrices in /data/tfm to the scan /data/patient.nii. Use /data/ref.nii as a reference and save the result to /data/output. Log it to /data/output/matrix.log.",
+            "expected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/data/patient.nii",
+                "input_matrix": "/data/tfm",
+                "reference_file": "/data/ref.nii",
+                "output_folder": "/data/output",
+                "log_path": "/data/output/matrix.log",
+                "fromAreg": false,
+                "is_seg": false
+            },
+            "extracted_params": {
+                "input_patient": "/data/patient.nii",
+                "input_matrix": "/data/tfm",
+                "reference_file": "/data/ref.nii",
+                "output_folder": "/data/output",
+                "log_path": "/data/output/matrix.log"
+            },
+            "extraction_latency": 1.872584342956543,
+            "extraction_reasoning": "Automatrix"
+        },
+        {
+            "prompt": "Please run a batch tooth segmentation on the folder /data/scans. Use the models in /models/weights, save the output to /data/segmented, and log the work to /data/segmented/seg.log.",
+            "expected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/data/scans",
+                "output_folder": "/data/segmented",
+                "models_folder": "/models/weights",
+                "log_path": "/data/segmented/seg.log"
+            },
+            "extracted_params": {
+                "input_folder": "/data/scans",
+                "output_folder": "/data/segmented",
+                "models_folder": "/models/weights",
+                "log_path": "/data/segmented/seg.log"
+            },
+            "extraction_latency": 1.5502245426177979,
+            "extraction_reasoning": "Extracting parameters from user prompt..."
+        },
+        {
+            "prompt": "Run the CLIC segmentation on the scans in /data/patients. Use the Mask-RCNN model at /models/clic and put the masks in /data/masks.",
+            "expected_tool": "clic",
+            "expected_params": {
+                "input_path": "/data/patients",
+                "model_folder": "/models/clic",
+                "output_dir": "/data/masks"
+            },
+            "extracted_params": {
+                "input_path": "/data/patients",
+                "model_folder": "/models/clic",
+                "output_dir": "/data/masks"
+            },
+            "extraction_latency": 1.4036900997161865,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Analyze the tooth shapes of the meshes in /data/stls using the classification task. Use 3 classes and the resnet model. Save results to /data/analysis and log to /data/analysis/log.txt.",
+            "expected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/data/stls",
+                "output_dir": "/data/analysis",
+                "data_type": "mesh",
+                "task": "classification",
+                "model": "tooth_model",
+                "nn": "resnet",
+                "num_classes": 3,
+                "log_path": "/data/analysis/log.txt"
+            },
+            "extracted_params": {
+                "input_dir": "/data/stls",
+                "output_dir": "/data/analysis",
+                "data_type": "",
+                "task": "classification",
+                "model": "resnet",
+                "nn": "ResNet",
+                "num_classes": 3,
+                "log_path": "/data/analysis/log.txt"
+            },
+            "extraction_latency": 3.0019118785858154,
+            "extraction_reasoning": "Analyzing tooth shapes of meshes in /data/stls using the classification task with 3 classes and the ResNet model, saving results to /data/analysis and logging to /data/analysis/log.txt."
+        },
+        {
+            "prompt": "Do a flexible registration for the tooth mesh at /data/tooth.vtk. Use the butterfly method and save the new mesh in /data/flex_output.",
+            "expected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/data/tooth.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/data/flex_output"
+            },
+            "extracted_params": {
+                "input_surface": "/data/tooth.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/data"
+            },
+            "extraction_latency": 1.2108702659606934,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Make a web dashboard to show the results in /data/results. Save the HTML dashboard files in /data/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/data/results",
+                "output_folder": "/data/dashboard"
+            },
+            "extracted_params": {
+                "summary_folder": "/data/results",
+                "output_folder": "/data/dashboard"
+            },
+            "extraction_latency": 0.7223360538482666,
+            "extraction_reasoning": "none"
+        },
+        {
+            "prompt": "Summarize the patient notes in /data/notes using the t5-base model. Put the summaries in /data/summaries and save the log to /data/summaries/medx.log.",
+            "expected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/data/notes",
+                "input_model": "t5-base",
+                "output_folder": "/data/summaries",
+                "log_path": "/data/summaries/medx.log"
+            },
+            "extracted_params": {
+                "input_notes": "/data/notes",
+                "input_model": "t5-base",
+                "output_folder": "/data/summaries",
+                "log_path": "/data/summaries/medx.log"
+            },
+            "extraction_latency": 1.8021776676177979,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Approximate the MRI scans in /data/mri using the CBCT scans in /data/cbct. Put the results in /data/approximated.",
+            "expected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "output_folder": "/data/approximated"
+            },
+            "extracted_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "output_folder": "/data/approximated"
+            },
+            "extraction_latency": 1.5363788604736328,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Register my MRI folder /data/mri to the CBCT folder /data/cbct. Use the masks in /data/masks and save the registered images to /data/registered.",
+            "expected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "output_folder": "/data/registered",
+                "mri_folder": "/data/mri",
+                "cbct_folder": "/data/cbct",
+                "cbct_label2": "/data/masks"
+            },
+            "extracted_params": {
+                "output_folder": "/data/registered",
+                "mri_folder": "/data/mri",
+                "cbct_folder": "/data/cbct",
+                "cbct_label2": "/data/masks"
+            },
+            "extraction_latency": 1.5445613861083984,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Crop the left and right sides of the scans. CBCT: /data/cbct, MRI: /data/mri, Seg: /data/seg. Put the output crops in /data/lr_crops.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/data/cbct",
+                "input_folder_MRI": "/data/mri",
+                "input_folder_Seg": "/data/seg",
+                "output_folder": "/data/lr_crops"
+            },
+            "extracted_params": {
+                "input_folder_CBCT": "/data/cbct",
+                "input_folder_MRI": "/data/mri",
+                "input_folder_Seg": "/data/seg",
+                "output_folder": "/data/lr_crops"
+            },
+            "extraction_latency": 1.631669521331787,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Standardize the MRI scans in /data/mri_raw. Set the direction to -1,0,0,0,-1,0,0,0,1 and Z-spacing to 1.5. Save to /data/mri_centered.",
+            "expected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/data/mri_raw",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/data/mri_centered",
+                "acquisition_z_spacing": 1.5
+            },
+            "extracted_params": {
+                "input_folder": "/data/mri_raw",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/data/mri_centered",
+                "acquisition_z_spacing": 1.5
+            },
+            "extraction_latency": 3.819002389907837,
+            "extraction_reasoning": "User wants to standardize MRI scans in /data/mri_raw by setting the direction to -1,0,0,0,-1,0,0,0,1 and Z-spacing to 1.5, then save the results to /data/mri_centered."
+        },
+        {
+            "prompt": "Resample all my images in /data/raw to size [256, 256, 128]. Use /data/resampled for the output folder.",
+            "expected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/data/raw/MRI",
+                "input_folder_T2_MRI": "/data/raw/MRI_T2",
+                "input_folder_CBCT": "/data/raw/CBCT",
+                "input_folder_T2_CBCT": "/data/raw/CBCT_T2",
+                "input_folder_Seg": "/data/raw/Seg",
+                "input_folder_T2_Seg": "/data/raw/Seg_T2",
+                "output_folder": "/data/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "center": false
+            },
+            "extracted_params": {
+                "input_folder_MRI": "/data/raw",
+                "input_folder_T2_MRI": "/data/raw",
+                "input_folder_CBCT": "/data/raw",
+                "input_folder_T2_CBCT": "/data/raw",
+                "input_folder_Seg": "/data/raw",
+                "input_folder_T2_Seg": "/data/raw",
+                "output_folder": "/data/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [],
+                "center": false
+            },
+            "extraction_latency": 3.245253324508667,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the selected tool."
+        },
+        {
+            "prompt": "Find and crop the TMJ regions from the scans in /data/cbct and /data/mri. Use the segments in /data/seg and the model at /models/tmj. Save to /data/tmj_out and log to /data/tmj_out/log.txt.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/data/tmj_out",
+                "model_folder": "/models/tmj",
+                "tmp_folder": "/data/tmj_out/log.txt"
+            },
+            "extracted_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/data/tmj_out",
+                "model_folder": "/models/tmj",
+                "tmp_folder": "/data/tmj_out"
+            },
+            "extraction_latency": 2.273595094680786,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Prepare the CBCT scans in /data/raw for ASO. Use the model in /models/aso, save to /data/preprocessed, and log to /data/preprocessed/log.txt. The input is not DICOM.",
+            "expected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/data/raw",
+                "output_folder": "/data/preprocessed",
+                "model_folder": "/models/aso",
+                "temp_folder": "/data/preprocessed/log.txt",
+                "DCMInput": false
+            },
+            "extracted_params": {
+                "input": "/data/raw",
+                "output_folder": "/data/preprocessed",
+                "model_folder": "/models/aso",
+                "temp_folder": "/data/preprocessed",
+                "DCMInput": false
+            },
+            "extraction_latency": 2.2769761085510254,
+            "extraction_reasoning": "Preparing CBCT scans in /data/raw for ASO using the model in /models/aso, saving to /data/preprocessed, and logging to /data/preprocessed/log.txt."
+        },
+        {
+            "prompt": "Orient my dental scans in /data/ios for ASO using the gold standard in /data/gold. Process teeth 8 and 9 for the Upper jaw with occlusion. Save to /data/oriented and log to /data/oriented/log.txt.",
+            "expected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/oriented",
+                "list_teeth": "8,9",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": "/data/oriented/log.txt"
+            },
+            "extracted_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/oriented",
+                "list_teeth": "8,9",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": "/data/oriented/log.txt"
+            },
+            "extraction_latency": 2.0517144203186035,
+            "extraction_reasoning": "extracting parameters from user prompt"
+        },
+        {
+            "prompt": "Fix the orientation of my CBCT scans in /data/scans using the gold standard in /data/gold. Use the landmarks Sella and Nasion. Save results to /data/oriented.",
+            "expected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/data/scans",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/oriented",
+                "list_landmark": "Sella Nasion"
+            },
+            "extracted_params": {
+                "input": "/data/scans",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/oriented",
+                "list_landmark": "Sella Nasion"
+            },
+            "extraction_latency": 1.5337064266204834,
+            "extraction_reasoning": "Extracted parameters based on user's prompt."
+        },
+        {
+            "prompt": "Orient my dental meshes in /data/ios using the gold folder /data/gold. Use landmarks Cusp and Fossa for the Upper jaw with no occlusion. Save to /data/oriented and log to /data/oriented/semi.log.",
+            "expected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/oriented",
+                "list_landmark": "Cusp,Fossa",
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/data/oriented/semi.log"
+            },
+            "extracted_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/gold",
+                "output_folder": "/data/oriented",
+                "list_landmark": "Cusp,Fossa",
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/data/oriented/semi.log"
+            },
+            "extraction_latency": 2.1291146278381348,
+            "extraction_reasoning": "extracted parameters from user prompt"
+        }
+    ]
+}

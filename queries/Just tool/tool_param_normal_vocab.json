@@ -1,0 +1,186 @@
+[
+  [
+    "Segment the mandible and maxilla from CBCT scans in /patients/study_a using nnUNet models at /models/amasss. Output to /results/segmentations and temp files in /tmp/amasss",
+    "amasss_cli"
+  ],
+  [
+    "Identify landmarks on DICOM CBCT scans in /data/dicom_folder. Use model folder /ai/models/ali. Detect points 1,5,10. Save to /output/landmarks and use /tmp/work for processing. Set DCMInput to true.",
+    "ali_cbct"
+  ],
+  [
+    "Run ALI IOS on mesh /meshes/scan01.stl. Models: /models/ios_v2. Detect landmarks: 11 12 13 14. Target teeth: 18 19 20. Output: /processed/ios. Log: /logs/ios_01.log",
+    "ali_ios"
+  ],
+  [
+    "Perform maxilla registration (MAX) between T1 /data/T1 and T2 /data/T2. Results to /output/reg. Temp folder /tmp/reg. Input is DICOM.",
+    "areg_cbct"
+  ],
+  [
+    "Register IOS surfaces from /ios/baseline to /ios/followup. Use model /models/refinement. Save to /ios/aligned. Log at /logs/reg_ios.txt. Mode: Auto_IOS.",
+    "areg_ios"
+  ],
+  [
+    "Crop 3D volumes in /scans using markers from /markers/points.mrk.json. Output to /scans/cropped. Box size: true. Log to /logs/crop.log",
+    "autocrop3d"
+  ],
+  [
+    "Apply transformation matrix from /matrices to patient scan /data/patient.nii.gz. Reference: /data/ref.nii.gz. Output: /data/out. Log: /logs/matrix.log. is_seg: false.",
+    "automatrix"
+  ],
+  [
+    "Perform Mask-RCNN segmentation on CBCTs in /in_scans with model /models/clic. Output to /out_segs.",
+    "clic"
+  ],
+  [
+    "Shape analysis on VTK meshes in /meshes. Output: /analysis. Data type: surface, Task: classification, Model: my_model, NN: resnet, Classes: 2. Log: /logs/shape.log",
+    "docshapeaxi"
+  ],
+  [
+    "Generate MedX Dashboard from summaries in /summaries/output. Save HTML to /dashboards/v1.",
+    "medx_dashboard"
+  ],
+  [
+    "Summarize medical notes in /notes using t5-base model. Output to /notes/summaries. Log to /logs/sum.log",
+    "medx_summarize"
+  ],
+  [
+    "Approximate MRI from /mri_data to CBCT in /cbct_data. Save results to /mri2cbct/approx.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Register MRI /mri_vol to CBCT /cbct_vol with mask /masks/cbct_mask.nii.gz. Output to /registered_mri.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Crop left-right regions for MRI /mri and CBCT /cbct using segmentation /seg. Save to /cropped_asymmetry.",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Orient and center MRI scans in /raw_mri. Output to /centered_mri. Spacing: 1.5. Direction: '-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0'",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Resample CBCT /cbct_in and MRI /mri_in (including T2 and segments) to size [256, 256, 128] with spacing [0.5, 0.5, 0.5]. Output to /resampled.",
+    "mri2cbct_resample"
+  ],
+  [
+    "Crop TMJ region using nnUNet model /models/tmj from CBCT /data/cbct and MRI /data/mri with segmentations /data/seg. Output to /tmj_out. Log to /tmp/tmj.log",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Preprocess CBCT scans in /raw for ASO. Use model /models/aso_pre. Output to /preprocessed. Temp log: /tmp/aso.log. DCMInput: true.",
+    "pre_aso_cbct"
+  ],
+  [
+    "Orient IOS scans in /ios_raw for tooth 14,15,16. Gold standard: /gold/ios. Output: /ios_oriented. Jaw: Upper, Occlusion: false. Log: /logs/pre_aso.log",
+    "pre_aso_ios"
+  ],
+  [
+    "Semi-auto orientation of CBCT /scans using gold /gold_std. Landmarks: Nasion,Sella,Porion. Output: /oriented_cbct",
+    "semi_aso_cbct"
+  ],
+  [
+    "Semi-auto orient IOS in /data/ios using landmarks L1,L2,L3. Reference: /data/ref. Output: /data/out. Jaw: Lower, Occlusion: true. Log: /data/log.txt",
+    "semi_aso_ios"
+  ],
+  [
+    "Detect landmarks 21,22,23 on CBCT /patient/vol.nrrd. Models in /models/ali. Save to /results. Temp in /tmp/ali. DCMInput: false.",
+    "ali_cbct"
+  ],
+  [
+    "ALI IOS on mesh /mesh/input.vtk with models /models/ios. Landmarks: 1 2. Teeth: 3 4. Output: /out. Log: /out/log.txt",
+    "ali_ios"
+  ],
+  [
+    "Segment skull structures Maxilla and Mandible from /in/cbct using /models/amasss. Save to /out/seg. Temp: /out/tmp",
+    "amasss_cli"
+  ],
+  [
+    "Register CBCT T1 /t1 to T2 /t2. Reg type: CB. Output: /reg_output. Temp: /reg_tmp. DCMInput: true.",
+    "areg_cbct"
+  ],
+  [
+    "IOS Registration T1: /s1, T2: /s2. Model: /mod/reg. Output: /aligned. Log: /aligned/reg.log. Mode: Auto_IOS",
+    "areg_ios"
+  ],
+  [
+    "AutoCrop3D: Scans at /vol, Markers at /vol/m.json. Output: /vol/crop. Box size: false. Log: /vol/crop.log",
+    "autocrop3d"
+  ],
+  [
+    "Apply matrix to /pat/scan.nii.gz from /pat/mat. Reference: /pat/ref.nii.gz. Output: /pat/out. Log: /pat/log. is_seg: true. fromAreg: true.",
+    "automatrix"
+  ],
+  [
+    "CLIC segmentation for /scans/dicom. Models: /clic_v1. Output: /segs.",
+    "clic"
+  ],
+  [
+    "ShapeAXI analysis on /data/meshes. Out: /data/results. Type: mesh, Task: regression, Model: net, NN: vgg, Classes: 1. Log: /data/res.log",
+    "docshapeaxi"
+  ],
+  [
+    "Create MedX Dashboard from /results/summaries. Save to /results/dashboard.",
+    "medx_dashboard"
+  ],
+  [
+    "Summarize notes at /in/notes. Model: t5-large. Output: /out/notes. Log: /out/notes.log",
+    "medx_summarize"
+  ],
+  [
+    "MRI approximation /mri to CBCT /cbct. Output: /mri_approx.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Register MRI /mri_folder to CBCT /cbct_folder with mask /masks/m.nii.gz. Output: /reg_mri.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Left-Right asymmetry crop for CBCT /c, MRI /m, Seg /s. Output: /lrcrop.",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Standardize MRI /raw_mri to /standard_mri. Z-spacing: 2.0. Direction: '1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0'",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Resample datasets in /raw to size [128, 128, 64] and spacing [1.0, 1.0, 2.0]. Output: /res.",
+    "mri2cbct_resample"
+  ],
+  [
+    "TMJ Cropping from CBCT /cbct_path and MRI /mri_path. Segs: /seg_path. Model: /tmj_mod. Out: /tmj_crop. Temp: /tmj_tmp.",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Pre-ASO CBCT preprocessing on /input_scans. Model: /aso_model. Out: /output_scans. Log: /log_aso. DCMInput: false.",
+    "pre_aso_cbct"
+  ],
+  [
+    "Pre-ASO IOS for teeth 2,3,4. Input: /ios_in, Gold: /ios_gold, Out: /ios_out. Jaw: Lower, Occlusion: true. Log: /ios_pre.log",
+    "pre_aso_ios"
+  ],
+  [
+    "Semi-ASO CBCT alignment. Input: /in, Reference: /ref, Out: /out. Landmarks: A,B,C.",
+    "semi_aso_cbct"
+  ],
+  [
+    "Semi-ASO IOS alignment. Input: /in, Gold: /gold, Out: /out. Landmarks: L1,L2. Jaw: Upper, Occlusion: false. Log: /log.txt",
+    "semi_aso_ios"
+  ],
+  [
+    "Run flexible registration on surface /meshes/upper_jaw.vtk with curve patches. Output folder: /meshes/registered/",
+    "flexreg"
+  ],
+  [
+    "Can you do patch-based deformable registration on /scans/dental_surface.stl? Use the delete patch type. Save to /scans/flexreg_result/",
+    "flexreg"
+  ],
+  [
+    "Segment dental structures from CBCT folder /data/study_cohort/ using models /opt/nnunet/dental/. Output to /data/study_cohort/segmentations/. Log to /data/study_cohort/seg_log.txt",
+    "batchdentalseg"
+  ],
+  [
+    "Can you process multiple CBCT scans for dental segmentation? Scans are in /hospital/dental_clinic/cbct_archive/. Models: /hospital/models/teeth_seg/. Results folder: /hospital/dental_clinic/auto_seg/. Log: /hospital/dental_clinic/process.log",
+    "batchdentalseg"
+  ]
+]

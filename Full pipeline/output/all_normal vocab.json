@@ -1,0 +1,1001 @@
+{
+    "queries_type": "normal vocab",
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 46,
+        "Reranker_correct": 46,
+        "Reranker_perfect": 45,
+        "Router_accuracy": 46,
+        "Agent_Param Correct": 87.5,
+        "Agent_Param Perfect": 27
+    },
+    "details": [
+        {
+            "prompt": "Segment the mandible and maxilla from CBCT scans in /patients/study_a using nnUNet models at /models/amasss. Output to /results/segmentations and temp files in /tmp/amasss",
+            "expected_tool": "amasss_cli",
+            "selected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/patients/study_a",
+                "modelDirectory": "/models/amasss",
+                "skullStructure": "Mandible,Maxilla",
+                "output_folder": "/results/segmentations",
+                "temp_fold": "/tmp/amasss"
+            },
+            "selected_params": {
+                "inputVolume": "/patients/study_a",
+                "modelDirectory": "/models/amasss",
+                "skullStructure": "mandible, maxilla",
+                "output_folder": "/results/segmentations",
+                "temp_fold": "/tmp/amasss"
+            }
+        },
+        {
+            "prompt": "Identify landmarks on DICOM CBCT scans in /data/dicom_folder. Use model folder /ai/models/ali. Detect points 1,5,10. Save to /output/landmarks and use /tmp/work for processing. Set DCMInput to true.",
+            "expected_tool": "ali_cbct",
+            "selected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/data/dicom_folder",
+                "dir_models": "/ai/models/ali",
+                "lm_type": [
+                    "1",
+                    "5",
+                    "10"
+                ],
+                "output_dir": "/output/landmarks",
+                "temp_fold": "/tmp/work",
+                "DCMInput": true
+            },
+            "selected_params": {
+                "input": "/data/dicom_folder",
+                "dir_models": "/ai/models/ali",
+                "lm_type": "1,5,10",
+                "output_dir": "/output/landmarks",
+                "temp_fold": "/tmp/work",
+                "DCMInput": true
+            }
+        },
+        {
+            "prompt": "Run ALI IOS on mesh /meshes/scan01.stl. Models: /models/ios_v2. Detect landmarks: 11 12 13 14. Target teeth: 18 19 20. Output: /processed/ios. Log: /logs/ios_01.log",
+            "expected_tool": "ali_ios",
+            "selected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/meshes/scan01.stl",
+                "dir_models": "/models/ios_v2",
+                "lm_type": [
+                    "11",
+                    "12",
+                    "13",
+                    "14"
+                ],
+                "teeth": [
+                    "18",
+                    "19",
+                    "20"
+                ],
+                "output_dir": "/processed/ios",
+                "log_path": "/logs/ios_01.log"
+            },
+            "selected_params": {
+                "input": "/meshes/scan01.stl",
+                "dir_models": "/models/ios_v2",
+                "lm_type": "11 12 13 14",
+                "teeth": "18 19 20",
+                "output_dir": "/processed/ios",
+                "log_path": "/logs/ios_01.log"
+            }
+        },
+        {
+            "prompt": "Perform maxilla registration (MAX) between T1 /data/T1 and T2 /data/T2. Results to /output/reg. Temp folder /tmp/reg. Input is DICOM.",
+            "expected_tool": "areg_cbct",
+            "selected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAX",
+                "output_folder": "/output/reg",
+                "DCMInput": true,
+                "temp_folder": "/tmp/reg",
+                "mask_folder_t1": "None"
+            },
+            "selected_params": {
+                "t1_folder": "/data/T1",
+                "reg_type": "MAX",
+                "output_folder": "/output/reg",
+                "temp_folder": "/tmp/reg",
+                "DCMInput": true,
+                "mask_folder_t1": "None"
+            }
+        },
+        {
+            "prompt": "Register IOS surfaces from /ios/baseline to /ios/followup. Use model /models/refinement. Save to /ios/aligned. Log at /logs/reg_ios.txt. Mode: Auto_IOS.",
+            "expected_tool": "areg_ios",
+            "selected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/ios/baseline",
+                "T2": "/ios/followup",
+                "output": "/ios/aligned",
+                "model": "/models/refinement",
+                "log_path": "/logs/reg_ios.txt",
+                "areg_mode": "Auto_IOS"
+            },
+            "selected_params": {
+                "T1": "/ios/baseline",
+                "T2": "/ios/followup",
+                "output": "/ios/aligned",
+                "model": "/models/refinement",
+                "log_path": "/logs/reg_ios.txt",
+                "areg_mode": "Auto_IOS"
+            }
+        },
+        {
+            "prompt": "Crop 3D volumes in /scans using markers from /markers/points.mrk.json. Output to /scans/cropped. Box size: true. Log to /logs/crop.log",
+            "expected_tool": "autocrop3d",
+            "selected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/scans",
+                "path_ROI_file": "/markers/points.mrk.json",
+                "output_path": "/scans/cropped",
+                "box_Size": true,
+                "logPath": "/logs/crop.log"
+            },
+            "selected_params": {
+                "scan_files_path": "/scans",
+                "path_ROI_file": "/markers/points.mrk.json",
+                "output_path": "/scans/cropped",
+                "box_Size": true,
+                "logPath": "/logs/crop.log"
+            }
+        },
+        {
+            "prompt": "Apply transformation matrix from /matrices to patient scan /data/patient.nii.gz. Reference: /data/ref.nii.gz. Output: /data/out. Log: /logs/matrix.log. is_seg: false.",
+            "expected_tool": "automatrix",
+            "selected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/data/patient.nii.gz",
+                "input_matrix": "/matrices",
+                "reference_file": "/data/ref.nii.gz",
+                "fromAreg": false,
+                "output_folder": "/data/out",
+                "log_path": "/logs/matrix.log",
+                "is_seg": false
+            },
+            "selected_params": {
+                "input_patient": "/data/patient.nii.gz",
+                "input_matrix": "/matrices",
+                "reference_file": "/data/ref.nii.gz",
+                "output_folder": "/data/out",
+                "log_path": "/logs/matrix.log",
+                "is_seg": false,
+                "fromAreg": false
+            }
+        },
+        {
+            "prompt": "Perform Mask-RCNN segmentation on CBCTs in /in_scans with model /models/clic. Output to /out_segs.",
+            "expected_tool": "clic",
+            "selected_tool": "clic",
+            "expected_params": {
+                "input_path": "/in_scans",
+                "model_folder": "/models/clic",
+                "output_dir": "/out_segs"
+            },
+            "selected_params": {
+                "input_path": "/in_scans",
+                "model_folder": "/models/clic",
+                "output_dir": "/out_segs"
+            }
+        },
+        {
+            "prompt": "Shape analysis on VTK meshes in /meshes. Output: /analysis. Data type: surface, Task: classification, Model: my_model, NN: resnet, Classes: 2. Log: /logs/shape.log",
+            "expected_tool": "docshapeaxi",
+            "selected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/meshes",
+                "output_dir": "/analysis",
+                "data_type": "surface",
+                "task": "classification",
+                "model": "my_model",
+                "nn": "resnet",
+                "num_classes": 2,
+                "log_path": "/logs/shape.log"
+            },
+            "selected_params": {
+                "input_dir": "/meshes",
+                "output_dir": "/analysis",
+                "data_type": "surface",
+                "task": "classification",
+                "model": "my_model",
+                "nn": "resnet",
+                "num_classes": 2,
+                "log_path": "/logs/shape.log"
+            }
+        },
+        {
+            "prompt": "Generate MedX Dashboard from summaries in /summaries/output. Save HTML to /dashboards/v1.",
+            "expected_tool": "medx_dashboard",
+            "selected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/summaries/output",
+                "output_folder": "/dashboards/v1"
+            },
+            "selected_params": {
+                "summary_folder": "/summaries/output",
+                "output_folder": "/dashboards/v1"
+            }
+        },
+        {
+            "prompt": "Summarize medical notes in /notes using t5-base model. Output to /notes/summaries. Log to /logs/sum.log",
+            "expected_tool": "medx_summarize",
+            "selected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/notes",
+                "input_model": "t5-base",
+                "output_folder": "/notes/summaries",
+                "log_path": "/logs/sum.log"
+            },
+            "selected_params": {
+                "input_notes": "/notes",
+                "input_model": "t5-base",
+                "output_folder": "/notes/summaries",
+                "log_path": "/logs/sum.log"
+            }
+        },
+        {
+            "prompt": "Approximate MRI from /mri_data to CBCT in /cbct_data. Save results to /mri2cbct/approx.",
+            "expected_tool": "mri2cbct_approx",
+            "selected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "cbct_folder": "/cbct_data",
+                "mri_folder": "/mri_data",
+                "output_folder": "/mri2cbct/approx"
+            },
+            "selected_params": {
+                "name": "mri2cbct_approx",
+                "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_APPROX.py",
+                "description": "MRI to CBCT approximation and preprocessing for multimodal registration. Preprocesses MRI and CBCT scans with intensity normalization and spatial reorientation for subsequent multimodal registration and fusion.",
+                "tags": [
+                    "mri",
+                    "cbct",
+                    "registration",
+                    "approximation",
+                    "transformation",
+                    "multimodal",
+                    "preprocessing",
+                    "normalization"
+                ],
+                "parameters": {
+                    "cbct_folder": "/cbct_data",
+                    "mri_folder": "/mri_data",
+                    "output_folder": "/mri2cbct/approx"
+                }
+            }
+        },
+        {
+            "prompt": "Register MRI /mri_vol to CBCT /cbct_vol with mask /masks/cbct_mask.nii.gz. Output to /registered_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "selected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "output_folder": "/registered_mri",
+                "mri_folder": "/mri_vol",
+                "cbct_folder": "/cbct_vol",
+                "cbct_label2": "/masks/cbct_mask.nii.gz"
+            },
+            "selected_params": {
+                "output_folder": "/registered_mri",
+                "mri_folder": "/mri_vol",
+                "cbct_folder": "/cbct_vol",
+                "cbct_label2": "/masks/cbct_mask.nii.gz"
+            }
+        },
+        {
+            "prompt": "Crop left-right regions for MRI /mri and CBCT /cbct using segmentation /seg. Save to /cropped_asymmetry.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "selected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/cbct",
+                "input_folder_MRI": "/mri",
+                "input_folder_Seg": "/seg",
+                "output_folder": "/cropped_asymmetry"
+            },
+            "selected_params": {
+                "input_folder_CBCT": "/mri",
+                "input_folder_MRI": "/cbct",
+                "input_folder_Seg": "/seg",
+                "output_folder": "/cropped_asymmetry"
+            }
+        },
+        {
+            "prompt": "Orient and center MRI scans in /raw_mri. Output to /centered_mri. Spacing: 1.5. Direction: '-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0'",
+            "expected_tool": "mri2cbct_orient_center",
+            "selected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/raw_mri",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/centered_mri",
+                "acquisition_z_spacing": 1.5
+            },
+            "selected_params": {
+                "input_folder": "/raw_mri",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/centered_mri",
+                "acquisition_z_spacing": 1.5
+            }
+        },
+        {
+            "prompt": "Resample CBCT /cbct_in and MRI /mri_in (including T2 and segments) to size [256, 256, 128] with spacing [0.5, 0.5, 0.5]. Output to /resampled.",
+            "expected_tool": "mri2cbct_resample",
+            "selected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/mri_in",
+                "input_folder_T2_MRI": "/mri_in/T2",
+                "input_folder_CBCT": "/cbct_in",
+                "input_folder_T2_CBCT": "/cbct_in/T2",
+                "input_folder_Seg": "/mri_in/Seg",
+                "input_folder_T2_Seg": "/mri_in/Seg_T2",
+                "output_folder": "/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "center": false
+            },
+            "selected_params": {
+                "input_folder_MRI": "/mri_in",
+                "input_folder_T2_MRI": "/mri_in/T2",
+                "input_folder_CBCT": "/cbct_in",
+                "input_folder_T2_CBCT": "/cbct_in/T2",
+                "input_folder_Seg": "/mri_in/segments",
+                "input_folder_T2_Seg": "/mri_in/T2/segments",
+                "output_folder": "/resampled",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                "center": false
+            }
+        },
+        {
+            "prompt": "Crop TMJ region using nnUNet model /models/tmj from CBCT /data/cbct and MRI /data/mri with segmentations /data/seg. Output to /tmj_out. Log to /tmp/tmj.log",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "selected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/tmj_out",
+                "model_folder": "/models/tmj",
+                "tmp_folder": "/tmp/tmj.log"
+            },
+            "selected_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "seg_folder": "/data/seg",
+                "output_folder": "/tmj_out",
+                "model_folder": "/models/tmj",
+                "tmp_folder": "/tmp/tmj.log"
+            }
+        },
+        {
+            "prompt": "Preprocess CBCT scans in /raw for ASO. Use model /models/aso_pre. Output to /preprocessed. Temp log: /tmp/aso.log. DCMInput: true.",
+            "expected_tool": "pre_aso_cbct",
+            "selected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/raw",
+                "output_folder": "/preprocessed",
+                "model_folder": "/models/aso_pre",
+                "temp_folder": "/tmp/aso.log",
+                "DCMInput": true
+            },
+            "selected_params": {
+                "input": "/raw",
+                "output_folder": "/preprocessed",
+                "model_folder": "/models/aso_pre",
+                "temp_folder": "/tmp/aso.log",
+                "DCMInput": true
+            }
+        },
+        {
+            "prompt": "Orient IOS scans in /ios_raw for tooth 14,15,16. Gold standard: /gold/ios. Output: /ios_oriented. Jaw: Upper, Occlusion: false. Log: /logs/pre_aso.log",
+            "expected_tool": "pre_aso_ios",
+            "selected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/ios_raw",
+                "gold_folder": "/gold/ios",
+                "output_folder": "/ios_oriented",
+                "list_teeth": [
+                    "14",
+                    "15",
+                    "16"
+                ],
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/logs/pre_aso.log"
+            },
+            "selected_params": {
+                "input_folder": "/ios_raw",
+                "list_teeth": "14,15,16",
+                "occlusion": false,
+                "jaw": "Upper",
+                "gold_folder": "/gold/ios",
+                "output_folder": "/ios_oriented",
+                "log_path": "/logs/pre_aso.log"
+            }
+        },
+        {
+            "prompt": "Semi-auto orientation of CBCT /scans using gold /gold_std. Landmarks: Nasion,Sella,Porion. Output: /oriented_cbct",
+            "expected_tool": "semi_aso_cbct",
+            "selected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/scans",
+                "gold_folder": "/gold_std",
+                "output_folder": "/oriented_cbct",
+                "list_landmark": [
+                    "Nasion",
+                    "Sella",
+                    "Porion"
+                ]
+            },
+            "selected_params": {
+                "input": "/scans",
+                "gold_folder": "/gold_std",
+                "output_folder": "/oriented_cbct",
+                "list_landmark": "Nasion Sella Porion"
+            }
+        },
+        {
+            "prompt": "Semi-auto orient IOS in /data/ios using landmarks L1,L2,L3. Reference: /data/ref. Output: /data/out. Jaw: Lower, Occlusion: true. Log: /data/log.txt",
+            "expected_tool": "semi_aso_ios",
+            "selected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/ref",
+                "output_folder": "/data/out",
+                "list_landmark": [
+                    "L1",
+                    "L2",
+                    "L3"
+                ],
+                "occlusion": true,
+                "jaw": "Lower",
+                "log_path": "/data/log.txt"
+            },
+            "selected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/data/ref",
+                "output_folder": "/data/out",
+                "list_landmark": "L1,L2,L3",
+                "occlusion": true,
+                "jaw": "Lower",
+                "log_path": "/data/log.txt"
+            }
+        },
+        {
+            "prompt": "Detect landmarks 21,22,23 on CBCT /patient/vol.nrrd. Models in /models/ali. Save to /results. Temp in /tmp/ali. DCMInput: false.",
+            "expected_tool": "ali_cbct",
+            "selected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/patient/vol.nrrd",
+                "dir_models": "/models/ali",
+                "lm_type": [
+                    "21",
+                    "22",
+                    "23"
+                ],
+                "output_dir": "/results",
+                "temp_fold": "/tmp/ali",
+                "DCMInput": false
+            },
+            "selected_params": {
+                "input": "/patient/vol.nrrd",
+                "dir_models": "/models/ali",
+                "lm_type": "21,22,23",
+                "output_dir": "/results",
+                "temp_fold": "/tmp/ali",
+                "DCMInput": false
+            }
+        },
+        {
+            "prompt": "ALI IOS on mesh /mesh/input.vtk with models /models/ios. Landmarks: 1 2. Teeth: 3 4. Output: /out. Log: /out/log.txt",
+            "expected_tool": "ali_ios",
+            "selected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/mesh/input.vtk",
+                "dir_models": "/models/ios",
+                "lm_type": [
+                    "1",
+                    "2"
+                ],
+                "teeth": [
+                    "3",
+                    "4"
+                ],
+                "output_dir": "/out",
+                "log_path": "/out/log.txt"
+            },
+            "selected_params": {
+                "input": "/mesh/input.vtk",
+                "dir_models": "/models/ios",
+                "lm_type": "1 2",
+                "teeth": "3 4",
+                "output_dir": "/out",
+                "log_path": "/out/log.txt"
+            }
+        },
+        {
+            "prompt": "Segment skull structures Maxilla and Mandible from /in/cbct using /models/amasss. Save to /out/seg. Temp: /out/tmp",
+            "expected_tool": "amasss_cli",
+            "selected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/in/cbct",
+                "modelDirectory": "/models/amasss",
+                "skullStructure": "Maxilla,Mandible",
+                "output_folder": "/out/seg",
+                "temp_fold": "/out/tmp"
+            },
+            "selected_params": {
+                "inputVolume": "/in/cbct",
+                "modelDirectory": "/models/amasss",
+                "skullStructure": "Maxilla,Mandible",
+                "output_folder": "/out/seg",
+                "temp_fold": "/out/tmp"
+            }
+        },
+        {
+            "prompt": "Register CBCT T1 /t1 to T2 /t2. Reg type: CB. Output: /reg_output. Temp: /reg_tmp. DCMInput: true.",
+            "expected_tool": "areg_cbct",
+            "selected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/t1",
+                "t2_folder": "/t2",
+                "reg_type": "CB",
+                "output_folder": "/reg_output",
+                "DCMInput": true,
+                "temp_folder": "/reg_tmp",
+                "mask_folder_t1": "None"
+            },
+            "selected_params": {
+                "t1_folder": "/t1",
+                "t2_folder": "/t2",
+                "reg_type": "CB",
+                "output_folder": "/reg_output",
+                "DCMInput": true,
+                "temp_folder": "/reg_tmp",
+                "mask_folder_t1": "None"
+            }
+        },
+        {
+            "prompt": "IOS Registration T1: /s1, T2: /s2. Model: /mod/reg. Output: /aligned. Log: /aligned/reg.log. Mode: Auto_IOS",
+            "expected_tool": "areg_ios",
+            "selected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/s1",
+                "T2": "/s2",
+                "output": "/aligned",
+                "model": "/mod/reg",
+                "log_path": "/aligned/reg.log",
+                "areg_mode": "Auto_IOS"
+            },
+            "selected_params": {
+                "T1": "/s1",
+                "T2": "/s2",
+                "output": "/aligned",
+                "model": "/mod/reg",
+                "log_path": "/aligned/reg.log",
+                "areg_mode": "Auto_IOS"
+            }
+        },
+        {
+            "prompt": "AutoCrop3D: Scans at /vol, Markers at /vol/m.json. Output: /vol/crop. Box size: false. Log: /vol/crop.log",
+            "expected_tool": "autocrop3d",
+            "selected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/vol",
+                "path_ROI_file": "/vol/m.json",
+                "output_path": "/vol/crop",
+                "box_Size": false,
+                "logPath": "/vol/crop.log"
+            },
+            "selected_params": {
+                "scan_files_path": "/vol",
+                "path_ROI_file": "/vol/m.json",
+                "output_path": "/vol/crop",
+                "box_Size": false,
+                "logPath": "/vol/crop.log"
+            }
+        },
+        {
+            "prompt": "Apply matrix to /pat/scan.nii.gz from /pat/mat. Reference: /pat/ref.nii.gz. Output: /pat/out. Log: /pat/log. is_seg: true. fromAreg: true.",
+            "expected_tool": "automatrix",
+            "selected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/pat/scan.nii.gz",
+                "input_matrix": "/pat/mat",
+                "reference_file": "/pat/ref.nii.gz",
+                "fromAreg": true,
+                "output_folder": "/pat/out",
+                "log_path": "/pat/log",
+                "is_seg": true
+            },
+            "selected_params": {
+                "input_patient": "/pat/scan.nii.gz",
+                "input_matrix": "/pat/mat",
+                "reference_file": "/pat/ref.nii.gz",
+                "output_folder": "/pat/out",
+                "log_path": "/pat/log",
+                "is_seg": true,
+                "fromAreg": true
+            }
+        },
+        {
+            "prompt": "CLIC segmentation for /scans/dicom. Models: /clic_v1. Output: /segs.",
+            "expected_tool": "clic",
+            "selected_tool": "clic",
+            "expected_params": {
+                "input_path": "/scans/dicom",
+                "model_folder": "/clic_v1",
+                "output_dir": "/segs"
+            },
+            "selected_params": {
+                "input_path": "/scans/dicom",
+                "model_folder": "/clic_v1",
+                "output_dir": "/segs"
+            }
+        },
+        {
+            "prompt": "ShapeAXI analysis on /data/meshes. Out: /data/results. Type: mesh, Task: regression, Model: net, NN: vgg, Classes: 1. Log: /data/res.log",
+            "expected_tool": "docshapeaxi",
+            "selected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/data/meshes",
+                "output_dir": "/data/results",
+                "data_type": "mesh",
+                "task": "regression",
+                "model": "net",
+                "nn": "vgg",
+                "num_classes": 1,
+                "log_path": "/data/res.log"
+            },
+            "selected_params": {
+                "input_dir": "/data/meshes",
+                "output_dir": "/data/results",
+                "data_type": "mesh",
+                "task": "regression",
+                "model": "net",
+                "nn": "vgg",
+                "num_classes": 1,
+                "log_path": "/data/res.log"
+            }
+        },
+        {
+            "prompt": "Create MedX Dashboard from /results/summaries. Save to /results/dashboard.",
+            "expected_tool": "medx_dashboard",
+            "selected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/results/summaries",
+                "output_folder": "/results/dashboard"
+            },
+            "selected_params": {
+                "summary_folder": "/results/summaries",
+                "output_folder": "/results/dashboard"
+            }
+        },
+        {
+            "prompt": "Summarize notes at /in/notes. Model: t5-large. Output: /out/notes. Log: /out/notes.log",
+            "expected_tool": "medx_summarize",
+            "selected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/in/notes",
+                "input_model": "t5-large",
+                "output_folder": "/out/notes",
+                "log_path": "/out/notes.log"
+            },
+            "selected_params": {
+                "input_notes": "/in/notes",
+                "input_model": "t5-large",
+                "output_folder": "/out/notes",
+                "log_path": "/out/notes.log"
+            }
+        },
+        {
+            "prompt": "MRI approximation /mri to CBCT /cbct. Output: /mri_approx.",
+            "expected_tool": "mri2cbct_approx",
+            "selected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "cbct_folder": "/cbct",
+                "mri_folder": "/mri",
+                "output_folder": "/mri_approx"
+            },
+            "selected_params": {
+                "cbct_folder": "/cbct",
+                "mri_folder": "/mri",
+                "output_folder": "/mri_approx"
+            }
+        },
+        {
+            "prompt": "Register MRI /mri_folder to CBCT /cbct_folder with mask /masks/m.nii.gz. Output: /reg_mri.",
+            "expected_tool": "mri2cbct_reg",
+            "selected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "output_folder": "/reg_mri",
+                "mri_folder": "/mri_folder",
+                "cbct_folder": "/cbct_folder",
+                "cbct_label2": "/masks/m.nii.gz"
+            },
+            "selected_params": {
+                "output_folder": "/reg_mri",
+                "mri_folder": "/mri_folder",
+                "cbct_folder": "/cbct_folder",
+                "cbct_label2": "/masks/m.nii.gz"
+            }
+        },
+        {
+            "prompt": "Left-Right asymmetry crop for CBCT /c, MRI /m, Seg /s. Output: /lrcrop.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "selected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/c",
+                "input_folder_MRI": "/m",
+                "input_folder_Seg": "/s",
+                "output_folder": "/lrcrop"
+            },
+            "selected_params": {
+                "input_folder_CBCT": "/c",
+                "input_folder_MRI": "/m",
+                "input_folder_Seg": "/s",
+                "output_folder": "/lrcrop"
+            }
+        },
+        {
+            "prompt": "Standardize MRI /raw_mri to /standard_mri. Z-spacing: 2.0. Direction: '1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0'",
+            "expected_tool": "mri2cbct_orient_center",
+            "selected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/raw_mri",
+                "direction": "1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/standard_mri",
+                "acquisition_z_spacing": 2.0
+            },
+            "selected_params": {
+                "input_folder": "/raw_mri",
+                "direction": "'1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0'",
+                "output_folder": "/standard_mri",
+                "acquisition_z_spacing": 2.0
+            }
+        },
+        {
+            "prompt": "Resample datasets in /raw to size [128, 128, 64] and spacing [1.0, 1.0, 2.0]. Output: /res.",
+            "expected_tool": "mri2cbct_resample",
+            "selected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/raw/MRI",
+                "input_folder_T2_MRI": "/raw/MRI_T2",
+                "input_folder_CBCT": "/raw/CBCT",
+                "input_folder_T2_CBCT": "/raw/CBCT_T2",
+                "input_folder_Seg": "/raw/Seg",
+                "input_folder_T2_Seg": "/raw/Seg_T2",
+                "output_folder": "/res",
+                "resample_size": [
+                    128,
+                    128,
+                    64
+                ],
+                "spacing": [
+                    1.0,
+                    1.0,
+                    2.0
+                ],
+                "center": true
+            },
+            "selected_params": {
+                "input_folder_MRI": "/raw",
+                "input_folder_T2_MRI": "MISSING",
+                "input_folder_CBCT": "/raw",
+                "input_folder_T2_CBCT": "MISSING",
+                "input_folder_Seg": "MISSING",
+                "input_folder_T2_Seg": "MISSING",
+                "output_folder": "/res",
+                "resample_size": [
+                    128,
+                    128,
+                    64
+                ],
+                "spacing": [
+                    1.0,
+                    1.0,
+                    2.0
+                ],
+                "center": false
+            }
+        },
+        {
+            "prompt": "TMJ Cropping from CBCT /cbct_path and MRI /mri_path. Segs: /seg_path. Model: /tmj_mod. Out: /tmj_crop. Temp: /tmj_tmp.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "selected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/cbct_path",
+                "mri_folder": "/mri_path",
+                "seg_folder": "/seg_path",
+                "output_folder": "/tmj_crop",
+                "model_folder": "/tmj_mod",
+                "tmp_folder": "/tmj_tmp"
+            },
+            "selected_params": {
+                "cbct_folder": "/cbct_path",
+                "mri_folder": "/mri_path",
+                "seg_folder": "/seg_path",
+                "output_folder": "/tmj_crop",
+                "model_folder": "/tmj_mod",
+                "tmp_folder": "/tmj_tmp"
+            }
+        },
+        {
+            "prompt": "Pre-ASO CBCT preprocessing on /input_scans. Model: /aso_model. Out: /output_scans. Log: /log_aso. DCMInput: false.",
+            "expected_tool": "pre_aso_cbct",
+            "selected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/input_scans",
+                "output_folder": "/output_scans",
+                "model_folder": "/aso_model",
+                "temp_folder": "/log_aso",
+                "DCMInput": false
+            },
+            "selected_params": {
+                "name": "pre_aso_cbct",
+                "input": "/input_scans",
+                "output_folder": "/output_scans",
+                "model_folder": "/aso_model",
+                "temp_folder": "/log_aso",
+                "DCMInput": false
+            }
+        },
+        {
+            "prompt": "Pre-ASO IOS for teeth 2,3,4. Input: /ios_in, Gold: /ios_gold, Out: /ios_out. Jaw: Lower, Occlusion: true. Log: /ios_pre.log",
+            "expected_tool": "pre_aso_ios",
+            "selected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/ios_in",
+                "gold_folder": "/ios_gold",
+                "output_folder": "/ios_out",
+                "list_teeth": [
+                    "2",
+                    "3",
+                    "4"
+                ],
+                "occlusion": true,
+                "jaw": "Lower",
+                "log_path": "/ios_pre.log"
+            },
+            "selected_params": {
+                "input_folder": "/ios_in",
+                "gold_folder": "/ios_gold",
+                "output_folder": "/ios_out",
+                "list_teeth": "2,3,4",
+                "occlusion": true,
+                "jaw": "Lower",
+                "log_path": "/ios_pre.log"
+            }
+        },
+        {
+            "prompt": "Semi-ASO CBCT alignment. Input: /in, Reference: /ref, Out: /out. Landmarks: A,B,C.",
+            "expected_tool": "semi_aso_cbct",
+            "selected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/in",
+                "gold_folder": "/ref",
+                "output_folder": "/out",
+                "list_landmark": [
+                    "A",
+                    "B",
+                    "C"
+                ]
+            },
+            "selected_params": {
+                "input": "/in",
+                "gold_folder": "/ref",
+                "output_folder": "/out",
+                "list_landmark": "A B C"
+            }
+        },
+        {
+            "prompt": "Semi-ASO IOS alignment. Input: /in, Gold: /gold, Out: /out. Landmarks: L1,L2. Jaw: Upper, Occlusion: false. Log: /log.txt",
+            "expected_tool": "semi_aso_ios",
+            "selected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/in",
+                "gold_folder": "/gold",
+                "output_folder": "/out",
+                "list_landmark": [
+                    "L1",
+                    "L2"
+                ],
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/log.txt"
+            },
+            "selected_params": {
+                "input_folder": "/in",
+                "gold_folder": "/gold",
+                "output_folder": "/out",
+                "list_landmark": "L1,L2",
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "/log.txt"
+            }
+        },
+        {
+            "prompt": "Run flexible registration on surface /meshes/upper_jaw.vtk with curve patches. Output folder: /meshes/registered/",
+            "expected_tool": "flexreg",
+            "selected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/meshes/upper_jaw.vtk",
+                "patch_type": "curve",
+                "output_folder": "/meshes/registered/"
+            },
+            "selected_params": {
+                "input_surface": "/meshes/upper_jaw.vtk",
+                "patch_type": "curve",
+                "output_folder": "/meshes/registered/"
+            }
+        },
+        {
+            "prompt": "Can you do patch-based deformable registration on /scans/dental_surface.stl? Use the delete patch type. Save to /scans/flexreg_result/",
+            "expected_tool": "flexreg",
+            "selected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/scans/dental_surface.stl",
+                "patch_type": "delete",
+                "output_folder": "/scans/flexreg_result/"
+            },
+            "selected_params": {
+                "input_surface": "/scans/dental_surface.stl",
+                "patch_type": "delete",
+                "output_folder": "/scans/flexreg_result"
+            }
+        },
+        {
+            "prompt": "Segment dental structures from CBCT folder /data/study_cohort/ using models /opt/nnunet/dental/. Output to /data/study_cohort/segmentations/. Log to /data/study_cohort/seg_log.txt",
+            "expected_tool": "batchdentalseg",
+            "selected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/data/study_cohort/",
+                "output_folder": "/data/study_cohort/segmentations/",
+                "models_folder": "/opt/nnunet/dental/",
+                "log_path": "/data/study_cohort/seg_log.txt"
+            },
+            "selected_params": {
+                "input_folder": "/data/study_cohort/",
+                "output_folder": "/data/study_cohort/segmentations/",
+                "models_folder": "/opt/nnunet/dental/",
+                "log_path": "/data/study_cohort/seg_log.txt"
+            }
+        },
+        {
+            "prompt": "Can you process multiple CBCT scans for dental segmentation? Scans are in /hospital/dental_clinic/cbct_archive/. Models: /hospital/models/teeth_seg/. Results folder: /hospital/dental_clinic/auto_seg/. Log: /hospital/dental_clinic/process.log",
+            "expected_tool": "batchdentalseg",
+            "selected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/hospital/dental_clinic/cbct_archive/",
+                "output_folder": "/hospital/dental_clinic/auto_seg/",
+                "models_folder": "/hospital/models/teeth_seg/",
+                "log_path": "/hospital/dental_clinic/process.log"
+            },
+            "selected_params": {
+                "input_folder": "/hospital/dental_clinic/cbct_archive/",
+                "output_folder": "/hospital/dental_clinic/auto_seg/",
+                "models_folder": "/hospital/models/teeth_seg/",
+                "log_path": "/hospital/dental_clinic/process.log"
+            }
+        }
+    ]
+}

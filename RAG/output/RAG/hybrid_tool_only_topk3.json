@@ -1,0 +1,2401 @@
+{
+    "rag_mode": "hybrid",
+    "enable_llm": false,
+    "queries_type": "tool_only",
+    "top_k": 3,
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 140,
+        "rag_correct": 110,
+        "rag_accuracy": 78.57,
+        "rag_perfect_accuracy": 57.14,
+        "llm_correct": 0,
+        "llm_accuracy": 0.0,
+        "average_rag_latency": 0.02,
+        "average_llm_latency": 0.0,
+        "average_total_latency": 0.02,
+        "total_time": 2.8065
+    },
+    "details": [
+        {
+            "query": "identify landmarks on CBCT scans",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0358,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0358,
+            "reasoning": null
+        },
+        {
+            "query": "automatic landmark detection on intraoral scans",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "ali_cbct",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0304,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0304,
+            "reasoning": null
+        },
+        {
+            "query": "segment dental anatomical structures",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0288,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0288,
+            "reasoning": null
+        },
+        {
+            "query": "register baseline and follow-up CBCT images",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "mri2cbct_reg",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0297,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0297,
+            "reasoning": null
+        },
+        {
+            "query": "register intraoral scan surfaces",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "areg_ios",
+                "flexreg",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0242,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0242,
+            "reasoning": null
+        },
+        {
+            "query": "crop region of interest from 3D volume",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.027,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.027,
+            "reasoning": null
+        },
+        {
+            "query": "apply transformation matrix to scans",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "pre_aso_cbct",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0312,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0312,
+            "reasoning": null
+        },
+        {
+            "query": "batch dental segmentation using nnUNet",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "mri2cbct_tmj_crop",
+                "amasss_cli"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "CBCT segmentation with Mask R-CNN",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "clic",
+                "mri2cbct_approx",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.015,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.015,
+            "reasoning": null
+        },
+        {
+            "query": "shape analysis of dental surfaces",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "areg_ios",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0181,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0181,
+            "reasoning": null
+        },
+        {
+            "query": "flexible patch-based surface registration",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "automatrix",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0168,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0168,
+            "reasoning": null
+        },
+        {
+            "query": "create medical data dashboard visualization",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "docshapeaxi"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0164,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0164,
+            "reasoning": null
+        },
+        {
+            "query": "automatic medical text summarization",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "MRI to CBCT approximation and preprocessing",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0283,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0283,
+            "reasoning": null
+        },
+        {
+            "query": "register MRI to CBCT images",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.02,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.02,
+            "reasoning": null
+        },
+        {
+            "query": "crop left-right asymmetry analysis volumes",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_tmj_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0197,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0197,
+            "reasoning": null
+        },
+        {
+            "query": "orient and center MRI for standardization",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "pre_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0184,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0184,
+            "reasoning": null
+        },
+        {
+            "query": "resample MRI and CBCT to uniform spacing",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0276,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0276,
+            "reasoning": null
+        },
+        {
+            "query": "temporomandibular joint region segmentation",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0204,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0204,
+            "reasoning": null
+        },
+        {
+            "query": "preprocess CBCT for automatic segmentation",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "semi_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0199,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0199,
+            "reasoning": null
+        },
+        {
+            "query": "preprocess intraoral scan for orientation",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "pre_aso_cbct",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0165,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0165,
+            "reasoning": null
+        },
+        {
+            "query": "semi-automatic CBCT orientation using landmarks",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "ali_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0208,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0208,
+            "reasoning": null
+        },
+        {
+            "query": "semi-automatic IOS orientation using landmarks",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0199,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0199,
+            "reasoning": null
+        },
+        {
+            "query": "detect landmark points on my CBCT",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0166,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0166,
+            "reasoning": null
+        },
+        {
+            "query": "find feature points in intraoral scans",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "segment teeth from 3D scan",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "clic",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0194,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0194,
+            "reasoning": null
+        },
+        {
+            "query": "align CBCT images before and after",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "mri2cbct_approx",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0176,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0176,
+            "reasoning": null
+        },
+        {
+            "query": "align two dental scan surfaces",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "areg_ios",
+                "pre_aso_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0186,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0186,
+            "reasoning": null
+        },
+        {
+            "query": "extract area of interest from volume",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_tmj_crop",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.017,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.017,
+            "reasoning": null
+        },
+        {
+            "query": "apply geometric transformation to scan",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "pre_aso_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0186,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0186,
+            "reasoning": null
+        },
+        {
+            "query": "segment multiple dental scans batch",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "pre_aso_ios",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "segment dental structures from CBCT",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0176,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0176,
+            "reasoning": null
+        },
+        {
+            "query": "analyze dental surface geometry",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "pre_aso_ios",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0186,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0186,
+            "reasoning": null
+        },
+        {
+            "query": "register dental surfaces using patches",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "areg_ios",
+                "docshapeaxi"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0198,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0198,
+            "reasoning": null
+        },
+        {
+            "query": "build visualization dashboard for data",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "docshapeaxi"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0183,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0183,
+            "reasoning": null
+        },
+        {
+            "query": "summarize medical report text",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0187,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0187,
+            "reasoning": null
+        },
+        {
+            "query": "approximate MRI to CBCT space",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0198,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0198,
+            "reasoning": null
+        },
+        {
+            "query": "match MRI with CBCT coordinates",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0195,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0195,
+            "reasoning": null
+        },
+        {
+            "query": "extract left-right comparison region",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_tmj_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0168,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0168,
+            "reasoning": null
+        },
+        {
+            "query": "center and orient MRI volume",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "pre_aso_cbct",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0191,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0191,
+            "reasoning": null
+        },
+        {
+            "query": "normalize MRI and CBCT resolution",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_resample",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0188,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0188,
+            "reasoning": null
+        },
+        {
+            "query": "segment jaw joint area",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "autocrop3d",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0182,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0182,
+            "reasoning": null
+        },
+        {
+            "query": "prepare CBCT for automated analysis",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "areg_cbct",
+                "ali_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "process intraoral scan for orientation",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "areg_ios",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0175,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0175,
+            "reasoning": null
+        },
+        {
+            "query": "find CBCT orientation with landmarks",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "ali_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0206,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0206,
+            "reasoning": null
+        },
+        {
+            "query": "orient scan using anatomical points",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "mri2cbct_orient_center",
+                "ali_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.021,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.021,
+            "reasoning": null
+        },
+        {
+            "query": "where are the landmarks on this CBCT",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_cbct",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0212,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0212,
+            "reasoning": null
+        },
+        {
+            "query": "how do i find anatomical points on scan",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0167,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0167,
+            "reasoning": null
+        },
+        {
+            "query": "can you segment my teeth structure",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "pre_aso_ios",
+                "clic"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0189,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0189,
+            "reasoning": null
+        },
+        {
+            "query": "i need to register my CBCT images",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "areg_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0205,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0205,
+            "reasoning": null
+        },
+        {
+            "query": "how to align intraoral scans",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "areg_ios",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0178,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0178,
+            "reasoning": null
+        },
+        {
+            "query": "extract region of interest",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0199,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0199,
+            "reasoning": null
+        },
+        {
+            "query": "transform scan coordinates",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "automatrix",
+                "pre_aso_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0271,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0271,
+            "reasoning": null
+        },
+        {
+            "query": "process many scans at one time",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "areg_cbct",
+                "pre_aso_ios",
+                "mri2cbct_resample"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0223,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0223,
+            "reasoning": null
+        },
+        {
+            "query": "segment cbct with deep learning",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "batchdentalseg",
+                "clic",
+                "amasss_cli"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.023,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.023,
+            "reasoning": null
+        },
+        {
+            "query": "measure tooth shape differences",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "ali_ios",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0196,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0196,
+            "reasoning": null
+        },
+        {
+            "query": "match dental surfaces together",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "areg_ios",
+                "docshapeaxi",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0189,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0189,
+            "reasoning": null
+        },
+        {
+            "query": "show data in dashboard",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0212,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0212,
+            "reasoning": null
+        },
+        {
+            "query": "make summary of medical text",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0209,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0209,
+            "reasoning": null
+        },
+        {
+            "query": "convert MRI to CBCT format",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0194,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0194,
+            "reasoning": null
+        },
+        {
+            "query": "overlay MRI on CBCT",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0199,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0199,
+            "reasoning": null
+        },
+        {
+            "query": "analyze asymmetry between sides",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "docshapeaxi",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0198,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0198,
+            "reasoning": null
+        },
+        {
+            "query": "put MRI in standard orientation",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "pre_aso_cbct",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0167,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0167,
+            "reasoning": null
+        },
+        {
+            "query": "make MRI and CBCT same resolution",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0201,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0201,
+            "reasoning": null
+        },
+        {
+            "query": "find jaw joint on scan",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "ali_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0204,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0204,
+            "reasoning": null
+        },
+        {
+            "query": "get CBCT ready for segmentation",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "semi_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0188,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0188,
+            "reasoning": null
+        },
+        {
+            "query": "fix scan orientation automatically",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "semi_aso_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0191,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0191,
+            "reasoning": null
+        },
+        {
+            "query": "use landmarks to orient CBCT",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "ali_cbct",
+                "semi_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0203,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0203,
+            "reasoning": null
+        },
+        {
+            "query": "set scan in proper position",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "pre_aso_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0172,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0172,
+            "reasoning": null
+        },
+        {
+            "query": "i wanna find points on my CBCT",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_cbct",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0187,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0187,
+            "reasoning": null
+        },
+        {
+            "query": "detect anatomical features automatically",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "semi_aso_ios",
+                "semi_aso_cbct",
+                "ali_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0187,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0187,
+            "reasoning": null
+        },
+        {
+            "query": "split teeth from other stuff",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "batchdentalseg",
+                "clic",
+                "pre_aso_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0168,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0168,
+            "reasoning": null
+        },
+        {
+            "query": "put two CBCT images together",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0196,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0196,
+            "reasoning": null
+        },
+        {
+            "query": "match dental impressions",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "flexreg",
+                "areg_ios",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0209,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0209,
+            "reasoning": null
+        },
+        {
+            "query": "cut out interesting part",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0166,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0166,
+            "reasoning": null
+        },
+        {
+            "query": "move scan around",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "pre_aso_cbct",
+                "autocrop3d"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.02,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.02,
+            "reasoning": null
+        },
+        {
+            "query": "segment lot of dental scans",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "pre_aso_ios",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0195,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0195,
+            "reasoning": null
+        },
+        {
+            "query": "use AI to segment CBCT",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "ali_cbct",
+                "amasss_cli",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0218,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0218,
+            "reasoning": null
+        },
+        {
+            "query": "check shape of tooth surface",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "ali_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0169,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0169,
+            "reasoning": null
+        },
+        {
+            "query": "make dental surfaces match",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "docshapeaxi",
+                "areg_ios",
+                "flexreg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0197,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0197,
+            "reasoning": null
+        },
+        {
+            "query": "make picture of my data",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "autocrop3d",
+                "docshapeaxi"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "write summary automatically",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0181,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0181,
+            "reasoning": null
+        },
+        {
+            "query": "turn MRI into CBCT",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0202,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0202,
+            "reasoning": null
+        },
+        {
+            "query": "put MRI and CBCT together",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "mri2cbct_approx",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0202,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0202,
+            "reasoning": null
+        },
+        {
+            "query": "see difference left and right",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_tmj_crop",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0188,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0188,
+            "reasoning": null
+        },
+        {
+            "query": "fix MRI position",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "mri2cbct_approx",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0188,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0188,
+            "reasoning": null
+        },
+        {
+            "query": "make same size for both",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_resample",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0174,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0174,
+            "reasoning": null
+        },
+        {
+            "query": "find jaw bone area",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "autocrop3d",
+                "ali_cbct",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0198,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0198,
+            "reasoning": null
+        },
+        {
+            "query": "make CBCT ready to use",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "pre_aso_cbct",
+                "semi_aso_cbct",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0207,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0207,
+            "reasoning": null
+        },
+        {
+            "query": "straighten the scan",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "pre_aso_cbct",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.017,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.017,
+            "reasoning": null
+        },
+        {
+            "query": "mark points on CBCT",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_cbct",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0196,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0196,
+            "reasoning": null
+        },
+        {
+            "query": "rotate scan correctly",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "automatrix",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0198,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0198,
+            "reasoning": null
+        },
+        {
+            "query": "whatr are key points on CBCT",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "clic",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0184,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0184,
+            "reasoning": null
+        },
+        {
+            "query": "locate features in mouth scan",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "ali_cbct",
+                "batchdentalseg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0178,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0178,
+            "reasoning": null
+        },
+        {
+            "query": "isolate tooth structures",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0182,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0182,
+            "reasoning": null
+        },
+        {
+            "query": "match two CBCT scans",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "mri2cbct_resample",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0189,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0189,
+            "reasoning": null
+        },
+        {
+            "query": "superimpose dental surfaces",
+            "expected_tool": "areg_ios",
+            "rag_tools": [
+                "flexreg",
+                "areg_ios",
+                "docshapeaxi"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0173,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0173,
+            "reasoning": null
+        },
+        {
+            "query": "isolate area of concern",
+            "expected_tool": "autocrop3d",
+            "rag_tools": [
+                "autocrop3d",
+                "docshapeaxi",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0199,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0199,
+            "reasoning": null
+        },
+        {
+            "query": "shift and rotate scan",
+            "expected_tool": "automatrix",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "pre_aso_cbct",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0194,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0194,
+            "reasoning": null
+        },
+        {
+            "query": "handle multiple scans quickly",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "areg_ios",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0168,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0168,
+            "reasoning": null
+        },
+        {
+            "query": "identify teeth in image",
+            "expected_tool": "clic",
+            "rag_tools": [
+                "ali_ios",
+                "batchdentalseg",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0188,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0188,
+            "reasoning": null
+        },
+        {
+            "query": "look at tooth geometry",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "ali_ios",
+                "pre_aso_ios",
+                "areg_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0219,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0219,
+            "reasoning": null
+        },
+        {
+            "query": "align surfaces precisely",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "docshapeaxi",
+                "pre_aso_ios",
+                "areg_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "visualize the information",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_dashboard",
+                "medx_summarize",
+                "mri2cbct_orient_center"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0196,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0196,
+            "reasoning": null
+        },
+        {
+            "query": "condense medical report",
+            "expected_tool": "medx_summarize",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0208,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0208,
+            "reasoning": null
+        },
+        {
+            "query": "get MRI in CBCT space",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "mri2cbct_approx",
+                "mri2cbct_reg"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.018,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.018,
+            "reasoning": null
+        },
+        {
+            "query": "synchronize MRI and CBCT",
+            "expected_tool": "mri2cbct_reg",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0198,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0198,
+            "reasoning": null
+        },
+        {
+            "query": "grab section for analysis",
+            "expected_tool": "mri2cbct_lr_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "medx_dashboard",
+                "medx_summarize"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0194,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0194,
+            "reasoning": null
+        },
+        {
+            "query": "position MRI correctly",
+            "expected_tool": "mri2cbct_orient_center",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "mri2cbct_approx",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0209,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0209,
+            "reasoning": null
+        },
+        {
+            "query": "harmonize image sizes",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_reg",
+                "pre_aso_cbct",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0188,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0188,
+            "reasoning": null
+        },
+        {
+            "query": "identify joint region",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "mri2cbct_lr_crop",
+                "autocrop3d"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0194,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0194,
+            "reasoning": null
+        },
+        {
+            "query": "ready CBCT for processing",
+            "expected_tool": "pre_aso_cbct",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "pre_aso_cbct",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0211,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0211,
+            "reasoning": null
+        },
+        {
+            "query": "adjust scan alignment",
+            "expected_tool": "pre_aso_ios",
+            "rag_tools": [
+                "mri2cbct_orient_center",
+                "semi_aso_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.018,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.018,
+            "reasoning": null
+        },
+        {
+            "query": "mark CBCT landmarks",
+            "expected_tool": "semi_aso_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.019,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.019,
+            "reasoning": null
+        },
+        {
+            "query": "align scan properly",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "ali_ios",
+                "pre_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.02,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.02,
+            "reasoning": null
+        },
+        {
+            "query": "detecter les points de repere sur CBCT",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "semi_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0191,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0191,
+            "reasoning": null
+        },
+        {
+            "query": "segmentation des structures dentaires",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "amasss_cli",
+                "batchdentalseg",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0178,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0178,
+            "reasoning": null
+        },
+        {
+            "query": "enregistrer les images CBCT",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "areg_cbct",
+                "pre_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0208,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0208,
+            "reasoning": null
+        },
+        {
+            "query": "creer tableau de bord medical",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "medx_summarize",
+                "medx_dashboard",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0203,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0203,
+            "reasoning": null
+        },
+        {
+            "query": "approximation IRM vers CBCT",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "semi_aso_cbct",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0197,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0197,
+            "reasoning": null
+        },
+        {
+            "query": "detecter les reperes sur l intraoral",
+            "expected_tool": "ali_ios",
+            "rag_tools": [
+                "ali_ios",
+                "areg_ios",
+                "pre_aso_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.019,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.019,
+            "reasoning": null
+        },
+        {
+            "query": "segmenter les dents rapidement",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "pre_aso_ios",
+                "semi_aso_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "registrer les scans rapidement",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_ios",
+                "mri2cbct_resample",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0189,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0189,
+            "reasoning": null
+        },
+        {
+            "query": "creer un dashbord",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "semi_aso_ios",
+                "pre_aso_ios",
+                "mri2cbct_tmj_crop"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0184,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0184,
+            "reasoning": null
+        },
+        {
+            "query": "convertir l IRM",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_resample",
+                "pre_aso_cbct",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0193,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0193,
+            "reasoning": null
+        },
+        {
+            "query": "detectar puntos en CBCT",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "mri2cbct_approx",
+                "clic"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0218,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0218,
+            "reasoning": null
+        },
+        {
+            "query": "segmentar estructuras dentales",
+            "expected_tool": "amasss_cli",
+            "rag_tools": [
+                "semi_aso_ios",
+                "pre_aso_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0182,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0182,
+            "reasoning": null
+        },
+        {
+            "query": "registrar imagenes CBCT",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "areg_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0176,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0176,
+            "reasoning": null
+        },
+        {
+            "query": "crear panel de datos",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "semi_aso_ios",
+                "pre_aso_ios",
+                "medx_dashboard"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0209,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0209,
+            "reasoning": null
+        },
+        {
+            "query": "aproximacion MRI a CBCT",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "mri2cbct_approx",
+                "mri2cbct_reg",
+                "mri2cbct_resample"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0191,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0191,
+            "reasoning": null
+        },
+        {
+            "query": "I have a series of CBCT images from a patient taken at baseline and at a 6-month follow-up appointment, and I would like to register these images together to compare the changes over time. Can you help me align these two datasets so I can see exactly what has changed in the anatomical structures?",
+            "expected_tool": "areg_cbct",
+            "rag_tools": [
+                "areg_cbct",
+                "mri2cbct_reg",
+                "areg_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0207,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0207,
+            "reasoning": null
+        },
+        {
+            "query": "We have multiple dental patients with intraoral scans that we need to segment and analyze for automated detection of dental structures and anatomical landmarks. I need a batch processing solution that can handle dozens of scans at once and provide detailed segmentation results for each one.",
+            "expected_tool": "batchdentalseg",
+            "rag_tools": [
+                "batchdentalseg",
+                "pre_aso_ios",
+                "clic"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0222,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0222,
+            "reasoning": null
+        },
+        {
+            "query": "I'm working on a research project where I need to convert MRI images from the head and neck region into the CBCT coordinate space so that I can perform comparative analysis and overlay the datasets for surgical planning purposes. The goal is to create a unified representation that combines both modalities.",
+            "expected_tool": "mri2cbct_approx",
+            "rag_tools": [
+                "semi_aso_cbct",
+                "mri2cbct_resample",
+                "mri2cbct_reg"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0197,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0197,
+            "reasoning": null
+        },
+        {
+            "query": "We need to analyze the temporomandibular joint region in detail from both MRI and CBCT imaging modalities. The scans need to be registered together, cropped to the specific joint area, and then analyzed for morphological changes and degenerative features that might indicate temporomandibular disorder.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "rag_tools": [
+                "mri2cbct_tmj_crop",
+                "autocrop3d",
+                "mri2cbct_lr_crop"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0222,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0222,
+            "reasoning": null
+        },
+        {
+            "query": "I have a collection of 3D dental scan surfaces from multiple patients with different tooth alignments and morphologies. I need to perform a comprehensive shape analysis to compare geometric variations across the patient population and identify any outliers or unusual dental surface characteristics.",
+            "expected_tool": "docshapeaxi",
+            "rag_tools": [
+                "docshapeaxi",
+                "areg_ios",
+                "ali_ios"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0239,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0239,
+            "reasoning": null
+        },
+        {
+            "query": "Our clinic is implementing an automated workflow for dental image processing where we need to take raw CBCT scans, preprocess them for optimal segmentation quality, apply various transformations and registrations, and then generate a comprehensive medical dashboard that displays all the results and metrics for clinical review.",
+            "expected_tool": "medx_dashboard",
+            "rag_tools": [
+                "areg_cbct",
+                "pre_aso_cbct",
+                "automatrix"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.023,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.023,
+            "reasoning": null
+        },
+        {
+            "query": "I'm conducting a comparative study between MRI and CBCT imaging for jaw anatomy assessment. The protocol requires me to resample both modalities to identical spatial resolution, register them to the same coordinate system, and then extract specific anatomical regions for side-by-side asymmetry analysis between left and right sides of the mandible.",
+            "expected_tool": "mri2cbct_resample",
+            "rag_tools": [
+                "mri2cbct_lr_crop",
+                "mri2cbct_tmj_crop",
+                "mri2cbct_approx"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0227,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0227,
+            "reasoning": null
+        },
+        {
+            "query": "We need to set up a semi-automated preprocessing pipeline for intraoral scan data where the system can automatically detect anatomical landmarks, use them to determine the correct 3D orientation, and then standardize the position of each scan in a consistent way for downstream analysis and comparison with other scans in our database.",
+            "expected_tool": "semi_aso_ios",
+            "rag_tools": [
+                "pre_aso_ios",
+                "semi_aso_cbct",
+                "ali_ios"
+            ],
+            "rag_success": false,
+            "rag_perfect_success": false,
+            "rag_latency": 0.0237,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0237,
+            "reasoning": null
+        },
+        {
+            "query": "I have acquired high-resolution CBCT images of dental and maxillofacial structures, and I want to perform a detailed landmark-based analysis to identify key anatomical points that are important for orthodontic treatment planning. These landmarks will be used to assess skeletal relationships and guide clinical decision-making.",
+            "expected_tool": "ali_cbct",
+            "rag_tools": [
+                "ali_cbct",
+                "ali_ios",
+                "semi_aso_cbct"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0229,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0229,
+            "reasoning": null
+        },
+        {
+            "query": "We're implementing a multimodal imaging analysis system that requires flexible surface registration between dental casts, intraoral scans, and radiographic images. The system needs to handle different patch sizes and registration parameters to achieve optimal alignment while preserving fine anatomical details for surgical navigation applications.",
+            "expected_tool": "flexreg",
+            "rag_tools": [
+                "flexreg",
+                "areg_ios",
+                "mri2cbct_approx"
+            ],
+            "rag_success": true,
+            "rag_perfect_success": true,
+            "rag_latency": 0.0217,
+            "llm_selected_tool": null,
+            "llm_success": false,
+            "llm_latency": 0,
+            "total_latency": 0.0217,
+            "reasoning": null
+        }
+    ]
+}

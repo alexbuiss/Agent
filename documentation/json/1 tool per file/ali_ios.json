@@ -1,0 +1,58 @@
+{
+    "name": "ali_ios",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/ALI_IOS.py",
+    "description": "Automatic Landmark Identification in Intraoral Scans (IOS). Detects dental and anatomical landmarks on 3D surface meshes from intraoral scanners for orthodontic and prosthodontic analysis.",
+    "tags": [
+        "ios",
+        "landmarks",
+        "ali",
+        "segmentation",
+        "surface",
+        "mesh",
+        "dental",
+        "intraoral",
+        "3d",
+        "detection",
+        "anatomy"
+    ],
+    "parameters": [
+        {
+            "name": "input",
+            "type": "path",
+            "required": true,
+            "description": "Input intraoral scan surface file (STL/VTK/OFF)."
+        },
+        {
+            "name": "dir_models",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing the pre-trained landmark detection models."
+        },
+        {
+            "name": "lm_type",
+            "type": "list",
+            "required": true,
+            "encode": "space_separated",
+            "description": "Types of landmarks to detect (space separated)."
+        },
+        {
+            "name": "teeth",
+            "type": "list",
+            "required": true,
+            "encode": "space_separated",
+            "description": "Teeth to process (space separated)."
+        },
+        {
+            "name": "output_dir",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for landmarks and results."
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Path to log file for progress tracking."
+        }
+    ]
+}

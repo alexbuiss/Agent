@@ -1,0 +1,35 @@
+{
+    "name": "mri2cbct_approx",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_APPROX.py",
+    "description": "MRI to CBCT approximation and preprocessing for multimodal registration. Preprocesses MRI and CBCT scans with intensity normalization and spatial reorientation for subsequent multimodal registration and fusion.",
+    "tags": [
+        "mri",
+        "cbct",
+        "registration",
+        "approximation",
+        "transformation",
+        "multimodal",
+        "preprocessing",
+        "normalization"
+    ],
+    "parameters": [
+        {
+            "name": "cbct_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans."
+        },
+        {
+            "name": "mri_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI scans."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for approximated images."
+        }
+    ]
+}

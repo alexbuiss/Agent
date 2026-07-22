@@ -1,0 +1,61 @@
+{
+    "name": "areg_cbct",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/AREG_CBCT.py",
+    "description": "Automatic Registration of CBCT images for longitudinal studies. Registers baseline and follow-up CBCT scans using deformable or rigid registration to track anatomical changes over time.",
+    "tags": [
+        "cbct",
+        "registration",
+        "voxel",
+        "transformation",
+        "dicom",
+        "longitudinal",
+        "deformable",
+        "rigid",
+        "alignment"
+    ],
+    "parameters": [
+        {
+            "name": "t1_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing baseline (T1) CBCT scans."
+        },
+        {
+            "name": "t2_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing follow-up (T2) CBCT scans."
+        },
+        {
+            "name": "reg_type",
+            "type": "str",
+            "required": true,
+            "description": "Registration type (MAND, MAX or CB)."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for registered images and transforms."
+        },
+        {
+            "name": "DCMInput",
+            "type": "bool",
+            "default": false,
+            "encode": "lower_str_bool",
+            "description": "Whether input is DICOM format."
+        },
+        {
+            "name": "temp_folder",
+            "type": "path",
+            "required": true,
+            "description": "Temporary folder for intermediate files."
+        },
+        {
+            "name": "mask_folder_t1",
+            "type": "path",
+            "default": "None",
+            "description": "Optional mask folder for T1 segmentation."
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "name": "pre_aso_cbct",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/PRE_ASO_CBCT.py",
+    "description": "Preprocessing for Automatic Segmentation Orientation - CBCT. Preprocesses CBCT scans with standardized resampling, orientation correction, and field-of-view adjustment for subsequent automated segmentation pipelines.",
+    "tags": [
+        "cbct",
+        "preprocessing",
+        "orientation",
+        "resampling",
+        "registration",
+        "standardization",
+        "fov",
+        "dental"
+    ],
+    "parameters": [
+        {
+            "name": "input",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for preprocessed scans."
+        },
+        {
+            "name": "model_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder of the model."
+        },
+        {
+            "name": "temp_folder",
+            "type": "path",
+            "required": true,
+            "description": "Log file path."
+        },
+        {
+            "name": "DCMInput",
+            "type": "bool",
+            "default": false,
+            "encode": "lower_str_bool",
+            "description": "Input is DICOM format."
+        }
+    ]
+}

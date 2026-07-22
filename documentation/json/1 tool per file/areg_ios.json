@@ -1,0 +1,54 @@
+{
+    "name": "areg_ios",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/AREG_IOS.py",
+    "description": "Automatic Registration of Intraoral Scans using Iterative Closest Point (ICP). Registers baseline and follow-up IOS surfaces for longitudinal dental tracking and treatment outcome assessment.",
+    "tags": [
+        "ios",
+        "registration",
+        "icp",
+        "surface",
+        "transformation",
+        "mesh",
+        "longitudinal",
+        "alignment",
+        "dental"
+    ],
+    "parameters": [
+        {
+            "name": "T1",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing baseline (T1) intraoral scan surfaces."
+        },
+        {
+            "name": "T2",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing follow-up (T2) intraoral scan surfaces."
+        },
+        {
+            "name": "output",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for registered surfaces."
+        },
+        {
+            "name": "model",
+            "type": "path",
+            "required": true,
+            "description": "Path to segmentation refinement model."
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Log file path."
+        },
+        {
+            "name": "areg_mode",
+            "type": "str",
+            "default": "Auto_IOS",
+            "description": "Registration mode (e.g., Auto_IOS)."
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+{
+    "name": "semi_aso_ios",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/SEMI_ASO_IOS.py",
+    "description": "Semi-Automatic Segmentation Orientation for IOS using landmarks. Uses manually-placed anatomical landmarks on dental surfaces with ICP registration to establish canonical tooth and jaw coordinate frames for analysis.",
+    "tags": [
+        "ios",
+        "segmentation",
+        "orientation",
+        "landmarks",
+        "icp",
+        "surface",
+        "semi-automatic",
+        "dental",
+        "mesh"
+    ],
+    "parameters": [
+        {
+            "name": "input_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing surface files and landmarks."
+        },
+        {
+            "name": "gold_folder",
+            "type": "path",
+            "required": true,
+            "description": "Reference surface and landmark files."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for oriented surfaces."
+        },
+        {
+            "name": "list_landmark",
+            "type": "list",
+            "required": true,
+            "encode": "comma_separated",
+            "description": "Landmark names for registration."
+        },
+        {
+            "name": "occlusion",
+            "type": "bool",
+            "required": true,
+            "description": "Bool to know if it is an occlusion"
+        },
+        {
+            "name": "jaw",
+            "type": "str",
+            "required": true,
+            "description": "'Upper' or 'Lower' whether or not the scan is a lower or upper jaw"
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Log file path."
+        }
+    ]
+}

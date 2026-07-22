@@ -1,0 +1,43 @@
+{
+    "name": "medx_summarize",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MedX_Summarize.py",
+    "description": "MedX Summarize - Automatic medical text summarization using transformers. Generates concise clinical summaries from patient notes (PDF, DOCX, TXT) using transformer-based NLP models for quick clinical review.",
+    "tags": [
+        "nlp",
+        "summarization",
+        "medx",
+        "pdf",
+        "docx",
+        "transformers",
+        "text",
+        "clinical",
+        "ai",
+        "document"
+    ],
+    "parameters": [
+        {
+            "name": "input_notes",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing patient notes (PDF/DOCX/TXT)."
+        },
+        {
+            "name": "input_model",
+            "type": "str",
+            "default": "t5-base",
+            "description": "Huggingface model for summarization."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for summaries."
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Log file path."
+        }
+    ]
+}

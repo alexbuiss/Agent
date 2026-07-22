@@ -1,0 +1,41 @@
+{
+    "name": "mri2cbct_reg",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_REG.py",
+    "description": "MRI to CBCT image registration with intensity normalization. Registers MRI volumes to CBCT reference frames using deformable registration with automatic intensity normalization for joint imaging analysis.",
+    "tags": [
+        "mri",
+        "cbct",
+        "registration",
+        "normalization",
+        "segmentation",
+        "multimodal",
+        "intensity",
+        "deformable"
+    ],
+    "parameters": [
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for registered images."
+        },
+        {
+            "name": "mri_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI scans."
+        },
+        {
+            "name": "cbct_folder",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans."
+        },
+        {
+            "name": "cbct_label2",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT masks."
+        }
+    ]
+}

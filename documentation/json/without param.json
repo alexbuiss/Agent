@@ -1,0 +1,122 @@
+[
+  {
+    "name": "ali_cbct",
+    "description": "FULLY AUTOMATIC Anatomic Landmarks Identification on CBCT scans using AI. Detects anatomical reference points automatically. NOTE: If the user wants to orient the scan using landmarks they placed manually, use 'semi_aso_cbct' instead.",
+    "tags": ["cbct", "landmarks", "ali", "segmentation", "automatic", "ai", "anatomy", "dental", "detection"]
+  },
+  {
+    "name": "ali_ios",
+    "description": "FULLY AUTOMATIC Landmark Identification in Intraoral Scans (IOS). Detects dental and anatomical landmarks automatically on 3D surface meshes. NOTE: For manual landmark orientation, use 'semi_aso_ios'.",
+    "tags": ["ios", "landmarks", "ali", "segmentation", "surface", "mesh", "automatic", "intraoral", "detection"]
+  },
+  {
+    "name": "amasss_cli",
+    "description": "AMASSS - Single-scan Anatomical Structures Segmentation from CBCT. Focuses on large skull structures: cranial base, maxilla, mandible, airway, and condyles. NOTE: Do NOT use this for batch processing (use 'batchdentalseg') or for impacted canines (use 'clic').",
+    "tags": ["cbct", "segmentation", "nnunet", "mandible", "maxilla", "cranial-base", "airway", "skull", "single-scan"]
+  },
+  {
+    "name": "areg_cbct",
+    "description": "Automatic Registration of CBCT-to-CBCT images. Registers baseline and follow-up CBCT scans using deformable or rigid registration. NOTE: Use this exclusively for matching two CBCT scans together, NOT for MRI-to-CBCT.",
+    "tags": ["cbct", "registration", "cbct-to-cbct", "transformation", "longitudinal", "deformable", "rigid", "alignment"]
+  },
+  {
+    "name": "areg_ios",
+    "description": "Automatic Registration of Intraoral Scans (IOS-to-IOS) using ICP. Registers baseline and follow-up IOS surfaces (dental models/impressions) together.",
+    "tags": ["ios", "registration", "icp", "surface", "mesh", "longitudinal", "alignment", "dental-impressions"]
+  },
+  {
+    "name": "autocrop3d",
+    "description": "Automatic 3D region cropping. Extracts and crops specific areas of interest from all cases in a study using a saved ROI .json file marker from Volume Rendering. NOTE: For specifically cropping the TMJ, use 'mri2cbct_tmj_crop'.",
+    "tags": ["crop", "roi", "volume", "marker", "json", "extraction", "isolate", "region", "batch-crop"]
+  },
+  {
+    "name": "automatrix",
+    "description": "Apply geometric transformation matrices (shift, rotate, mirror, affine) to medical images and 3D surface meshes. NOTE: Use this when the user explicitly asks to apply a matrix (.tfm) or transform coordinates.",
+    "tags": ["transformation", "matrix", "deformation", "registration", "alignment", "affine", "rigid", "shift", "rotate", "tfm"]
+  },
+  {
+    "name": "batchdentalseg",
+    "description": "BATCH processing for Dental Segmentation. Automated segmentation of dental structures from MULTIPLE scans. Specifically includes models for PEDIATRIC/children (mixed dentition) and UNIVERSAL NUMBERING SYSTEM labeling. NOTE: Use this ONLY when explicitly asked for batch, multiple scans, pediatric, or universal numbering.",
+    "tags": ["dental", "segmentation", "nnunet", "cbct", "batch", "multiple-scans", "pediatric", "children", "universal-numbering"]
+  },
+  {
+    "name": "clic",
+    "description": "CLIC - Instance Segmentation and Localization of IMPACTED CANINES from CBCT using Mask-RCNN. Identifies the exact position (buccal, palatal, bicortical) of impacted teeth. Use this tool anytime the user asks to split/isolate individual teeth or analyze impacted canines.",
+    "tags": ["cbct", "segmentation", "mask-rcnn", "instance-segmentation", "impacted-canines", "buccal", "palatal", "isolate-teeth"]
+  },
+  {
+    "name": "docshapeaxi",
+    "description": "DOC-ShapeAXI - Statistical shape analysis and geometry classification. Specifically designed to classify nasopharynx airways obstruction, mandibular condyles severity, and alveolar bone defect in clefts.",
+    "tags": ["shape", "analysis", "surface", "classification", "airway-obstruction", "condyles", "cleft", "alveolar-bone"]
+  },
+  {
+    "name": "flexreg",
+    "description": "Flexible Patch-based Registration for dental surfaces. Registers 3D dental meshes using precise deformable patches (butterfly/curve) for tooth movement tracking.",
+    "tags": ["registration", "surface", "patch", "deformation", "mesh", "dental", "deformable"]
+  },
+  {
+    "name": "medical_data_anonymizer",
+    "description": "Automatically anonymize sensitive information (PII/PHI) in medical documents (PDF, DOCX, TXT, CSV, XML) to ensure HIPAA compliance and patient privacy.",
+    "tags": ["anonymization", "privacy", "hipaa", "pii", "phi", "pdf", "docx", "text", "redact"]
+  },
+  {
+    "name": "medx_dashboard",
+    "description": "MedX Dashboard - Visualizes data and creates interactive HTML dashboards from structured comorbidity summaries. Use this when the user asks to 'visualize', 'make a picture of data', or 'create a dashboard'.",
+    "tags": ["dashboard", "visualization", "medx", "html", "web", "reporting", "analytics", "picture"]
+  },
+  {
+    "name": "medx_summarize",
+    "description": "MedX Summarize - Extracts TMJ-related comorbidities from unstructured clinical notes (PDF, DOCX) using fine-tuned NLP models to generate concise summaries.",
+    "tags": ["nlp", "summarization", "medx", "text", "clinical-notes", "tmj-comorbidities", "document"]
+  },
+  {
+    "name": "mri2cbct_approx",
+    "description": "MRI to CBCT approximation. Converts and preprocesses MRI spaces to CBCT format for multimodal registration. NOTE: Use this for approximation/conversion before the final registration.",
+    "tags": ["mri", "cbct", "approximation", "conversion", "multimodal", "preprocessing"]
+  },
+  {
+    "name": "mri2cbct_reg",
+    "description": "MRI-to-CBCT Image Registration. Overlays, synchronizes, and registers an MRI volume onto a CBCT reference frame using intensity normalization.",
+    "tags": ["mri", "cbct", "registration", "overlay", "synchronize", "multimodal", "intensity"]
+  },
+  {
+    "name": "mri2cbct_lr_crop",
+    "description": "Crop volumes for left-right asymmetry analysis. Extracts left and right hemimandibular/hemimaxillary regions to see bilateral differences between the two sides.",
+    "tags": ["mri", "cbct", "crop", "left-right", "asymmetry", "bilateral", "difference", "sides"]
+  },
+  {
+    "name": "mri2cbct_orient_center",
+    "description": "Orient, center, and fix the position of MRI scans for standardized positioning. Reorients MRI volumes to a canonical anatomical frame.",
+    "tags": ["mri", "orientation", "centering", "registration", "standardization", "alignment", "fix-position"]
+  },
+  {
+    "name": "mri2cbct_resample",
+    "description": "Resample MRI and CBCT to uniform spacing. Harmonizes image sizes and makes them the same resolution/size for standardized processing.",
+    "tags": ["mri", "cbct", "resample", "spacing", "resolution", "harmonize", "same-size"]
+  },
+  {
+    "name": "mri2cbct_tmj_crop",
+    "description": "Automatic Temporomandibular Joint (TMJ) / jaw joint region cropping. Segments and extracts ONLY the TMJ or jaw bone area from scans.",
+    "tags": ["tmj", "crop", "segmentation", "jaw-joint", "jaw-bone", "temporomandibular"]
+  },
+  {
+    "name": "pre_aso_cbct",
+    "description": "FULLY AUTOMATIC Preprocessing and orientation for CBCT. Standardizes orientation and field-of-view using ONLY the scan as input. NOTE: If the user mentions landmarks or manual points, use 'semi_aso_cbct' instead.",
+    "tags": ["cbct", "preprocessing", "orientation", "automatic", "standardization", "ready-to-use"]
+  },
+  {
+    "name": "pre_aso_ios",
+    "description": "FULLY AUTOMATIC Preprocessing and orientation for IOS (Intraoral scans). Straightens and orients surface meshes using ONLY the scan as input. NOTE: If the user mentions manual landmarks, use 'semi_aso_ios' instead.",
+    "tags": ["ios", "preprocessing", "orientation", "automatic", "surface", "straighten", "mesh"]
+  },
+  {
+    "name": "semi_aso_cbct",
+    "description": "SEMI-AUTOMATIC Orientation for CBCT. Requires both the scan AND a manually-placed landmark/fiducial file as input. NOTE: Use this ONLY if the user explicitly mentions using, placing, or marking points/landmarks files.",
+    "tags": ["cbct", "orientation", "landmarks", "fiducial", "semi-automatic", "mark", "manual-points"]
+  },
+  {
+    "name": "semi_aso_ios",
+    "description": "SEMI-AUTOMATIC Orientation for IOS. Requires both the dental surface mesh AND a manually-placed landmark/fiducial file as input. NOTE: Use this ONLY if the user explicitly mentions using or marking points/landmarks files.",
+    "tags": ["ios", "orientation", "landmarks", "fiducial", "surface", "semi-automatic", "mark", "manual-points"]
+  }
+]

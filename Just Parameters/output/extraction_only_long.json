@@ -1,0 +1,442 @@
+{
+    "mode": "parameter_extraction_only",
+    "queries_type": "long",
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 23,
+        "avg_extraction_latency": 2.3878,
+        "total_with_expected_params": 23,
+        "total_perfect_matches": 8,
+        "query_accuracy_percentage": 34.78,
+        "total_expected_individual_params": 83,
+        "total_correct_individual_params": 76,
+        "param_accuracy_percentage": 91.57
+    },
+    "details": [
+        {
+            "prompt": "I am currently reviewing a complex clinical case involving a patient with severe craniofacial asymmetry. We have just acquired a new set of high-resolution CBCT scans which are stored in the directory /clinical_data/patient_045/scans. For our pre-surgical planning, I need you to identify all relevant anatomical landmarks. Please use the specialized neural network models located in /software/ai_models/v4/ali_weights. It is crucial that the resulting coordinate files are exported directly to /clinical_data/patient_045/results/landmarks for further analysis by the surgical team.",
+            "expected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/clinical_data/patient_045/scans",
+                "dir_models": "/software/ai_models/v4/ali_weights",
+                "output_dir": "/clinical_data/patient_045/results/landmarks"
+            },
+            "extracted_params": {
+                "input": "/clinical_data/patient_045/scans",
+                "dir_models": "/software/ai_models/v4/ali_weights",
+                "lm_type": "all relevant anatomical landmarks",
+                "output_dir": "/clinical_data/patient_045/results/",
+                "temp_fold": "",
+                "DCMInput": false
+            },
+            "extraction_latency": 4.291032552719116,
+            "extraction_reasoning": "Parameter extraction based on user's prompt"
+        },
+        {
+            "prompt": "The orthodontics department has sent over several intraoral scans for a digital wax-up. Specifically, for the mesh file /ortho/capture/upper_arch_final.obj, we need to extract the precise dental landmarks for the central incisors, specifically teeth 8 and 9. We should be using the IOS-specific landmarking weights found in /shared/models/ios_ref. Once the processing is complete, please ensure the output data is saved within the /ortho/analysis/incisors directory to maintain our file organization standards.",
+            "expected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/ortho/capture/upper_arch_final.obj",
+                "teeth": "8 9",
+                "dir_models": "/shared/models/ios_ref",
+                "output_dir": "/ortho/analysis/incisors"
+            },
+            "extracted_params": {
+                "input": "/ortho/capture/upper_arch_final.obj",
+                "dir_models": "/shared/models/ios_ref",
+                "lm_type": "central incisors teeth 8 and 9",
+                "teeth": "8 9",
+                "output_dir": "/ortho/analysis/incisors",
+                "log_path": ""
+            },
+            "extraction_latency": 2.5923314094543457,
+            "extraction_reasoning": "Based on the user's prompt, I extracted the required parameters for the 'ali_ios' tool."
+        },
+        {
+            "prompt": "As part of our automated bone density study, we need to isolate the mandibular structure from the surrounding tissue in the volume located at /imaging/ct_vault/patient_x_head.nii.gz. I would like you to run the AMASSS segmentation pipeline, focusing exclusively on the Mandible structure. Please point the script to the nnU-Net model weights in /apps/amasss/models. Due to the size of these files, make sure the generated segmentation masks are placed in the dedicated output folder at /imaging/segmentations/mandibular_only.",
+            "expected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/imaging/ct_vault/patient_x_head.nii.gz",
+                "skullStructure": "Mandible",
+                "modelDirectory": "/apps/amasss/models",
+                "output_folder": "/imaging/segmentations/mandibular_only"
+            },
+            "extracted_params": {
+                "inputVolume": "/imaging/ct_vault/patient_x_head.nii.gz",
+                "modelDirectory": "/apps/amasss/models",
+                "skullStructure": "Mandible",
+                "output_folder": "/imaging/segmentations/mandibular_only",
+                "temp_fold": ""
+            },
+            "extraction_latency": 2.5184149742126465,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the AMASSS tool."
+        },
+        {
+            "prompt": "We are conducting a longitudinal study on bone remodeling and need to compare the baseline scan (T1) with the six-month follow-up (T2). The baseline data is located in /research/study_alpha/baseline_scans while the follow-up data is in /research/study_alpha/followup_6m. I need you to perform a rigid registration based on the Mandibular (MAND) alignment type. The transformation results and the registered volumes should be meticulously saved into /research/study_alpha/alignment_outputs/rigid_mand.",
+            "expected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/research/study_alpha/baseline_scans",
+                "t2_folder": "/research/study_alpha/followup_6m",
+                "reg_type": "MAND",
+                "output_folder": "/research/study_alpha/alignment_outputs/rigid_mand"
+            },
+            "extracted_params": {},
+            "extraction_latency": 5.637465476989746,
+            "extraction_reasoning": "Error: 1 validation error for ParameterExtraction\n  Invalid JSON: EOF while parsing a string at line 9 column 561 [type=json_invalid, input_value='{ \"reasoning\": \"Based on...} } } } } } } } } } } }', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid"
+        },
+        {
+            "prompt": "For the digital dental alignment project, we need to register the surface mesh of the initial intraoral scan /lab/ios/initial_arch.stl with the target arch model /lab/ios/target_arch.stl. Please utilize the high-precision refinement model located in /lab/weights/ios_refine_v2. To ensure that the prosthetic team can access the files immediately, save the final aligned mesh directly into the folder /lab/ios/aligned_results.",
+            "expected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/lab/ios/initial_arch.stl",
+                "T2": "/lab/ios/target_arch.stl",
+                "model": "/lab/weights/ios_refine_v2",
+                "output": "/lab/ios/aligned_results"
+            },
+            "extracted_params": {
+                "T1": "/lab/ios/initial_arch.stl",
+                "T2": "/lab/ios/target_arch.stl",
+                "output": "/lab/ios/aligned_results",
+                "model": "/lab/weights/ios_refine_v2",
+                "log_path": "",
+                "areg_mode": "Auto_IOS"
+            },
+            "extraction_latency": 2.0702574253082275,
+            "extraction_reasoning": "digital dental alignment project"
+        },
+        {
+            "prompt": "The raw volumetric datasets in /storage/raw_cbct_dump are currently too large for our analysis pipeline. We need to perform an automated cropping procedure to focus on the regions of interest. I have prepared a JSON file containing all the necessary ROI coordinates at /storage/config/crop_roi_definitions.json. Please process the scans and save the cropped, smaller volumes into /storage/processed/cropped_scans, ensuring that the physical voxel dimensions are preserved during the operation.",
+            "expected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/storage/raw_cbct_dump",
+                "path_ROI_file": "/storage/config/crop_roi_definitions.json",
+                "output_path": "/storage/processed/cropped_scans"
+            },
+            "extracted_params": {
+                "scan_files_path": "/storage/raw_cbct_dump",
+                "path_ROI_file": "/storage/config/crop_roi_definitions.json",
+                "output_path": "/storage/processed/cropped_scans",
+                "box_Size": true,
+                "logPath": ""
+            },
+            "extraction_latency": 2.0699987411499023,
+            "extraction_reasoning": "Automated cropping of raw CBCT datasets using ROI coordinates from a JSON file."
+        },
+        {
+            "prompt": "Following the previous registration step, we now have a set of transformation matrices stored in /work/matrices/batch_01. I need you to apply these specific transformations to the patient volume /work/data/target_patient.nii.gz. You must use /work/data/atlas_reference.nii.gz as the spatial reference file for this operation. The resulting transformed volume needs to be exported to /work/output/transformed_data for final verification.",
+            "expected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/work/data/target_patient.nii.gz",
+                "input_matrix": "/work/matrices/batch_01",
+                "reference_file": "/work/data/atlas_reference.nii.gz",
+                "output_folder": "/work/output/transformed_data"
+            },
+            "extracted_params": {
+                "input_patient": "/work/data/target_patient.nii.gz",
+                "input_matrix": "/work/matrices/batch_01",
+                "reference_file": "/work/data/atlas_reference.nii.gz",
+                "output_folder": "/work/output/transformed_data",
+                "log_path": "",
+                "is_seg": false
+            },
+            "extraction_latency": 1.864912509918213,
+            "extraction_reasoning": "Automatrix CLI tool"
+        },
+        {
+            "prompt": "We have a large backlog of CBCT scans in the directory /radiology/archive/scans_2025 that require dental segmentation for a retrospective study. I need you to run a batch processing operation using our specialized dental segmentation models found in /ai/dental_seg/nnunet_weights. This is a large-scale task, so please ensure that all the generated tooth masks are organized and saved within the /radiology/outputs/segmented_teeth directory.",
+            "expected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/radiology/archive/scans_2025",
+                "models_folder": "/ai/dental_seg/nnunet_weights",
+                "output_folder": "/radiology/outputs/segmented_teeth"
+            },
+            "extracted_params": {
+                "input_folder": "/radiology/archive/scans_2025",
+                "output_folder": "/radiology/outputs/segmented_teeth",
+                "models_folder": "/ai/dental_seg/nnunet_weights",
+                "log_path": ""
+            },
+            "extraction_latency": 2.5715579986572266,
+            "extraction_reasoning": "Batch Dental Segmentation using nnUNet in 3D Slicer. Automated segmentation of dental structures (teeth, bone, soft tissue) from CBCT scans using pre-trained nnUNet deep learning models with batch processing support."
+        },
+        {
+            "prompt": "To improve our diagnostic workflow, we are implementing a new Mask-RCNN based segmentation for tooth structures. Please process the cohort of patients located in /hospital/data/patient_cohort_A. You should apply the CLIC model weights which are stored at /hospital/models/clic_mask_rcnn_v3. All individual segmentation maps should be stored in the /hospital/results/clic_segmentations folder for clinical review.",
+            "expected_tool": "clic",
+            "expected_params": {
+                "input_path": "/hospital/data/patient_cohort_A",
+                "model_folder": "/hospital/models/clic_mask_rcnn_v3",
+                "output_dir": "/hospital/results/clic_segmentations"
+            },
+            "extracted_params": {
+                "input_path": "/hospital/data/patient_cohort_A",
+                "model_folder": "/hospital/models/clic_mask_rcnn_v3",
+                "output_dir": "/hospital/results/clic_segmentations"
+            },
+            "extraction_latency": 1.5485279560089111,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "For our research into tooth morphology, we need to classify a large set of dental meshes based on their shape characteristics. The STL mesh files are located in /research/morphology/meshes. I want you to perform a classification task using the resnet architecture with a configuration for 3 distinct classes. Please use the shape analysis weights from /research/models/shapeaxi_tooth. The final classification reports and data should be saved to /research/morphology/classification_results.",
+            "expected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/research/morphology/meshes",
+                "nn": "resnet",
+                "num_classes": 3,
+                "output_dir": "/research/morphology/classification_results"
+            },
+            "extracted_params": {
+                "input_dir": "/research/morphology/meshes",
+                "output_dir": "/research/morphology/classification_results",
+                "data_type": "path",
+                "task": "classification",
+                "model": "resnet",
+                "nn": "shapeaxi_tooth",
+                "num_classes": 3,
+                "log_path": ""
+            },
+            "extraction_latency": 2.57480788230896,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'docshapeaxi' tool."
+        },
+        {
+            "prompt": "We are dealing with a highly deformed tooth structure that requires a non-rigid alignment. Please apply a flexible registration to the mesh file at /lab/segmentations/deformed_tooth.vtk. I want you to use the 'butterfly' patch interpolation method to ensure a smooth deformation field. The resulting warped surface mesh should be saved into our results directory at /lab/registrations/flexible_outputs.",
+            "expected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/lab/segmentations/deformed_tooth.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/lab/registrations/flexible_outputs"
+            },
+            "extracted_params": {
+                "input_surface": "/lab/segmentations/deformed_tooth.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/lab/registrations/flexible_outputs"
+            },
+            "extraction_latency": 1.7325613498687744,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the flexreg tool."
+        },
+        {
+            "prompt": "Now that we have completed the summarization of over five hundred patient records, we need to visualize the key findings. Please take all the clinical summary files located in /data/summaries/extracted_text and generate an interactive medx dashboard. The resulting HTML and visualization assets should be compiled and saved into the webserver directory at /var/www/html/clinical_dashboards.",
+            "expected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/data/summaries/extracted_text",
+                "output_folder": "/var/www/html/clinical_dashboards"
+            },
+            "extracted_params": {
+                "summary_folder": "/data/summaries/extracted_text",
+                "output_folder": "/var/www/html/clinical_dashboards"
+            },
+            "extraction_latency": 1.4794156551361084,
+            "extraction_reasoning": "Based on the user's prompt, I extracted the following parameters for the MedX Dashboard tool."
+        },
+        {
+            "prompt": "Our database contains thousands of free-text clinical notes in /clinical_notes/raw_text that are difficult for surgeons to read quickly. I need you to perform a natural language summarization on these notes. Please utilize the t5-base transformer model for this task to ensure high-quality extraction of clinical intent. All the condensed summaries should be saved to the /clinical_notes/summarized_reports directory.",
+            "expected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/clinical_notes/raw_text",
+                "input_model": "t5-base",
+                "output_folder": "/clinical_notes/summarized_reports"
+            },
+            "extracted_params": {
+                "input_notes": "/clinical_notes/raw_text",
+                "input_model": "t5-base",
+                "output_folder": "/clinical_notes/summarized_reports",
+                "log_path": ""
+            },
+            "extraction_latency": 1.296220302581787,
+            "extraction_reasoning": "Parameter Extraction Agent"
+        },
+        {
+            "prompt": "In this multimodal study, we are attempting to synthesize CBCT-like intensity values from MRI data to aid in bone visualization. Please process the MRI volumes found in /imaging/mri_database. You must use the existing CBCT scans in /imaging/cbct_reference_library as the ground truth reference for the intensity approximation. The synthesized volumes should be exported to /imaging/synthesized_cbct_results.",
+            "expected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "mri_folder": "/imaging/mri_database",
+                "cbct_folder": "/imaging/cbct_reference_library",
+                "output_folder": "/imaging/synthesized_cbct_results"
+            },
+            "extracted_params": {
+                "cbct_folder": "/imaging/cbct_reference_library",
+                "mri_folder": "/imaging/mri_database",
+                "output_folder": "/imaging/synthesized_cbct_results"
+            },
+            "extraction_latency": 1.8110606670379639,
+            "extraction_reasoning": "Based on the user's prompt, I extracted the required parameters according to the selected tool's schema."
+        },
+        {
+            "prompt": "To improve our surgical planning, we need to align the soft tissue information from MRI with the hard tissue data from CBCT. Please register the MRI scans in /data/multimodal/mri_scans with the CBCT volumes in /data/multimodal/cbct_scans. You must use the anatomical segmentation masks in /data/multimodal/guidance_masks to facilitate the registration. The aligned multimodal volumes should be saved in /data/multimodal/aligned_registration_outputs.",
+            "expected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "mri_folder": "/data/multimodal/mri_scans",
+                "cbct_folder": "/data/multimodal/cbct_scans",
+                "cbct_label2": "/data/multimodal/guidance_masks",
+                "output_folder": "/data/multimodal/aligned_registration_outputs"
+            },
+            "extracted_params": {
+                "output_folder": "/data/multimodal/aligned_registration_outputs",
+                "mri_folder": "/data/multimodal/mri_scans",
+                "cbct_folder": "/data/multimodal/cbct_scans",
+                "cbct_label2": "/data/multimodal/guidance_masks"
+            },
+            "extraction_latency": 2.1172080039978027,
+            "extraction_reasoning": "Parameter Extraction for MRI2CBCT_REG Tool"
+        },
+        {
+            "prompt": "For our bilateral symmetry analysis of the temporomandibular joint, we need to separate the left and right sides of our imaging data. Please process the CBCTs in /data/symmetry/cbct, the MRIs in /data/symmetry/mri, and the existing segmentations in /data/symmetry/seg. I need the left and right ROI crops to be generated and stored in /data/symmetry/separated_crops.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/data/symmetry/cbct",
+                "input_folder_MRI": "/data/symmetry/mri",
+                "input_folder_Seg": "/data/symmetry/seg",
+                "output_folder": "/data/symmetry/separated_crops"
+            },
+            "extracted_params": {
+                "input_folder_CBCT": "/data/symmetry/cbct",
+                "input_folder_MRI": "/data/symmetry/mri",
+                "input_folder_Seg": "/data/symmetry/seg",
+                "output_folder": "/data/symmetry/separated_crops"
+            },
+            "extraction_latency": 1.850675106048584,
+            "extraction_reasoning": "processing user request"
+        },
+        {
+            "prompt": "The raw MRI scans we received from the outside imaging center are not in a standard orientation. Please take all the volumes in /incoming/raw_mri and perform a reorientation and centering procedure. Use the standard radiological direction matrix [-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0] and ensure the acquisition Z-spacing is set to 1.5. The standardized output should be saved to /hospital/standard_mri/centered_data.",
+            "expected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/incoming/raw_mri",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/hospital/standard_mri/centered_data"
+            },
+            "extracted_params": {
+                "input_folder": "/incoming/raw_mri",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/hospital/standard_mri/centered_data",
+                "acquisition_z_spacing": 1.5
+            },
+            "extraction_latency": 2.5488803386688232,
+            "extraction_reasoning": "Parameter extraction for MRI2CBCT_ORIENT_CENTER tool"
+        },
+        {
+            "prompt": "To standardize our dataset for deep learning training, all volumes must have the same spatial dimensions. Please take the MRI data in /training/raw_data/MRI and resample every volume to a fixed size of [256, 256, 128]. I want the output to be saved in /training/processed_data/resampled_256. It's important to keep the resolution consistent across the entire batch.",
+            "expected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/training/raw_data/MRI",
+                "output_folder": "/training/processed_data/resampled_256",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ]
+            },
+            "extracted_params": {
+                "input_folder_MRI": "/training/raw_data/MRI",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "output_folder": "/training/processed_data/resampled_256"
+            },
+            "extraction_latency": 1.7587807178497314,
+            "extraction_reasoning": "To standardize our dataset for deep learning training, all volumes must have the same spatial dimensions."
+        },
+        {
+            "prompt": "We are specifically investigating disorders of the temporomandibular joint (TMJ). I need you to extract the TMJ regions from both the CBCT scans in /research/tmj_study/cbct and the MRI scans in /research/tmj_study/mri. You will need to use the corresponding segmentation masks in /research/tmj_study/masks and the TMJ detection model in /research/models/tmj_net. Please export the localized crops to /research/tmj_study/tmj_localized_crops.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/research/tmj_study/cbct",
+                "mri_folder": "/research/tmj_study/mri",
+                "seg_folder": "/research/tmj_study/masks",
+                "model_folder": "/research/models/tmj_net",
+                "output_folder": "/research/tmj_study/tmj_localized_crops"
+            },
+            "extracted_params": {
+                "cbct_folder": "/research/tmj_study/cbct",
+                "mri_folder": "/research/tmj_study/mri",
+                "seg_folder": "/research/tmj_study/masks",
+                "model_folder": "/research/models/tmj_net",
+                "output_folder": "/research/tmj_study/tmj_localized_crops",
+                "tmp_folder": ""
+            },
+            "extraction_latency": 2.6406495571136475,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the MRI2CBCT_TMJ_CROP tool."
+        },
+        {
+            "prompt": "Before we can perform the full ASO registration, we need to run the preprocessing script on our raw CBCT volumes. Please take all the scans from the /clinic/inbox/raw_cbct folder. Use the ASO-specific preprocessing model weights located at /opt/aso/models/pre_aso_v1. The resulting pre-oriented volumes should be saved to /clinic/processed/pre_aso_cbct_data for the next stage of the pipeline.",
+            "expected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/clinic/inbox/raw_cbct",
+                "model_folder": "/opt/aso/models/pre_aso_v1",
+                "output_folder": "/clinic/processed/pre_aso_cbct_data"
+            },
+            "extracted_params": {
+                "input": "/clinic/inbox/raw_cbct",
+                "output_folder": "/clinic/processed/pre_aso_cbct_data",
+                "model_folder": "/opt/aso/models/pre_aso_v1",
+                "temp_folder": "",
+                "DCMInput": false
+            },
+            "extraction_latency": 1.8382210731506348,
+            "extraction_reasoning": "extracting parameters from user prompt"
+        },
+        {
+            "prompt": "We need to standardize the orientation of several intraoral scans to a common coordinate system. Please process the Upper jaw scans found in the directory /scans/ortho/raw_ios. You must align them to the gold-standard reference models in /scans/ortho/gold_standards. Focus on teeth 8 and 9 for the primary alignment. The resulting oriented mesh files should be saved in /scans/ortho/standardized_ios.",
+            "expected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/scans/ortho/raw_ios",
+                "gold_folder": "/scans/ortho/gold_standards",
+                "jaw": "Upper",
+                "list_teeth": "8,9",
+                "output_folder": "/scans/ortho/standardized_ios"
+            },
+            "extracted_params": {
+                "input_folder": "/scans/ortho/raw_ios",
+                "gold_folder": "/scans/ortho/gold_standards",
+                "output_folder": "/scans/ortho/standardized_ios",
+                "list_teeth": "8,9",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": ""
+            },
+            "extraction_latency": 3.5483222007751465,
+            "extraction_reasoning": "Processing Upper jaw scans from directory /scans/ortho/raw_ios, aligning them to gold-standard reference models in /scans/ortho/gold_standards, focusing on teeth 8 and 9 for primary alignment, saving oriented mesh files in /scans/ortho/standardized_ios."
+        },
+        {
+            "prompt": "For our cephalometric analysis, we are using a semi-automated approach to orient the CBCT volumes. Please process the scans in /data/ceph/scans_to_orient and align them with the reference volumes in /data/ceph/gold_atlas. The orientation should be calculated using the Sella and Nasion landmarks. Please save all the reoriented CBCT volumes into the output folder /data/ceph/reoriented_volumes.",
+            "expected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/data/ceph/scans_to_orient",
+                "gold_folder": "/data/ceph/gold_atlas",
+                "list_landmark": "Sella Nasion",
+                "output_folder": "/data/ceph/reoriented_volumes"
+            },
+            "extracted_params": {
+                "input": "/data/ceph/scans_to_orient",
+                "gold_folder": "/data/ceph/gold_atlas",
+                "output_folder": "/data/ceph/reoriented_volumes",
+                "list_landmark": "Sella Nasion"
+            },
+            "extraction_latency": 1.9361629486083984,
+            "extraction_reasoning": "Processing cephalometric analysis with semi-automated approach to orient CBCT volumes."
+        },
+        {
+            "prompt": "The prosthetic lab requires the intraoral scans to be oriented based on specific landmarks. Please take the Lower jaw scans from /lab/prosthetic/raw_scans and align them to the gold-standard reference directory at /lab/prosthetic/references. Use the Cusp and Fossa points as the primary landmarks for this semi-automated orientation. All processed files should be saved in /lab/prosthetic/ready_for_design.",
+            "expected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/lab/prosthetic/raw_scans",
+                "gold_folder": "/lab/prosthetic/references",
+                "list_landmark": "Cusp Fossa",
+                "jaw": "Lower",
+                "output_folder": "/lab/prosthetic/ready_for_design"
+            },
+            "extracted_params": {
+                "input_folder": "/lab/prosthetic/raw_scans",
+                "gold_folder": "/lab/prosthetic/references",
+                "output_folder": "/lab/prosthetic/ready_for_design",
+                "list_landmark": "Cusp, Fossa",
+                "occlusion": true,
+                "jaw": "Lower",
+                "log_path": ""
+            },
+            "extraction_latency": 2.6222970485687256,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'semi_aso_ios' tool."
+        }
+    ]
+}

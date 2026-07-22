@@ -1,0 +1,50 @@
+{
+    "name": "amasss_cli",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/AMASSS_CLI.py",
+    "description": "AMASSS - Anatomical Structures Segmentation from CBCT using deep learning. Automatic segmentation of maxilla, mandible, and other anatomical structures using nnUNet-based models trained on dental CBCT data.",
+    "tags": [
+        "cbct",
+        "segmentation",
+        "nnunet",
+        "anatomical",
+        "mandible",
+        "maxilla",
+        "jaw",
+        "dental",
+        "anatomy",
+        "deep-learning",
+        "ai"
+    ],
+    "parameters": [
+        {
+            "name": "inputVolume",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans to segment."
+        },
+        {
+            "name": "modelDirectory",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing nnUNet model checkpoints."
+        },
+        {
+            "name": "skullStructure",
+            "type": "str",
+            "required": true,
+            "description": " Structures to segment"
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for segmented structures."
+        },
+        {
+            "name": "temp_fold",
+            "type": "path",
+            "required": true,
+            "description": "Path to log file."
+        }
+    ]
+}

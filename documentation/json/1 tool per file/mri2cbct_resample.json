@@ -1,0 +1,86 @@
+{
+    "name": "mri2cbct_resample",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/MRI2CBCT_RESAMPLE_CBCT_MRI.py",
+    "description": "Resample MRI and CBCT to uniform spacing. Interpolates medical images to isotropic or anisotropic target resolution for standardized processing and compatibility with subsequent deep learning or analysis pipelines.",
+    "tags": [
+        "mri",
+        "cbct",
+        "resample",
+        "spacing",
+        "interpolation",
+        "preprocessing",
+        "voxel",
+        "standardization"
+    ],
+    "parameters": [
+        {
+            "name": "input_folder_MRI",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI scans to resample."
+        },
+        {
+            "name": "input_folder_T2_MRI",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing MRI T2 scans to resample."
+        },
+        {
+            "name": "input_folder_CBCT",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT scans to resample."
+        },
+        {
+            "name": "input_folder_T2_CBCT",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing CBCT T2 scans to resample."
+        },
+        {
+            "name": "input_folder_Seg",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing Seg scans to resample."
+        },
+        {
+            "name": "input_folder_T2_Seg",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing Seg T2 scans to resample."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for resampled images."
+        },
+        {
+            "name": "resample_size",
+            "type": "list[int]",
+            "default": [
+                443,
+                443,
+                119
+            ],
+            "encode": "python_literal",
+            "description": "list for the resample size of the scans"
+        },
+        {
+            "name": "spacing",
+            "type": "lsit[float]",
+            "default": [
+                0.3,
+                0.3,
+                0.3
+            ],
+            "description": "list for the spacing size of the scans"
+        },
+        {
+            "name": "center",
+            "type": "bool",
+            "default": false,
+            "description": "Interpolation method: linear, nearest, etc."
+        }
+    ]
+}

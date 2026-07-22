@@ -1,0 +1,396 @@
+{
+    "mode": "parameter_extraction_only",
+    "queries_type": "missingparam",
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 21,
+        "avg_extraction_latency": 1.9956,
+        "total_with_expected_params": 21,
+        "total_perfect_matches": 0,
+        "query_accuracy_percentage": 0.0,
+        "total_expected_individual_params": 72,
+        "total_correct_individual_params": 42,
+        "param_accuracy_percentage": 58.33
+    },
+    "details": [
+        {
+            "prompt": "Identify landmarks on the CBCT scans in /data/scans and save them to /output, but I haven't specified the model directory.",
+            "expected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/data/scans",
+                "dir_models": "MISSING",
+                "output_dir": "/output",
+                "DCMInput": false
+            },
+            "extracted_params": {
+                "input": "/data/scans",
+                "lm_type": "",
+                "output_dir": "/output",
+                "temp_fold": "",
+                "DCMInput": false
+            },
+            "extraction_latency": 1.6357479095458984,
+            "extraction_reasoning": "The user wants to identify landmarks on CBCT scans without specifying a model directory."
+        },
+        {
+            "prompt": "Extract landmarks from /scans/ios.stl for teeth 8 and 9. Where should I put the output?",
+            "expected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/scans/ios.stl",
+                "teeth": "8 9",
+                "output_dir": "MISSING",
+                "dir_models": "/models/default_ios"
+            },
+            "extracted_params": {
+                "input": "/scans/ios.stl",
+                "dir_models": "(no value provided, so it will be omitted)",
+                "lm_type": "(no value provided, so it will be omitted)",
+                "teeth": "8 9",
+                "output_dir": "(no value provided, so it will be omitted)",
+                "log_path": "(no value provided, so it will be omitted)"
+            },
+            "extraction_latency": 2.7148237228393555,
+            "extraction_reasoning": "Based on the user's prompt, we can extract the following parameters:"
+        },
+        {
+            "prompt": "Run the jaw segmentation on /data/vol.nii.gz using the models in /models/nnunet.",
+            "expected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/data/vol.nii.gz",
+                "modelDirectory": "/models/nnunet",
+                "skullStructure": "MISSING",
+                "output_folder": "/results"
+            },
+            "extracted_params": {
+                "inputVolume": "/data/vol.nii.gz",
+                "modelDirectory": "/models/nnunet",
+                "skullStructure": "jaw",
+                "output_folder": "",
+                "temp_fold": ""
+            },
+            "extraction_latency": 1.8746743202209473,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the AMASSS tool."
+        },
+        {
+            "prompt": "Register the T1 scans in /data/T1 and T2 in /data/T2. I want the results in /registered, but which alignment type should I use?",
+            "expected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "output_folder": "/registered",
+                "reg_type": "MISSING"
+            },
+            "extracted_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "",
+                "output_folder": "/registered",
+                "DCMInput": false,
+                "temp_folder": "",
+                "mask_folder_t1": "None"
+            },
+            "extraction_latency": 2.2857797145843506,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'areg_cbct' tool."
+        },
+        {
+            "prompt": "Align the dental mesh /T1.obj with the target /T2.obj using the refine model in /models/ref.",
+            "expected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/T1.obj",
+                "T2": "/T2.obj",
+                "model": "/models/ref",
+                "output": "MISSING"
+            },
+            "extracted_params": {
+                "T1": "/path/to/T1.obj",
+                "T2": "/path/to/T2.obj",
+                "output": "/path/to/output/folder",
+                "model": "/models/ref",
+                "log_path": "/path/to/log/file.log",
+                "areg_mode": "Auto_IOS"
+            },
+            "extraction_latency": 2.075704336166382,
+            "extraction_reasoning": "areg_ios"
+        },
+        {
+            "prompt": "Crop the volumes in /data/raw and save them to /data/cropped. I forgot to provide the ROI marker file.",
+            "expected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/data/raw",
+                "output_path": "/data/cropped",
+                "path_ROI_file": "MISSING"
+            },
+            "extracted_params": {
+                "scan_files_path": "/data/raw",
+                "path_ROI_file": null,
+                "output_path": "/data/cropped",
+                "box_Size": true,
+                "logPath": null
+            },
+            "extraction_latency": 2.059006690979004,
+            "extraction_reasoning": "User wants to crop 3D volumetric medical images (CT, MRI, CBCT) using point-based or region markers for focused analysis."
+        },
+        {
+            "prompt": "Apply the matrices from /transforms to the patient file /pat.nii.gz, but I didn't provide a reference file.",
+            "expected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/pat.nii.gz",
+                "input_matrix": "/transforms",
+                "reference_file": "MISSING"
+            },
+            "extracted_params": {
+                "input_patient": "/pat.nii.gz",
+                "input_matrix": "/transforms",
+                "reference_file": null,
+                "fromAreg": false,
+                "output_folder": null,
+                "log_path": null,
+                "is_seg": false
+            },
+            "extraction_latency": 2.4571990966796875,
+            "extraction_reasoning": "The user wants to apply transformation matrices from the '/transforms' folder to the patient file '/pat.nii.gz', but no reference file is provided."
+        },
+        {
+            "prompt": "Start the batch segmentation for the scans in /inbox/scans. Use the weights in /weights/dental.",
+            "expected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/inbox/scans",
+                "models_folder": "/weights/dental",
+                "output_folder": "MISSING"
+            },
+            "extracted_params": {
+                "input_folder": "/inbox/scans",
+                "output_folder": "",
+                "><!-- No output folder specified, so it will be left blank --><!-- ": "",
+                "models_folder": "/weights/dental",
+                "log_path": ""
+            },
+            "extraction_latency": 1.6260240077972412,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Run CLIC segmentation for the patient data in /data/patients. I have the output folder /results ready.",
+            "expected_tool": "clic",
+            "expected_params": {
+                "input_path": "/data/patients",
+                "output_dir": "/results",
+                "model_folder": "MISSING"
+            },
+            "extracted_params": {},
+            "extraction_latency": 4.613832235336304,
+            "extraction_reasoning": "Error: 1 validation error for ParameterExtraction\n  Invalid JSON: EOF while parsing a string at line 3 column 587 [type=json_invalid, input_value='{\"reasoning\": \"Analyzing...} } } } } } } } } } } }', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid"
+        },
+        {
+            "prompt": "Classify the meshes in /data/meshes using the ResNet architecture and 3 classes. I didn't specify the output directory.",
+            "expected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/data/meshes",
+                "nn": "resnet",
+                "num_classes": 3,
+                "output_dir": "MISSING"
+            },
+            "extracted_params": {
+                "input_dir": "/data/meshes",
+                "output_dir": null,
+                "data_type": "ResNet",
+                "task": "classification",
+                "model": "ResNet",
+                "nn": "ResNet",
+                "num_classes": 3,
+                "log_path": null
+            },
+            "extraction_latency": 2.264077663421631,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'docshapeaxi' tool."
+        },
+        {
+            "prompt": "Apply flexible registration to the mesh /data/tooth.vtk. I want to use the 'butterfly' method.",
+            "expected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/data/tooth.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "MISSING"
+            },
+            "extracted_params": {
+                "input_surface": "/data/tooth.vtk",
+                "patch_type": "butterfly",
+                "output_folder": ""
+            },
+            "extraction_latency": 1.2114334106445312,
+            "extraction_reasoning": "extracting parameters from user's prompt"
+        },
+        {
+            "prompt": "Generate a clinical dashboard from the summaries in /data/summaries.",
+            "expected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/data/summaries",
+                "output_folder": "MISSING"
+            },
+            "extracted_params": {
+                "summary_folder": "/data/summaries",
+                "output_folder": ""
+            },
+            "extraction_latency": 1.208463430404663,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the MedX Dashboard tool."
+        },
+        {
+            "prompt": "Summarize the medical notes in /data/notes. Save the results to /data/output.",
+            "expected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/data/notes",
+                "output_folder": "/data/output",
+                "input_model": "MISSING"
+            },
+            "extracted_params": {
+                "input_notes": "/data/notes",
+                "output_folder": "/data/output",
+                "log_path": "",
+                "input_model": "t5-base"
+            },
+            "extraction_latency": 1.4809114933013916,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Perform MRI to CBCT intensity approximation for the files in /data/mri. I have the output folder /data/results.",
+            "expected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "mri_folder": "/data/mri",
+                "output_folder": "/data/results",
+                "cbct_folder": "MISSING"
+            },
+            "extracted_params": {
+                "cbct_folder": "/data/cbct",
+                "mri_folder": "/data/mri",
+                "output_folder": "/data/results"
+            },
+            "extraction_latency": 1.7531969547271729,
+            "extraction_reasoning": "Based on the provided information, I will extract the required parameters for the 'mri2cbct_approx' tool."
+        },
+        {
+            "prompt": "Align MRI sequences in /mri with CBCT volumes in /cbct. I have an output folder /aligned.",
+            "expected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "mri_folder": "/mri",
+                "cbct_folder": "/cbct",
+                "output_folder": "/aligned",
+                "cbct_label2": "MISSING"
+            },
+            "extracted_params": {
+                "output_folder": "/aligned",
+                "mri_folder": "/mri",
+                "cbct_folder": "/cbct",
+                "cbct_label2": ""
+            },
+            "extraction_latency": 1.5108661651611328,
+            "extraction_reasoning": "Extracting parameters for MRI2CBCT_REG tool."
+        },
+        {
+            "prompt": "Crop the left and right sides of the CBCT in /cbct and MRI in /mri. Where should the cropped files go?",
+            "expected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/cbct",
+                "input_folder_MRI": "/mri",
+                "output_folder": "MISSING"
+            },
+            "extracted_params": {
+                "input_folder_CBCT": "/cbct",
+                "input_folder_MRI": "/mri",
+                "output_folder": "path_to_output_folder"
+            },
+            "extraction_latency": 1.9981331825256348,
+            "extraction_reasoning": "User wants to crop the left and right sides of both CBCT and MRI scans, with input folders at /cbct and /mri, and output folder for cropped volumes."
+        },
+        {
+            "prompt": "Reorient the raw MRI data in /raw_mri to /centered_mri. What direction matrix should I use?",
+            "expected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/raw_mri",
+                "output_folder": "/centered_mri",
+                "direction": "MISSING"
+            },
+            "extracted_params": {
+                "input_folder": "/raw_mri",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/centered_mri",
+                "acquisition_z_spacing": 3.0
+            },
+            "extraction_latency": 2.7745585441589355,
+            "extraction_reasoning": "The user wants to reorient the raw MRI data from /raw_mri to /centered_mri."
+        },
+        {
+            "prompt": "Extract TMJ regions from CBCT /c and MRI /m using the models in /models/tmj.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/c",
+                "mri_folder": "/m",
+                "model_folder": "/models/tmj",
+                "seg_folder": "MISSING"
+            },
+            "extracted_params": {
+                "cbct_folder": "/c",
+                "mri_folder": "/m",
+                "seg_folder": "",
+                "output_folder": "",
+                "model_folder": "/models/tmj",
+                "tmp_folder": ""
+            },
+            "extraction_latency": 1.9205732345581055,
+            "extraction_reasoning": "Automatic Temporomandibular Joint (TMJ) region segmentation and cropping."
+        },
+        {
+            "prompt": "Prepare the CBCT scans in /data/raw for ASO orientation and save to /data/pre_aso. Which model should I use?",
+            "expected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/data/raw",
+                "output_folder": "/data/pre_aso",
+                "model_folder": "MISSING"
+            },
+            "extracted_params": {
+                "input": "/data/raw",
+                "output_folder": "/data/pre_aso",
+                "model_folder": "",
+                "temp_folder": "",
+                "DCMInput": true
+            },
+            "extraction_latency": 1.5515050888061523,
+            "extraction_reasoning": "Preparing CBCT scans for Automatic Segmentation Orientation (ASO) orientation"
+        },
+        {
+            "prompt": "Standardize the IOS scan in /data/ios. Dents 8 and 9 are selected. Reference is /gold.",
+            "expected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/data/ios",
+                "gold_folder": "/gold",
+                "list_teeth": "8,9",
+                "jaw": "MISSING"
+            },
+            "extracted_params": {
+                "input_folder": "/data/ios",
+                "list_teeth": "8,9",
+                "occlusion": false,
+                "jaw": "Upper",
+                "log_path": "",
+                "output_folder": ""
+            },
+            "extraction_latency": 1.5598526000976562,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Orient the CBCT scans in /scans using the reference /gold. Landmarks are Sella and Nasion.",
+            "expected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/scans",
+                "gold_folder": "/gold",
+                "list_landmark": "Sella Nasion",
+                "output_folder": "MISSING"
+            },
+            "extracted_params": {
+                "input": "/scans",
+                "gold_folder": "/gold",
+                "output_folder": "",
+                "list_landmark": "Sella Nason"
+            },
+            "extraction_latency": 1.3308956623077393,
+            "extraction_reasoning": "Parameter extraction for semi_aso_cbct tool"
+        }
+    ]
+}

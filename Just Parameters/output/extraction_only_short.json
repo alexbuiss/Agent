@@ -1,0 +1,450 @@
+{
+    "mode": "parameter_extraction_only",
+    "queries_type": "short",
+    "model": "llama3:latest",
+    "metrics": {
+        "total_queries": 23,
+        "avg_extraction_latency": 1.8635,
+        "total_with_expected_params": 23,
+        "total_perfect_matches": 6,
+        "query_accuracy_percentage": 26.09,
+        "total_expected_individual_params": 79,
+        "total_correct_individual_params": 76,
+        "param_accuracy_percentage": 96.2
+    },
+    "details": [
+        {
+            "prompt": "Detect landmarks in /data/cbct using /models/ali. Output to /out_dir.",
+            "expected_tool": "ali_cbct",
+            "expected_params": {
+                "input": "/data/cbct",
+                "dir_models": "/models/ali",
+                "output_dir": "/out_dir"
+            },
+            "extracted_params": {
+                "input": "/data/cbct",
+                "dir_models": "/models/ali",
+                "lm_type": "",
+                "output_dir": "/out_dir",
+                "temp_fold": "",
+                "DCMInput": false
+            },
+            "extraction_latency": 1.7221896648406982,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Extract landmarks for teeth 8 and 9 from /scans/ios.obj to /results.",
+            "expected_tool": "ali_ios",
+            "expected_params": {
+                "input": "/scans/ios.obj",
+                "teeth": "8 9",
+                "output_dir": "/results"
+            },
+            "extracted_params": {
+                "input": "/scans/ios.obj",
+                "dir_models": "",
+                "lm_type": "teeth",
+                "teeth": "8 9",
+                "output_dir": "/results",
+                "log_path": ""
+            },
+            "extraction_latency": 1.6843626499176025,
+            "extraction_reasoning": "extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Segment Mandible from /vol.nii.gz using /weights/amasss. Save to /output.",
+            "expected_tool": "amasss_cli",
+            "expected_params": {
+                "inputVolume": "/vol.nii.gz",
+                "skullStructure": "Mandible",
+                "output_folder": "/output"
+            },
+            "extracted_params": {
+                "inputVolume": "/vol.nii.gz",
+                "modelDirectory": "/weights",
+                "skullStructure": "Mandible",
+                "output_folder": "/output",
+                "temp_fold": ""
+            },
+            "extraction_latency": 1.6034750938415527,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Register T1 /data/T1 with T2 /data/T2 using MAND type to /reg_out.",
+            "expected_tool": "areg_cbct",
+            "expected_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAND",
+                "output_folder": "/reg_out"
+            },
+            "extracted_params": {
+                "t1_folder": "/data/T1",
+                "t2_folder": "/data/T2",
+                "reg_type": "MAND",
+                "output_folder": "/reg_out",
+                "DCMInput": false,
+                "temp_folder": "None",
+                "><!--- default value for temp_folder is None, as it's not specified in the prompt ---&gt;  ": "",
+                "mask_folder_t1": "None"
+            },
+            "extraction_latency": 2.803323745727539,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Align /T1.stl to /T2.stl with model /models/refine. Output to /aligned.",
+            "expected_tool": "areg_ios",
+            "expected_params": {
+                "T1": "/T1.stl",
+                "T2": "/T2.stl",
+                "model": "/models/refine",
+                "output": "/aligned"
+            },
+            "extracted_params": {
+                "T1": "/T1.stl",
+                "T2": "/T2.stl",
+                "output": "/aligned",
+                "model": "/models/refine",
+                "log_path": "",
+                "><!-- default value, not provided by user --><!-- areg_mode": "Auto_IOS"
+            },
+            "extraction_latency": 2.67063570022583,
+            "extraction_reasoning": "Automatic Registration of Intraoral Scans using Iterative Closest Point (ICP). Registers baseline and follow-up IOS surfaces for longitudinal dental tracking and treatment outcome assessment."
+        },
+        {
+            "prompt": "Crop volumes in /raw using /meta/roi.json. Save results to /cropped.",
+            "expected_tool": "autocrop3d",
+            "expected_params": {
+                "scan_files_path": "/raw",
+                "path_ROI_file": "/meta/roi.json",
+                "output_path": "/cropped"
+            },
+            "extracted_params": {
+                "scan_files_path": "/raw",
+                "path_ROI_file": "/meta/roi.json",
+                "output_path": "/cropped",
+                "box_Size": true,
+                "logPath": ""
+            },
+            "extraction_latency": 1.6352026462554932,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Apply /mats/m.txt to /scans/p.nii.gz with ref /ref.nii.gz to /out.",
+            "expected_tool": "automatrix",
+            "expected_params": {
+                "input_patient": "/scans/p.nii.gz",
+                "input_matrix": "/mats/m.txt",
+                "reference_file": "/ref.nii.gz",
+                "output_folder": "/out"
+            },
+            "extracted_params": {
+                "input_patient": "/scans/p.nii.gz",
+                "input_matrix": "/mats/m.txt",
+                "reference_file": "/ref.nii.gz",
+                "output_folder": "/out",
+                "log_path": "",
+                "fromAreg": false,
+                "is_seg": false
+            },
+            "extraction_latency": 1.8822569847106934,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Batch segment /all_scans with /models/nnunet. Save to /masks_out.",
+            "expected_tool": "batchdentalseg",
+            "expected_params": {
+                "input_folder": "/all_scans",
+                "models_folder": "/models/nnunet",
+                "output_folder": "/masks_out"
+            },
+            "extracted_params": {
+                "input_folder": "/all_scans",
+                "output_folder": "/masks_out",
+                "models_folder": "/models/nnunet",
+                "log_path": ""
+            },
+            "extraction_latency": 1.7970225811004639,
+            "extraction_reasoning": "Based on the user's prompt, I extracted the following parameters for the 'batchdentalseg' tool."
+        },
+        {
+            "prompt": "Run CLIC on /patients with /models/clic_v1. Output to /masks.",
+            "expected_tool": "clic",
+            "expected_params": {
+                "input_path": "/patients",
+                "model_folder": "/models/clic_v1",
+                "output_dir": "/masks"
+            },
+            "extracted_params": {
+                "input_path": "/patients",
+                "model_folder": "/models/clic_v1",
+                "output_dir": "/masks"
+            },
+            "extraction_latency": 1.3255085945129395,
+            "extraction_reasoning": "Extracted parameters from user's prompt"
+        },
+        {
+            "prompt": "Classify meshes in /meshes with resnet and 3 classes to /analysis.",
+            "expected_tool": "docshapeaxi",
+            "expected_params": {
+                "input_dir": "/meshes",
+                "nn": "resnet",
+                "num_classes": 3,
+                "output_dir": "/analysis"
+            },
+            "extracted_params": {
+                "input_dir": "/meshes",
+                "output_dir": "/analysis",
+                "data_type": "resnet",
+                "task": "classification",
+                "model": "",
+                "nn": "resnet",
+                "num_classes": 3,
+                "log_path": ""
+            },
+            "extraction_latency": 2.1814143657684326,
+            "extraction_reasoning": "Based on the provided prompt, I will extract the required parameters for the 'docshapeaxi' tool."
+        },
+        {
+            "prompt": "Warp /mesh.vtk using butterfly method. Save to /warped_out.",
+            "expected_tool": "flexreg",
+            "expected_params": {
+                "input_surface": "/mesh.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/warped_out"
+            },
+            "extracted_params": {
+                "input_surface": "/mesh.vtk",
+                "patch_type": "butterfly",
+                "output_folder": "/warped_out"
+            },
+            "extraction_latency": 1.4061055183410645,
+            "extraction_reasoning": "Extracted parameters based on user prompt"
+        },
+        {
+            "prompt": "Create dashboard from /reports/summaries. Output to /web_out.",
+            "expected_tool": "medx_dashboard",
+            "expected_params": {
+                "summary_folder": "/reports/summaries",
+                "output_folder": "/web_out"
+            },
+            "extracted_params": {
+                "summary_folder": "/reports/summaries",
+                "output_folder": "/web_out"
+            },
+            "extraction_latency": 0.9946603775024414,
+            "extraction_reasoning": "Extracted parameters based on user prompt"
+        },
+        {
+            "prompt": "Summarize notes in /data/notes using t5-base. Save to /summaries.",
+            "expected_tool": "medx_summarize",
+            "expected_params": {
+                "input_notes": "/data/notes",
+                "input_model": "t5-base",
+                "output_folder": "/summaries"
+            },
+            "extracted_params": {
+                "input_notes": "/data/notes",
+                "input_model": "t5-base",
+                "output_folder": "/summaries",
+                "log_path": ""
+            },
+            "extraction_latency": 1.5002949237823486,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Approximate MRI /mri_dir to CBCT /cbct_ref. Save to /approx_out.",
+            "expected_tool": "mri2cbct_approx",
+            "expected_params": {
+                "mri_folder": "/mri_dir",
+                "cbct_folder": "/cbct_ref",
+                "output_folder": "/approx_out"
+            },
+            "extracted_params": {
+                "cbct_folder": "/cbct_ref",
+                "mri_folder": "/mri_dir",
+                "output_folder": "/approx_out"
+            },
+            "extraction_latency": 1.7258474826812744,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'mri2cbct_approx' tool."
+        },
+        {
+            "prompt": "Register MRI /mri to CBCT /cbct with mask /seg to /aligned.",
+            "expected_tool": "mri2cbct_reg",
+            "expected_params": {
+                "mri_folder": "/mri",
+                "cbct_folder": "/cbct",
+                "cbct_label2": "/seg",
+                "output_folder": "/aligned"
+            },
+            "extracted_params": {
+                "output_folder": "/aligned",
+                "mri_folder": "/mri",
+                "cbct_folder": "/cbct",
+                "cbct_label2": "/seg"
+            },
+            "extraction_latency": 1.7116098403930664,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "LR crop CBCT /c, MRI /m, and Seg /s. Output to /lr_results.",
+            "expected_tool": "mri2cbct_lr_crop",
+            "expected_params": {
+                "input_folder_CBCT": "/c",
+                "input_folder_MRI": "/m",
+                "input_folder_Seg": "/s",
+                "output_folder": "/lr_results"
+            },
+            "extracted_params": {
+                "input_folder_CBCT": "/c",
+                "input_folder_MRI": "/m",
+                "input_folder_Seg": "/s",
+                "output_folder": "/lr_results"
+            },
+            "extraction_latency": 1.3741445541381836,
+            "extraction_reasoning": "Extracted parameters from user prompt"
+        },
+        {
+            "prompt": "Center MRI /raw using dir -1,0,0,0,-1,0,0,0,1 to /centered.",
+            "expected_tool": "mri2cbct_orient_center",
+            "expected_params": {
+                "input_folder": "/raw",
+                "direction": "-1,0,0,0,-1,0,0,0,1",
+                "output_folder": "/centered"
+            },
+            "extracted_params": {
+                "input_folder": "/raw",
+                "direction": "-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0",
+                "output_folder": "/centered",
+                "acquisition_z_spacing": 3.0
+            },
+            "extraction_latency": 3.314450979232788,
+            "extraction_reasoning": "User wants to center MRI scans from the '/raw' folder using a specific direction (-1,0,0,0,-1,0,0,0,1) and output them to the '/centered' folder."
+        },
+        {
+            "prompt": "Resample /raw_vol to [256,256,128]. Output to /resampled_out.",
+            "expected_tool": "mri2cbct_resample",
+            "expected_params": {
+                "input_folder_MRI": "/raw_vol/MRI",
+                "output_folder": "/resampled_out",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ]
+            },
+            "extracted_params": {
+                "input_folder_MRI": "/raw_vol",
+                "output_folder": "/resampled_out",
+                "resample_size": [
+                    256,
+                    256,
+                    128
+                ],
+                "spacing": [],
+                "center": false
+            },
+            "extraction_latency": 2.1300785541534424,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the 'mri2cbct_resample' tool."
+        },
+        {
+            "prompt": "Crop TMJ from /cbct and /mri with /seg. Save to /tmj_out.",
+            "expected_tool": "mri2cbct_tmj_crop",
+            "expected_params": {
+                "cbct_folder": "/cbct",
+                "mri_folder": "/mri",
+                "seg_folder": "/seg",
+                "output_folder": "/tmj_out"
+            },
+            "extracted_params": {
+                "cbct_folder": "/cbct",
+                "mri_folder": "/mri",
+                "seg_folder": "/seg",
+                "output_folder": "/tmj_out",
+                "model_folder": "",
+                "tmp_folder": ""
+            },
+            "extraction_latency": 2.087991952896118,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the MRI2CBCT_TMJ_CROP tool."
+        },
+        {
+            "prompt": "Pre-ASO CBCT /data/raw using /models/aso to /aso_out.",
+            "expected_tool": "pre_aso_cbct",
+            "expected_params": {
+                "input": "/data/raw",
+                "model_folder": "/models/aso",
+                "output_folder": "/aso_out"
+            },
+            "extracted_params": {
+                "input": "/data/raw",
+                "output_folder": "/aso_out",
+                "model_folder": "/models/aso",
+                "temp_folder": "",
+                "DCMInput": false
+            },
+            "extraction_latency": 1.485391616821289,
+            "extraction_reasoning": "string"
+        },
+        {
+            "prompt": "Standardize Upper IOS /ios with gold /ref. Output to /out.",
+            "expected_tool": "pre_aso_ios",
+            "expected_params": {
+                "input_folder": "/ios",
+                "gold_folder": "/ref",
+                "jaw": "Upper",
+                "output_folder": "/out"
+            },
+            "extracted_params": {
+                "input_folder": "/ios",
+                "gold_folder": "/ref",
+                "output_folder": "/out",
+                "list_teeth": "",
+                "occlusion": true,
+                "jaw": "Upper",
+                "log_path": ""
+            },
+            "extraction_latency": 1.901726245880127,
+            "extraction_reasoning": "Standardizing Upper IOS /ios with gold /ref. Output to /out."
+        },
+        {
+            "prompt": "Orient CBCT /scans to /gold with Sella,Nasion to /oriented.",
+            "expected_tool": "semi_aso_cbct",
+            "expected_params": {
+                "input": "/scans",
+                "gold_folder": "/gold",
+                "list_landmark": "Sella,Nasion",
+                "output_folder": "/oriented"
+            },
+            "extracted_params": {
+                "input": "/scans",
+                "gold_folder": "/gold",
+                "output_folder": "/oriented",
+                "list_landmark": "Sella Nasion"
+            },
+            "extraction_latency": 1.500521183013916,
+            "extraction_reasoning": "Extracted parameters based on user's prompt"
+        },
+        {
+            "prompt": "Semi-ASO Lower IOS /ios to /gold with Cusp,Fossa to /out.",
+            "expected_tool": "semi_aso_ios",
+            "expected_params": {
+                "input_folder": "/ios",
+                "gold_folder": "/gold",
+                "list_landmark": "Cusp,Fossa",
+                "jaw": "Lower",
+                "output_folder": "/out"
+            },
+            "extracted_params": {
+                "input_folder": "/ios",
+                "gold_folder": "/gold",
+                "output_folder": "/out",
+                "list_landmark": "Cusp,Fossa",
+                "occlusion": true,
+                "jaw": "Lower",
+                "log_path": ""
+            },
+            "extraction_latency": 2.421827793121338,
+            "extraction_reasoning": "Based on the user's prompt, I will extract the required parameters for the Semi-Automatic Segmentation Orientation (SEMI_ASO_IOS) tool."
+        }
+    ]
+}

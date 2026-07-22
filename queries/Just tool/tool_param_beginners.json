@@ -1,0 +1,186 @@
+[
+  [
+    "Can you find the dots on the bone scans in /data/scans? Use the models in /models/ali and save them to /output. My computer needs /tmp for a second and these are simple files, not DICOM.",
+    "ali_cbct"
+  ],
+  [
+    "I need to mark teeth 8 and 9 on the picture at /data/tooth.stl. Use the /models/ios folder and save the result to /output/marks. Please write down what happened in /output/log.txt.",
+    "ali_ios"
+  ],
+  [
+    "Please color in the top and bottom jaw from the scans in /data/cbct. Use the AI in /models/nnunet and put the new files in /data/results. Save the log to /data/results/info.log.",
+    "amasss_cli"
+  ],
+  [
+    "Can you line up the old scans in /data/T1 with the new ones in /data/T2 for the bottom jaw? Put them in /data/lined_up and use /data/tmp for the work. These are not DICOM.",
+    "areg_cbct"
+  ],
+  [
+    "Match the first mouth scan in /data/pre with the second one in /data/post. Use the helper model at /models/refine, save it to /data/matched, and log it to /data/matched/log.txt.",
+    "areg_ios"
+  ],
+  [
+    "Cut out the small boxes from the big scans in /data/scans using the marker file /data/box.json. Save the small pieces in /data/cutouts and log to /data/cutouts/log.txt.",
+    "autocrop3d"
+  ],
+  [
+    "Move the scan /data/patient.nii using the directions in /data/tfm. Use /data/ref.nii as the map and save to /data/output. Keep a log at /data/output/run.log.",
+    "automatrix"
+  ],
+  [
+    "Find the teeth in all the files in /data/scans at once. Use the models in /models/weights, save the results to /data/out, and log it to /data/out/batch.log.",
+    "batchdentalseg"
+  ],
+  [
+    "Use the CLIC tool to find teeth in the scans at /data/patients. Use the model folder /models/clic and save the masks to /data/masks.",
+    "clic"
+  ],
+  [
+    "Check the tooth shapes in /data/meshes. Use the classification mode with 3 groups and the resnet model. Save to /data/shapes and log to /data/shapes/log.txt.",
+    "docshapeaxi"
+  ],
+  [
+    "Warp the tooth shape at /data/tooth.stl. Use the butterfly way and save the new shape in /data/warped.",
+    "flexreg"
+  ],
+  [
+    "Make a simple webpage to look at the results in /data/summaries. Save the files to /data/web_page.",
+    "medx_dashboard"
+  ],
+  [
+    "Read the patient notes in /data/notes and give me a short summary. Use the t5-base model and save to /data/summary. Log it to /data/summary/log.txt.",
+    "medx_summarize"
+  ],
+  [
+    "Make the MRI scans in /data/mri look like the CBCT scans in /data/cbct. Save the results to /data/approximated.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Line up the MRI folder /data/mri with the CBCT folder /data/cbct. Use the masks in /data/masks and save them to /data/registered.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Cut the scans into left and right sides. Use CBCT /data/cbct, MRI /data/mri, and Seg /data/seg. Put the pieces in /data/sides.",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Straighten the MRI scans in /data/mri_raw. Use direction -1,0,0,0,-1,0,0,0,1 and Z-spacing 1.5. Save them to /data/straight.",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Change the resolution of all my scans in /data/raw to size [256, 256, 128]. Save the new versions to /data/resampled.",
+    "mri2cbct_resample"
+  ],
+  [
+    "Cut out the jaw joints from the scans in /data/cbct and /data/mri. Use /data/seg for reference and the model in /models/tmj. Save to /data/joints and log to /data/joints/log.txt.",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Clean up the scans in /data/raw for ASO. Use the model in /models/aso, save to /data/pre, and log it to /data/pre/log.txt. These are not DICOM.",
+    "pre_aso_cbct"
+  ],
+  [
+    "Turn the mouth scans in /data/ios the right way using /data/gold. Do teeth 8 and 9 for the top jaw. Save to /data/turned and log to /data/turned/log.txt.",
+    "pre_aso_ios"
+  ],
+  [
+    "Fix the angle of the scans in /data/scans using the landmarks Sella and Nasion. Use /data/gold as a guide and save to /data/fixed.",
+    "semi_aso_cbct"
+  ],
+  [
+    "Turn the mouth shapes in /data/ios using landmarks Cusp and Fossa. Use the top jaw with /data/gold. Save to /data/fixed and log to /data/fixed/semi.log.",
+    "semi_aso_ios"
+  ],
+  [
+    "Can you find the landmark points on the patient scans in /data/scans? Use the models in /models/ali and save everything to /output. Use /tmp for the temporary files and note that these are not DICOM files.",
+    "ali_cbct"
+  ],
+  [
+    "I need to find landmarks for teeth 8 and 9 on the scan file /data/teeth.stl. Use the models in /models/ios and save the results to /output/landmarks. Please keep a log at /output/process.log.",
+    "ali_ios"
+  ],
+  [
+    "Please segment the Mandible and Maxilla from the scans in /data/cbct_scans. Use the models at /models/nnunet, save them to /data/results, and save the log to /data/results/amasss.log.",
+    "amasss_cli"
+  ],
+  [
+    "Help me align my first scans in /data/T1 with the second scans in /data/T2 using MAND registration. Put the results in /data/aligned and use /data/tmp for temporary files. These are not DICOMs.",
+    "areg_cbct"
+  ],
+  [
+    "Can you register the dental scans in /data/pre to the ones in /data/post? Use the refinement model at /models/refine, save the output to /data/registered, and log it to /data/reg.log.",
+    "areg_ios"
+  ],
+  [
+    "I want to crop my scans in /data/volumes using the marker file /data/markers.json. Save the new files in /data/cropped and use a physical box size. Log the progress to /data/cropped/log.txt.",
+    "autocrop3d"
+  ],
+  [
+    "Apply the movement matrices in /data/tfm to the scan /data/patient.nii. Use /data/ref.nii as a reference and save the result to /data/output. Log it to /data/output/matrix.log.",
+    "automatrix"
+  ],
+  [
+    "Please run a batch tooth segmentation on the folder /data/scans. Use the models in /models/weights, save the output to /data/segmented, and log the work to /data/segmented/seg.log.",
+    "batchdentalseg"
+  ],
+  [
+    "Run the CLIC segmentation on the scans in /data/patients. Use the Mask-RCNN model at /models/clic and put the masks in /data/masks.",
+    "clic"
+  ],
+  [
+    "Analyze the tooth shapes of the meshes in /data/stls using the classification task. Use 3 classes and the resnet model. Save results to /data/analysis and log to /data/analysis/log.txt.",
+    "docshapeaxi"
+  ],
+  [
+    "Do a flexible registration for the tooth mesh at /data/tooth.vtk. Use the butterfly method and save the new mesh in /data/flex_output.",
+    "flexreg"
+  ],
+  [
+    "Make a web dashboard to show the results in /data/results. Save the HTML dashboard files in /data/dashboard.",
+    "medx_dashboard"
+  ],
+  [
+    "Summarize the patient notes in /data/notes using the t5-base model. Put the summaries in /data/summaries and save the log to /data/summaries/medx.log.",
+    "medx_summarize"
+  ],
+  [
+    "Approximate the MRI scans in /data/mri using the CBCT scans in /data/cbct. Put the results in /data/approximated.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Register my MRI folder /data/mri to the CBCT folder /data/cbct. Use the masks in /data/masks and save the registered images to /data/registered.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Crop the left and right sides of the scans. CBCT: /data/cbct, MRI: /data/mri, Seg: /data/seg. Put the output crops in /data/lr_crops.",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Standardize the MRI scans in /data/mri_raw. Set the direction to -1,0,0,0,-1,0,0,0,1 and Z-spacing to 1.5. Save to /data/mri_centered.",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Resample all my images in /data/raw to size [256, 256, 128]. Use /data/resampled for the output folder.",
+    "mri2cbct_resample"
+  ],
+  [
+    "Find and crop the TMJ regions from the scans in /data/cbct and /data/mri. Use the segments in /data/seg and the model at /models/tmj. Save to /data/tmj_out and log to /data/tmj_out/log.txt.",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Prepare the CBCT scans in /data/raw for ASO. Use the model in /models/aso, save to /data/preprocessed, and log to /data/preprocessed/log.txt. The input is not DICOM.",
+    "pre_aso_cbct"
+  ],
+  [
+    "Orient my dental scans in /data/ios for ASO using the gold standard in /data/gold. Process teeth 8 and 9 for the Upper jaw with occlusion. Save to /data/oriented and log to /data/oriented/log.txt.",
+    "pre_aso_ios"
+  ],
+  [
+    "Fix the orientation of my CBCT scans in /data/scans using the gold standard in /data/gold. Use the landmarks Sella and Nasion. Save results to /data/oriented.",
+    "semi_aso_cbct"
+  ],
+  [
+    "Orient my dental meshes in /data/ios using the gold folder /data/gold. Use landmarks Cusp and Fossa for the Upper jaw with no occlusion. Save to /data/oriented and log to /data/oriented/semi.log.",
+    "semi_aso_ios"
+  ]
+]

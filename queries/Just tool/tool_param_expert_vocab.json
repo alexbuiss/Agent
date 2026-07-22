@@ -1,0 +1,94 @@
+[
+  [
+    "Execute automated cephalometric landmark identification on high-resolution CBCT volumetric datasets located in /data/volumetric_scans. Implement the specialized neural architectures residing in /opt/models/cephalometric_v4. Output the coordinate vectors to /results/landmarks and utilize /tmp/proc for transient histogram equalization data. Note: Input imagery is in NIfTI format.",
+    "ali_cbct"
+  ],
+  [
+    "Perform precise odontometric landmark extraction on the intraoral surface mesh at /clinical/scans/maxillary_arch.stl. Targeted landmarks include 'cusp_tip' and 'central_fossa' for FDI tooth positions 11 and 21. Deploy models from /weights/ios_v2 and export findings to /analysis/metrics. Append telemetry to /analysis/logs/ali_ios.log.",
+    "ali_ios"
+  ],
+  [
+    "Initiate deep-learning-based anatomical segmentation on the CBCT cohort in /research/cohort_A. Targeted structures: 'Mandible, Maxilla, Cranial_Base'. Utilize nnUNet checkpoints in /models/segmentation/amasss. Redirect masks to /output/segmentation and establish a diagnostic log at /output/segmentation/process.log.",
+    "amasss_cli"
+  ],
+  [
+    "Execute voxel-based rigid registration of longitudinal CBCT datasets. Baseline (T1) is located in /data/T1; follow-up (T2) is in /data/T2. Specify 'MAX' registration protocol. Persist the aligned volumes and transformation matrices to /results/registration and use /tmp/reg for intermediary caching. Format: Non-DICOM.",
+    "areg_cbct"
+  ],
+  [
+    "Implement surface-to-surface ICP registration for sequential intraoral scans stored in /ios/T1 and /ios/T2. Leverage the segmentation-refinement neural network at /models/ios/refine_net for enhanced alignment precision. Output registered meshes to /ios/aligned and document convergence metrics in /ios/aligned/registration.log.",
+    "areg_ios"
+  ],
+  [
+    "Perform automated spatial cropping of volumetric scans in /archive/full_volumes based on region-of-interest markers defined in /archive/markers/roi.mrk.json. Preserve physical coordinate box scaling. Export truncated volumes to /archive/roi_crops and log the clipping coordinates to /archive/roi_crops/crop_metrics.log.",
+    "autocrop3d"
+  ],
+  [
+    "Apply composite rigid transformation matrices from /transformations/matrices to the patient volume at /patients/P001/volume.nii.gz. Reference spatial domain: /reference/atlas_v3.nii.gz. Target directory: /patients/P001/aligned. Record the spatial mapping in /patients/P001/aligned/matrix_application.log.",
+    "automatrix"
+  ],
+  [
+    "Deploy the nnUNet-based dental segmentation pipeline on the CBCT repository at /scans/raw_cbct. Utilize the weight configurations in /opt/nnunet/models/dental_seg. Store resulting multi-label segmentations (teeth, cortical bone) in /scans/segmented and maintain a runtime log at /scans/segmented/batch_execution.log.",
+    "batchdentalseg"
+  ],
+  [
+    "Execute instance segmentation using the Mask R-CNN architecture on CBCT scans within /clinical/dataset. Model parameters are localized in /models/mask_rcnn_clic. Save the inferred instance masks to /clinical/segmentation_results.",
+    "clic"
+  ],
+  [
+    "Conduct morphometric shape analysis and classification on the surface mesh library in /morphology/meshes. Task: 'classification' using a 'resnet' backbone with 3 discrete classes. Models: 'ShapeAXI_V1'. Save results to /morphology/analysis and log metrics to /morphology/analysis/shape.log.",
+    "docshapeaxi"
+  ],
+  [
+    "Perform flexible patch-based deformable registration on the dental surface file /models/surface_01.vtk. Implement the 'butterfly' patch methodology for non-rigid mapping. Output the resultant deformed mesh to /results/flex_registration.",
+    "flexreg"
+  ],
+  [
+    "Synthesize an interactive analytical dashboard from the clinical summary data in /reports/study_01. Generate the HTML visualization suite in /reports/dashboard_output.",
+    "medx_dashboard"
+  ],
+  [
+    "Perform transformer-based NLP summarization on the corpus of clinical narratives in /records/patient_notes. Utilize the 't5-base' architecture for abstractive summarization. Export findings to /records/summaries and log the NLP pipeline execution to /records/summaries/medx.log.",
+    "medx_summarize"
+  ],
+  [
+    "Execute multimodal intensity normalization and spatial domain approximation of MRI datasets in /imaging/mri to the reference CBCT frame in /imaging/cbct. Save the synthesized volumes to /imaging/approximated_scans.",
+    "mri2cbct_approx"
+  ],
+  [
+    "Implement multimodal deformable registration to align the MRI cohort in /data/mri_seq with the CBCT reference in /data/cbct_seq. Incorporate anatomical constraints using CBCT masks from /data/cbct_masks. Persist registered volumes to /data/multimodal_alignment.",
+    "mri2cbct_reg"
+  ],
+  [
+    "Perform bilateral hemimandibular ROI extraction for morphometric asymmetry assessment from registered MRI-CBCT pairs. Inputs: CBCT (/data/cbct), MRI (/data/mri), and Segmentations (/data/seg). Export the asymmetric crops to /data/analysis/lr_crops.",
+    "mri2cbct_lr_crop"
+  ],
+  [
+    "Standardize the anatomical orientation and spatial centering of the MRI volumes in /raw/mri_data. Reorient to cardinal direction [-1, 0, 0, 0, -1, 0, 0, 0, 1] and resample to a Z-axis spacing of 1.5mm. Output: /standardized/mri_volumes.",
+    "mri2cbct_orient_center"
+  ],
+  [
+    "Perform isotropic voxel resampling and grid interpolation of the multimodal dataset in /study/raw. Target resolution: [256, 256, 128] with 0.3mm spacing. Save resampled volumes to /study/resampled.",
+    "mri2cbct_resample"
+  ],
+  [
+    "Execute automated nnUNet-based segmentation and spatial cropping of the Temporomandibular Joint (TMJ) complex. Process CBCT (/data/cbct), MRI (/data/mri), and segmentations (/data/seg) using weights from /models/tmj_v2. Save ROIs to /data/tmj_crops and log to /data/tmj_crops/tmj.log.",
+    "mri2cbct_tmj_crop"
+  ],
+  [
+    "Implement standardized orientation normalization for Automatic Segmentation Orientation (ASO) on the CBCT series in /dataset/raw_scans. Deploy models from /opt/aso/pre_aso_v1. Export volumes to /dataset/pre_aso. Input: DICOM. Log: /dataset/pre_aso/pre_aso.log.",
+    "pre_aso_cbct"
+  ],
+  [
+    "Standardize intraoral surface orientation for ASO using reference templates from /gold_standard/templates. Process FDI positions '11, 21' for the 'Upper' jaw in an 'occlusion' state. Source: /ios/raw. Save to /ios/oriented and log to /ios/oriented/pre_aso.log.",
+    "pre_aso_ios"
+  ],
+  [
+    "Perform semi-automatic CBCT orientation using landmark-guided ICP registration. Source: /data/unaligned. Reference: /atlas/gold. Utilize landmarks 'Sella, Nasion, Porion' for spatial alignment. Export oriented volumes to /data/standardized.",
+    "semi_aso_cbct"
+  ],
+  [
+    "Implement semi-automatic dental mesh orientation using point-based ICP. Source: /surfaces/raw. Reference: /surfaces/gold. Landmarks: 'Mesial, Distal'. Jaw: 'Lower'. Occlusion: false. Save oriented meshes to /surfaces/standardized and log to /surfaces/standardized/semi.log.",
+    "semi_aso_ios"
+  ]
+]

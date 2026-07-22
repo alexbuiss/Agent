@@ -1,0 +1,67 @@
+{
+    "name": "docshapeaxi",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/DOCShapeAXI_CLI.py",
+    "description": "Shape Analysis of dental surfaces using ShapeAXI. Statistical shape analysis and classification of 3D dental meshes with GradCAM visualization for interpretability and morphometric feature extraction.",
+    "tags": [
+        "shape",
+        "analysis",
+        "surface",
+        "gradcam",
+        "classification",
+        "mesh",
+        "3d",
+        "morphometry",
+        "dental",
+        "interpretability"
+    ],
+    "parameters": [
+        {
+            "name": "input_dir",
+            "type": "path",
+            "required": true,
+            "description": "Folder containing surface meshes (.vtk, .stl, .off)."
+        },
+        {
+            "name": "output_dir",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for analysis results."
+        },
+        {
+            "name": "data_type",
+            "type": "str",
+            "required": true,
+            "description": "Path to trained ShapeAXI model."
+        },
+        {
+            "name": "task",
+            "type": "str",
+            "required": true,
+            "description": "Path to trained ShapeAXI model."
+        },
+        {
+            "name": "model",
+            "type": "str",
+            "required": true,
+            "description": "Name of the model used"
+        },
+        {
+            "name": "nn",
+            "type": "str",
+            "required": true,
+            "description": "Model type"
+        },
+        {
+            "name": "num_classes",
+            "type": "int",
+            "required": true,
+            "description": "Number of classes."
+        },
+        {
+            "name": "log_path",
+            "type": "path",
+            "required": true,
+            "description": "Log file path."
+        }
+    ]
+}

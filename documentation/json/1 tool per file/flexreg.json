@@ -1,0 +1,37 @@
+{
+    "name": "flexreg",
+    "path": "/home/luciacev/Documents/AlexCodes/Agent/CLI files/FlexReg_CLI.py",
+    "description": "Flexible Patch-based Registration for dental surfaces. Registers 3D dental surface meshes using patch-based deformable registration with butterfly and curve patch methods for precision tooth movement tracking.",
+    "tags": [
+        "registration",
+        "surface",
+        "patch",
+        "deformation",
+        "mesh",
+        "dental",
+        "3d",
+        "deformable",
+        "alignment",
+        "tooth"
+    ],
+    "parameters": [
+        {
+            "name": "input_surface",
+            "type": "path",
+            "required": true,
+            "description": "Input surface file."
+        },
+        {
+            "name": "patch_type",
+            "type": "str",
+            "required": true,
+            "description": "Type of patch: butterfly, curve, or delete."
+        },
+        {
+            "name": "output_folder",
+            "type": "path",
+            "required": true,
+            "description": "Output folder for deformed surfaces."
+        }
+    ]
+}
